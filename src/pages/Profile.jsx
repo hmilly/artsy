@@ -22,7 +22,7 @@ const Profile = () => {
   const auth = getAuth();
 
   const [changeDetails, setChangeDetails] = useState(false);
-
+  const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
@@ -137,10 +137,7 @@ const Profile = () => {
         {!loading && listings?.length > 0 && (
           <>
             <p className="listingText">Your listings</p>
-            <ul className="listingList">
-            
-            
-            </ul>
+            <ul className="listingList"></ul>
           </>
         )}
       </main>

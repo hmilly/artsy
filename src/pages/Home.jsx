@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Home = () => {
   return (
     <>
@@ -6,10 +8,10 @@ const Home = () => {
 
         <nav>
           <li>
-            <Link to="sign-in"></Link>
+            <Link to="sign-in">Sign in</Link>
           </li>
           <li>
-            <Link to="sign-up"></Link>
+            <Link to="sign-up">Sign Up</Link>
           </li>
         </nav>
       </header>

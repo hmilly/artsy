@@ -83,7 +83,7 @@ const EditListing = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (images.length > 1) {
+    if (image.length > 1) {
       setLoading(false);
       toast.error("Only 1 image can be uploaded");
       return;
@@ -146,7 +146,7 @@ const EditListing = () => {
             <FormBody
               formData={formData}
               setFormData={setFormData}
-              geolocationEnabled={geolocationEnabled}
+            
             />
             <button type="submit" className="primaryButton createListingButton">
               Edit Listing

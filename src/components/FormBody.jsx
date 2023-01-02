@@ -61,7 +61,7 @@ const FormBody = ({ formData, setFormData }) => {
         </button>
         <button
           className={
-            !offer && reserved !== null ? "formButtonActive" : "formButton"
+            !reserved !== null ? "formButtonActive" : "formButton"
           }
           type="button"
           id="reserved"

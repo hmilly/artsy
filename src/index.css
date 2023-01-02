@@ -1,23 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap");
 
 * {
   box-sizing: border-box;
@@ -28,7 +23,7 @@ html::-webkit-scrollbar {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #f2f4f8;
   margin: 0;
   box-sizing: border-box;
@@ -57,13 +52,12 @@ button {
   height: 3rem;
   width: 100%;
   outline: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   padding: 0 3rem;
   font-size: 1rem;
 }
 
 @media (min-width: 1100px) {
-
   .input,
   .passwordInput,
   .emailInput,
@@ -118,7 +112,6 @@ button {
 }
 
 @media (min-width: 1024px) {
-
   .pageContainer,
   .offers,
   .profile,
@@ -214,12 +207,10 @@ button {
 
 .nameInput {
   margin-bottom: 2rem;
-  background: url('./assets/svg/badgeIcon.svg') #ffffff 2.5% center no-repeat;
 }
 
 .emailInput {
   margin-bottom: 2rem;
-  background: url('./assets/svg/personIcon.svg') #ffffff 2.5% center no-repeat;
 }
 
 .passwordInputDiv {
@@ -228,7 +219,6 @@ button {
 
 .passwordInput {
   margin-bottom: 2rem;
-  background: url('./assets/svg/lockIcon.svg') #ffffff 2.5% center no-repeat;
 }
 
 .passwordHidden {
@@ -267,7 +257,6 @@ button {
 }
 
 @media (min-width: 1024px) {
-
   .signInBar,
   .signUpBar {
     justify-content: start;
@@ -292,7 +281,6 @@ button {
 }
 
 @media (min-width: 1024px) {
-
   .signInButton,
   .signUpButton {
     margin-left: 3rem;
@@ -666,7 +654,7 @@ button {
 
 .logOut {
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
@@ -801,7 +789,7 @@ button {
 .formInputFile {
   border: none;
   outline: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .formInputSmall,

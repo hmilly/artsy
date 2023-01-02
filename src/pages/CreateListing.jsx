@@ -114,7 +114,6 @@ const CreateListing = () => {
             <FormBody
               formData={formData}
               setFormData={setFormData}
-              geolocationEnabled={geolocationEnabled}
             />
             <button type="submit" className="primaryButton createListingButton">
               Create Listing

@@ -1,7 +1,5 @@
 const ShopItem = ({ item }) => {
-  const updateSold = (id) => {
-    
-  };
+  const updateSold = (id) => {};
 
   return (
     <>
@@ -17,7 +15,7 @@ const ShopItem = ({ item }) => {
             onClick={() => updateSold(item.id)}
             className={item.reserved ? "red" : "green"}
           >
-            {item.reserved ? Reserved : Reserve}
+            {item.reserved ? "Reserved" : "Reserve"}
           </button>
         </section>
       </div>

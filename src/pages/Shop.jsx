@@ -1,5 +1,4 @@
 import Collection from "../components/Collection";
-import ShopItem from "../components/ShopItem";
 
 const Shop = () => {
   return (
