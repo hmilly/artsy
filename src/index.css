@@ -43,6 +43,8 @@ button {
 .input,
 .passwordInput,
 .emailInput,
+.numberInput,
+.customerType,
 .nameInput,
 .textarea {
   box-shadow: rgba(0, 0, 0, 0.11);
@@ -57,10 +59,36 @@ button {
   font-size: 1rem;
 }
 
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.customerType {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  height: 5rem;
+}
+
+.customerType p,
+.customerTypeInputs {
+  padding: 10px;
+  margin: 0;
+}
+
+.customerTypeInputs label:first-child {
+  margin-right: 20px;
+}
+
 @media (min-width: 1100px) {
+
   .input,
   .passwordInput,
   .emailInput,
+  .numberInput,
+  .customerType,
   .nameInput,
   .textarea {
     padding: 0 5rem;
@@ -112,6 +140,7 @@ button {
 }
 
 @media (min-width: 1024px) {
+
   .pageContainer,
   .offers,
   .profile,
@@ -205,13 +234,13 @@ button {
   color: #2c2c2c;
 }
 
-.nameInput {
+.nameInput,
+.emailInput,
+.numberInput,
+.customerType {
   margin-bottom: 2rem;
 }
 
-.emailInput {
-  margin-bottom: 2rem;
-}
 
 .passwordInputDiv {
   position: relative;
@@ -257,6 +286,7 @@ button {
 }
 
 @media (min-width: 1024px) {
+
   .signInBar,
   .signUpBar {
     justify-content: start;
@@ -281,6 +311,7 @@ button {
 }
 
 @media (min-width: 1024px) {
+
   .signInButton,
   .signUpButton {
     margin-left: 3rem;

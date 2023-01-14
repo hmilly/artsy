@@ -1,6 +1,11 @@
 import Collection from "../components/Collection";
+import { useParams } from "react-router-dom";
 
 const Shop = () => {
+  const params = useParams();
+
+
+
   return (
     <>
       <div>

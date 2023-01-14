@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, updateEmail } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   updateDoc,
@@ -31,32 +31,43 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const listingsRef = collection(db, "users");
-      const q = query(
-        listingsRef,
-        where("userRef", "==", auth.currentUser.uid),
-        orderBy("timestamp", "desc")
-      );
-      const querySnap = await getDocs(q);
+      const customersRef = collection(db, "users");
 
-      querySnap.forEach((doc) => {
-        listings.push({ id: doc.id, data: doc.data() });
-      });
+      // const q = query(
+      //   customersRef,
+      //   where("userRef", "==", auth.currentUser.uid)
+      // );
+      // const querySnap = await getDocs(q);
 
-      setListings(listings);
+      // querySnap.forEach((doc) => {
+      //   listings.push({ id: doc.id, data: doc.data() });
+      // });
+
+      console.log(auth.currentUser);
+      // setListings(listings);
       setLoading(false);
     };
+
     fetchUser();
   }, [auth.currentUser.uid]);
 
   const onSubmit = async () => {
     try {
-      if (auth.currentUser.displayName !== formData.name) {
+      if (
+        auth.currentUser.displayName !== formData.name ||
+        auth.currentUser.email !== formData.email
+      ) {
+        // Update display name in fb
         await updateProfile(auth.currentUser, { displayName: formData.name });
+        await updateEmail(auth.currentUser, formData.email);
       }
+
+      // Update in firestore
       const userRef = doc(db, "users", auth.currentUser.uid);
-      await updateDoc(userRef, { name: formData.name });
+
+      await updateDoc(userRef, { name: formData.name, email: formData.email });
     } catch (error) {
+      console.log(error);
       toast.error("Couldn't update profile details!");
     }
   };

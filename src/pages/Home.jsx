@@ -14,6 +14,9 @@ const Home = () => {
             <Link to="sign-up">Sign Up</Link>
           </li>
         </nav>
+
+
+        
       </header>
     </>
   );

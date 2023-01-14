@@ -14,38 +14,44 @@ import Oauth from "../components/Oauth";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [userType, setUserType] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    number: "",
     password: "",
   });
 
-  const { name, email, password } = formData;
+  const { name, email, number, password } = formData;
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (userType === "") {
+      toast.error("Please select account type");
+    } else {
+      try {
+        const auth = getAuth();
+        const userCredentials = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredentials.user;
 
-    try {
-      const auth = getAuth();
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredentials.user;
+        updateProfile(auth.currentUser, { displayName: name });
 
-      updateProfile(auth.currentUser, { displayName: name });
+        const formDataCopy = { ...formData, userRef: userType };
+        delete formDataCopy.password;
+        formDataCopy.serverTimestamp = serverTimestamp();
 
-      const formDataCopy = { ...formData };
-      delete formDataCopy.password;
-      formDataCopy.serverTimestamp = serverTimestamp();
+        await setDoc(doc(db, "users", user.uid), formDataCopy);
 
-      await setDoc(doc(db, "users", user.uid), formDataCopy);
-
-      navigate("/");
-    } catch (error) {
-      toast.error("Something went wrong with validation");
+        navigate("/profile");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong with validation");
+      }
     }
   };
 
@@ -60,7 +66,7 @@ const SignUp = () => {
     <>
       <div className="pageContainer">
         <header>
-          <p className="pageHeader">Welcome Back!</p>
+          <p className="pageHeader">Welcome</p>
         </header>
         <main>
           <form onSubmit={onSubmit}>
@@ -71,6 +77,7 @@ const SignUp = () => {
               id="name"
               value={name}
               onChange={onChange}
+              required
             />
 
             <input
@@ -80,7 +87,44 @@ const SignUp = () => {
               id="email"
               value={email}
               onChange={onChange}
+              required
             />
+
+            <input
+              type="number"
+              className="numberInput"
+              placeholder="Phone Number"
+              id="number"
+              value={number}
+              onChange={onChange}
+              required
+            />
+
+            <div className="customerType">
+              <p>Please select which account you'd like to sign up for:</p>
+              <div className="customerTypeInputs">
+                <label htmlFor="customer">
+                  <input
+                    type="radio"
+                    name="user_type"
+                    value="customer"
+                    onChange={(e) => setUserType(e.target.value)}
+                    required
+                  />
+                    Customer
+                </label>
+                <label htmlFor="seller">
+                  <input
+                    type="radio"
+                    name="user_type"
+                    value="seller"
+                    onChange={(e) => setUserType(e.target.value)}
+                  />
+                    Seller
+                </label>
+              </div>
+            </div>
+
             <div className="passwordInputDiv">
               <input
                 type={showPassword ? "text" : "password"}
@@ -89,6 +133,7 @@ const SignUp = () => {
                 id="password"
                 value={password}
                 onChange={onChange}
+                required
               />
               <img
                 src={visibilityIcon}
@@ -96,12 +141,9 @@ const SignUp = () => {
                 className="showPassword"
                 onClick={() => setShowPassword(!showPassword)}
               />
-              <Link to="/forgot-password" className="forgotPasswordLink">
-                Forgot Password
-              </Link>
 
               <div className="signUpBar">
-                <p className="signUpText">Sign Up</p>
+                <p className="signUpText">Click to sign up</p>
                 <button className="signUpButton">
                   <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
                 </button>
