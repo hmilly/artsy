@@ -24,12 +24,12 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="pageContainer">
+    <div className="p-4">
       <header>
-        <p className="pageHeader">Forgot Password</p>
+        <h2 className="pageHeader">Forgot Password</h2>
       </header>
       <main>
-        <form onSubmit={onSubmit}>
+        <form className="m-4" onSubmit={onSubmit}>
           <input
             type="email"
             className="emailInput"
@@ -38,11 +38,11 @@ const ForgotPassword = () => {
             value={email}
             onChange={onChange}
           />
-          <Link className="forgotPasswordLink" to="/sign-in">
-            Forgot Password
+          <Link className="forgotPasswordLink text-end" to="/sign-in">
+            Sign in Instead
           </Link>
           <div className="signInBar">
-            <div className="signInText">Send Reset Link</div>
+            <div className="fw-bolder">Send Reset Link</div>
             <button className="signInButton">
               <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
             </button>

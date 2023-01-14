@@ -8,7 +8,7 @@ const Shop = () => {
 
   return (
     <>
-      <div>
+      <div className="p-4">
         <h3>page name</h3>
         <p>page description</p>
       </div>

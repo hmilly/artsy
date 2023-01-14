@@ -34,10 +34,13 @@ const Oauth = () => {
   };
 
   return (
-    <div className="socialLogin">
-      <p>Sign {location.pathname === "/sign-up" ? "up" : "in"} with </p>
-      <button className="socialIconDiv" onClick={onGoogleClick}>
-        <img className="socialIconImg" src={googleIcon} alt="google" />
+    <div className="d-flex flex-column align-items-center">
+      <p>Sign {location.pathname === "/sign-up" ? "up" : "in"} with: </p>
+      <button
+        className="d-flex flex-column align-items-center justify-content-center m-5"
+        onClick={onGoogleClick}
+      >
+        <img className="w-50 h-50" src={googleIcon} alt="google" />
       </button>
     </div>
   );

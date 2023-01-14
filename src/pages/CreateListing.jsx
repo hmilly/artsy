@@ -106,7 +106,7 @@ const CreateListing = () => {
     return <Spinner />;
   }
   return (
-    <div className="profile">
+    <div className="profile p-4">
       <header>
         <p className="pageHeader">Create a listing</p>
         <main>

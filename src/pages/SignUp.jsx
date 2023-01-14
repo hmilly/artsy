@@ -64,12 +64,12 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="pageContainer">
+      <div className="p-4">
         <header>
-          <p className="pageHeader">Welcome</p>
+          <h2 className="pageHeader">Welcome</h2>
         </header>
         <main>
-          <form onSubmit={onSubmit}>
+          <form className="m-4" onSubmit={onSubmit}>
             <input
               type="text"
               className="nameInput"
@@ -100,10 +100,10 @@ const SignUp = () => {
               required
             />
 
-            <div className="customerType">
+            <div className="radioInputDiv d-flex flex-column justify-content-center">
               <p>Please select which account you'd like to sign up for:</p>
               <div className="customerTypeInputs">
-                <label htmlFor="customer">
+                <label className="me-4">
                   <input
                     type="radio"
                     name="user_type"
@@ -113,7 +113,7 @@ const SignUp = () => {
                   />
                     Customer
                 </label>
-                <label htmlFor="seller">
+                <label>
                   <input
                     type="radio"
                     name="user_type"
@@ -125,7 +125,7 @@ const SignUp = () => {
               </div>
             </div>
 
-            <div className="passwordInputDiv">
+            <div className="position-relative">
               <input
                 type={showPassword ? "text" : "password"}
                 className="passwordInput"
@@ -143,7 +143,7 @@ const SignUp = () => {
               />
 
               <div className="signUpBar">
-                <p className="signUpText">Click to sign up</p>
+                <p className="fw-bolder">Click to sign up</p>
                 <button className="signUpButton">
                   <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
                 </button>
@@ -151,7 +151,7 @@ const SignUp = () => {
             </div>
           </form>
           <Oauth />
-          <Link to="/sign-in" className="registerLink">
+          <Link to="/sign-in" className="registerLink text-center">
             Sign In Instead
           </Link>
         </main>

@@ -100,9 +100,9 @@ const Profile = () => {
     return <Spinner />;
   }
   return (
-    <div className="profile">
+    <div className="profile p-4">
       <header className="profileHeader">
-        <p className="pageHeader">My Profile</p>
+        <h2 className="pageHeader">My Profile</h2>
         <button className="logOut" type="button" onClick={onLogOut}>
           Log Out
         </button>

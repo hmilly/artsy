@@ -41,12 +41,12 @@ const SignIn = () => {
 
   return (
     <>
-      <div className="pageContainer">
+      <div className="p-4">
         <header>
-          <p className="pageHeader">Welcome Back!</p>
+          <h2 className="pageHeader">Welcome Back!</h2>
         </header>
         <main>
-          <form onSubmit={onSubmit}>
+          <form className="m-4" onSubmit={onSubmit}>
             <input
               type="email"
               className="emailInput"
@@ -73,12 +73,15 @@ const SignIn = () => {
                 className="showPassword"
                 onClick={() => setShowPassword(!showPassword)}
               />
-              <Link to="/forgot-password" className="forgotPasswordLink">
+              <Link
+                to="/forgot-password"
+                className="forgotPasswordLink text-end"
+              >
                 Forgot Password
               </Link>
 
               <div className="signInBar">
-                <p className="signInText">Sign In</p>
+                <p className="fw-bolder">Sign In</p>
                 <button className="signInButton">
                   <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
                 </button>
@@ -86,7 +89,7 @@ const SignIn = () => {
             </div>
           </form>
           <Oauth />
-          <Link to="/sign-up" className="registerLink">
+          <Link to="/sign-up" className="registerLink text-center">
             Sign Up Instead
           </Link>
         </main>
