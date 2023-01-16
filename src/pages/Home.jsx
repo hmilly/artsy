@@ -22,7 +22,10 @@ const Home = () => {
           </ul>
         </nav>
       </header>
-      <main></main>
+      <main>
+
+        <Collection/>
+      </main>
     </>
   );
 };

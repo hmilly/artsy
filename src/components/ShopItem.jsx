@@ -1,21 +1,21 @@
-const ShopItem = ({ item }) => {
+const ShopItem = ({ paintingData }) => {
   const updateSold = (id) => {};
 
   return (
     <>
-      <img src={item.link} alt={item.name} />
+      <img src={paintingData.imgUrl} alt={paintingData.name} className="w-25" />
       <div>
-        <h4>{item.name}</h4>
+        <h4>{paintingData.name}</h4>
 
-        {item.description && <p>{item.description}</p>}
+        {paintingData.description && <p>{paintingData.description}</p>}
 
         <section>
-          <p>Price {item.price}</p>
+          <p>Price {paintingData.price}</p>
           <button
-            onClick={() => updateSold(item.id)}
-            className={item.reserved ? "red" : "green"}
+            onClick={() => updateSold(paintingData.id)}
+            className={paintingData.reserved ? "red" : "green"}
           >
-            {item.reserved ? "Reserved" : "Reserve"}
+            {paintingData.reserved ? "Reserved" : "Reserve"}
           </button>
         </section>
       </div>

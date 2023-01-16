@@ -55,7 +55,7 @@ const SignIn = () => {
               value={email}
               onChange={onChange}
             />
-            <div className="passwordInputDiv">
+            <div className="passwordInputDiv position-relative">
               <input
                 type="text"
                 className={`passwordInput ${

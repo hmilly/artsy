@@ -426,9 +426,10 @@ input::-webkit-scrollbar {
 .profileCard {
   background-color: #ffffff;
   border-radius: 1rem;
+  border: solid 1px green;
   padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+
 }
 
 .profileDetails {

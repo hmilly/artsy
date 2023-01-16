@@ -1,8 +1,9 @@
-
 const Spinner = () => {
   return (
-    <div>Spinner</div>
-  )
-}
+    <div className="loadingSpinnerContainer">
+      <div className="loadingSpinner"></div>
+    </div>
+  );
+};
 
-export default Spinner
+export default Spinner;
