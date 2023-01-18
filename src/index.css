@@ -6,9 +6,9 @@
   font-family: "Montserrat", sans-serif;
 }
 
-body,
-#root {
+body {
   min-height: 100vh;
+  padding: 20px;
 }
 
 
@@ -17,13 +17,16 @@ body,
 h1 {
   font-size: 2.5rem;
 }
+
 h2 {
   font-size: 1.8rem;
 }
+
 h3,
 h4 {
   font-size: 1.5rem;
 }
+
 h5,
 h6,
 p,
@@ -31,6 +34,7 @@ button,
 a {
   font-size: 1.2rem;
 }
+
 form input,
 form label,
 form p {
@@ -44,12 +48,6 @@ a {
   text-decoration: none;
   display: block;
   color: #000000;
-}
-
-button {
-  cursor: pointer;
-  outline: none;
-  border: none;
 }
 
 
@@ -76,7 +74,8 @@ button {
 }
 
 .forgotPasswordLink,
-.registerLink {
+.registerLink,
+.changePersonalDetails {
   color: #00cc66;
   font-weight: 600;
 }
@@ -95,19 +94,6 @@ button {
 
 
 
-/* current form styles */
-.nameInput,
-.emailInput,
-.numberInput,
-.passwordInput,
-.radioInputDiv {
-  box-shadow: rgba(0, 0, 0, 0.11);
-  border: 2px solid blue;
-  border-radius: 3rem;
-  width: 100%;
-  padding: 0.3rem 3rem;
-  margin-bottom: 1.5rem;
-}
 
 input::-webkit-scrollbar {
   display: none;
@@ -117,14 +103,6 @@ input::-webkit-scrollbar {
 .passwordHidden {
   -webkit-text-security: disc;
 }
-
-.showPassword {
-  position: absolute;
-  top: -4%;
-  right: 1%;
-  padding: 1rem;
-}
-
 
 /* spinner animation */
 .loadingSpinnerContainer {
@@ -210,31 +188,7 @@ input::-webkit-scrollbar {
 }
 
 
-/* sign in, up, forgot */
-.signInBar,
-.signUpBar {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: inherit;
-}
-
-.signInButton,
-.signUpButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3rem;
-  height: 3rem;
-  background-color: #00cc66;
-  border-radius: 50%;
-}
-
-
 .socialIconDiv {
-
-
   background-color: #ffffff;
   border-radius: 50%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
@@ -397,76 +351,8 @@ input::-webkit-scrollbar {
   margin-bottom: 0.5rem;
 }
 
-.profile {
-  margin-bottom: 10rem;
-}
-
-.profileHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 
-.profileDetailsHeader {
-  display: flex;
-  justify-content: space-between;
-  max-width: 500px;
-}
-
-.personalDetailsText {
-  font-weight: 600;
-}
-
-.changePersonalDetails {
-  font-weight: 600;
-  color: #00cc66;
-}
-
-.profileCard {
-  background-color: #ffffff;
-  border-radius: 1rem;
-  border: solid 1px green;
-  padding: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.2);
-
-}
-
-.profileDetails {
-  display: flex;
-  flex-direction: column;
-}
-
-.profileName,
-.profileEmail,
-.profileAddress,
-.profileAddressActive,
-.profileEmailActive,
-.profileNameActive {
-  all: unset;
-  margin: 0.3rem 0;
-  font-weight: 600;
-  width: 100%;
-}
-
-.profileNameActive {
-  background-color: rgba(44, 44, 44, 0.1);
-}
-
-.profileEmail,
-.profileAddress,
-.profileAddressActive,
-.profileEmailActive {
-  font-weight: 500;
-}
-
-.profileEmailActive {
-  background-color: rgba(44, 44, 44, 0.1);
-}
-
-.profileAddressActive {
-  background-color: rgba(44, 44, 44, 0.1);
-}
 
 .createListing {
   background-color: #ffffff;

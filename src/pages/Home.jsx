@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import Collection from "../components/Collection";
+
 
 const Home = () => {
   return (
     <>
-      <header className="p-4 d-flex  justify-content-between w-100">
+      <header className="d-flex  justify-content-between w-100">
         <h1 className="w-75 text-center">Artsy</h1>
 
         <nav className="w-25 m-auto">
@@ -23,8 +23,8 @@ const Home = () => {
         </nav>
       </header>
       <main>
-
-        <Collection/>
+      
+      
       </main>
     </>
   );

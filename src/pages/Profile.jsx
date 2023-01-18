@@ -100,58 +100,62 @@ const Profile = () => {
     return <Spinner />;
   }
   return (
-    <div className="profile p-4">
-      <header className="profileHeader">
-        <h2 className="pageHeader">My Profile</h2>
-        <button className="logOut" type="button" onClick={onLogOut}>
+    <div>
+      <header className="d-flex justify-content-between">
+        <h2>My Profile</h2>
+        <Link to="/" className="btn btn-sm btn-outline-light">
+          <img src={homeIcon} alt="home" className="img-fluid" />
+        </Link>
+        <button
+          className="btn btn-sm btn-success rounded-pill"
+          type="button"
+          onClick={onLogOut}
+        >
           Log Out
         </button>
       </header>
-      <main>
-        <div className="profileDetailsHeader">
-          <p className="profileDetailsText">Personal Details</p>
-          <p
-            className="changePersonalDetails"
+      <main className="container m-4 border border-success border-2 rounded w-75 mx-auto">
+        <div className="row d-flex justify-content-between p-3">
+          <p className="w-auto">Personal Details</p>
+          <a
+            className="btn fw-bold row text-success w-auto mx-1"
             onClick={() => {
               changeDetails && onSubmit();
               setChangeDetails((prevState) => !prevState);
             }}
           >
             {changeDetails ? "Done" : "Change"}
-          </p>
+          </a>
         </div>
-        <div className="profileCard">
-          <form>
-            <input
-              type="text"
-              id="name"
-              className={!changeDetails ? "profileName" : "profileNameActive"}
-              disabled={!changeDetails}
-              value={formData.name}
-              onChange={onChange}
-            />
-            <input
-              type="text"
-              id="email"
-              className={!changeDetails ? "profileEmail" : "profileEmailActive"}
-              disabled={!changeDetails}
-              value={formData.email}
-              onChange={onChange}
-            />
-          </form>
-        </div>
-        <Link to="/create-listing" className="createListing">
-          <img src={homeIcon} alt="home" />
-          <p>Sell or rent your home</p>
-          <img src={arrowRight} alt="right arrow" />
-        </Link>
-        {!loading && listings?.length > 0 && (
-          <>
-            <p className="listingText">Your listings</p>
-            <ul className="listingList"></ul>
-          </>
-        )}
+        <form className="row p-3 mx-auto">
+          <input
+            type="text"
+            id="name"
+            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+              !changeDetails ? "" : "bg-secondary bg-opacity-25"
+            }`}
+            disabled={!changeDetails}
+            value={formData.name}
+            onChange={onChange}
+          />
+          <input
+            type="text"
+            id="email"
+            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+              !changeDetails ? "" : "bg-secondary bg-opacity-25"
+            }`}
+            disabled={!changeDetails}
+            value={formData.email}
+            onChange={onChange}
+          />
+        </form>
       </main>
+      {!loading && listings?.length > 0 && (
+        <div>
+          <p className="listingText">Your listings</p>
+          <ul className="listingList"></ul>
+        </div>
+      )}
     </div>
   );
 };

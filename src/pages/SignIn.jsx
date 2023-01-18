@@ -40,32 +40,33 @@ const SignIn = () => {
   };
 
   return (
-    <>
-      <div className="p-4">
-        <header>
-          <h2 className="pageHeader">Welcome Back!</h2>
-        </header>
-        <main>
-          <form className="m-4" onSubmit={onSubmit}>
-            <input
-              type="email"
-              className="emailInput"
-              placeholder="Email"
-              id="email"
-              value={email}
-              onChange={onChange}
-            />
-            <div className="passwordInputDiv position-relative">
+    <div>
+      <header>
+        <h2>Welcome Back!</h2>
+      </header>
+      <main className="container">
+        <form className="m-4 row" onSubmit={onSubmit}>
+          <input
+            type="email"
+            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            placeholder="Email"
+            id="email"
+            value={email}
+            onChange={onChange}
+          />
+          <div className="px-0 position-relative">
+            <span
+              className="d-flex
+            border border-primary border-2 rounded-pill py-1 px-5 w-100 mb-3"
+            >
               <input
-                type="text"
-                className={`passwordInput ${
-                  showPassword ? "" : "passwordHidden"
-                }`}
-                autoComplete="off"
+                type={showPassword ? "text" : "password"}
+                className="w-100 border-0"
                 placeholder="Password"
                 id="password"
                 value={password}
                 onChange={onChange}
+                required
               />
               <img
                 src={visibilityIcon}
@@ -73,28 +74,33 @@ const SignIn = () => {
                 className="showPassword"
                 onClick={() => setShowPassword(!showPassword)}
               />
+            </span>
+
+            <div className="row justify-content-end">
               <Link
                 to="/forgot-password"
-                className="forgotPasswordLink text-end"
+                className="btn fw-bold row text-success w-auto"
               >
                 Forgot Password
               </Link>
-
-              <div className="signInBar">
-                <p className="fw-bolder">Sign In</p>
-                <button className="signInButton">
-                  <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-                </button>
-              </div>
             </div>
-          </form>
-          <Oauth />
-          <Link to="/sign-up" className="registerLink text-center">
+
+            <div className="mt-5 d-flex justify-content-between align-items-center">
+              <div className="fw-bolder">Sign In</div>
+              <button className="btn btn-sm btn-success rounded-pill">
+                <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+              </button>
+            </div>
+          </div>
+        </form>
+        <Oauth />
+        <div className="row justify-content-center">
+          <Link to="/sign-up" className="btn fw-bold row text-success w-auto">
             Sign Up Instead
           </Link>
-        </main>
-      </div>
-    </>
+        </div>
+      </main>
+    </div>
   );
 };
 

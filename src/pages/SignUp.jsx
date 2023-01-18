@@ -63,72 +63,81 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <div className="p-4">
-        <header>
-          <h2 className="pageHeader">Welcome</h2>
-        </header>
-        <main>
-          <form className="m-4" onSubmit={onSubmit}>
-            <input
-              type="text"
-              className="nameInput"
-              placeholder="Name"
-              id="name"
-              value={name}
-              onChange={onChange}
-              required
-            />
+    <div>
+      <header>
+        <h2>Welcome</h2>
+      </header>
+      <main className="container">
+        <form className="m-4 row" onSubmit={onSubmit}>
+          <input
+            type="text"
+            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            placeholder="Name"
+            id="name"
+            value={name}
+            onChange={onChange}
+            required
+          />
+          <input
+            type="email"
+            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            placeholder="Email"
+            id="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
+          <input
+            type="number"
+            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            placeholder="Phone Number"
+            id="number"
+            value={number}
+            onChange={onChange}
+            required
+          />
 
-            <input
-              type="email"
-              className="emailInput"
-              placeholder="Email"
-              id="email"
-              value={email}
-              onChange={onChange}
-              required
-            />
+          <div className="border border-primary border-2 rounded-pill py-1 px-5 mb-3">
+            <p>Please select which account you'd like to sign up for:</p>
 
-            <input
-              type="number"
-              className="numberInput"
-              placeholder="Phone Number"
-              id="number"
-              value={number}
-              onChange={onChange}
-              required
-            />
-
-            <div className="radioInputDiv d-flex flex-column justify-content-center">
-              <p>Please select which account you'd like to sign up for:</p>
-              <div className="customerTypeInputs">
-                <label className="me-4">
-                  <input
-                    type="radio"
-                    name="user_type"
-                    value="customer"
-                    onChange={(e) => setUserType(e.target.value)}
-                    required
-                  />
-                    Customer
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="user_type"
-                    value="seller"
-                    onChange={(e) => setUserType(e.target.value)}
-                  />
-                    Seller
-                </label>
-              </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="user_type"
+                value="customer"
+                onChange={(e) => setUserType(e.target.value)}
+                required
+                id="inlineRadioDefault"
+              />
+              <label class="form-check-label" for="inlineRadioDefault">
+                Customer
+              </label>
             </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="user_type"
+                value="seller"
+                onChange={(e) => setUserType(e.target.value)}
+                required
+                id="inlineRadioChecked"
+              />
+              <label class="form-check-label" for="inlineRadioChecked">
+                Seller
+              </label>
+            </div>
+          </div>
 
-            <div className="position-relative">
+          <div className="px-0">
+            <span
+              className="d-flex
+            border border-primary border-2 rounded-pill py-1 px-5 w-100 mb-3"
+            >
               <input
                 type={showPassword ? "text" : "password"}
-                className="passwordInput"
+                className="w-100 border-0"
                 placeholder="Password"
                 id="password"
                 value={password}
@@ -138,25 +147,27 @@ const SignUp = () => {
               <img
                 src={visibilityIcon}
                 alt="show password"
-                className="showPassword"
+                className="btn"
                 onClick={() => setShowPassword(!showPassword)}
               />
-
-              <div className="signUpBar">
-                <p className="fw-bolder">Click to sign up</p>
-                <button className="signUpButton">
-                  <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-                </button>
-              </div>
+            </span>
+            <div className="mt-5 d-flex justify-content-between align-items-center ">
+              <div className="fw-bolder">Click to sign up</div>
+              <button className="btn btn-sm btn-success rounded-pill">
+                <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+              </button>
             </div>
-          </form>
-          <Oauth />
-          <Link to="/sign-in" className="registerLink text-center">
+          </div>
+        </form>
+        <Oauth />
+
+        <div className="row justify-content-center">
+          <Link to="/sign-in" className="btn fw-bold row text-success w-auto">
             Sign In Instead
           </Link>
-        </main>
-      </div>
-    </>
+        </div>
+      </main>
+    </div>
   );
 };
 

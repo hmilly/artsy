@@ -1,9 +1,11 @@
 const ShopItem = ({ paintingData }) => {
-  const updateSold = (id) => {};
+  const updateSold = (id) => {
+    console.log(id)
+  };
 
   return (
     <>
-      <img src={paintingData.imgUrl} alt={paintingData.name} className="w-25" />
+      <img src={paintingData.imgUrl} alt={paintingData.name} className="img-fluid img-thumbnail"/>
       <div>
         <h4>{paintingData.name}</h4>
 
@@ -12,7 +14,7 @@ const ShopItem = ({ paintingData }) => {
         <section>
           <p>Price {paintingData.price}</p>
           <button
-            onClick={() => updateSold(paintingData.id)}
+            onClick={() => updateSold(paintingData)}
             className={paintingData.reserved ? "red" : "green"}
           >
             {paintingData.reserved ? "Reserved" : "Reserve"}
