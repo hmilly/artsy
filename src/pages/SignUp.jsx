@@ -45,12 +45,12 @@ const SignUp = () => {
         delete formDataCopy.password;
         formDataCopy.serverTimestamp = serverTimestamp();
 
-        await setDoc(doc(db, "users", user.uid), formDataCopy);
+        await setDoc(doc(db, userType, user.uid), formDataCopy);
 
         navigate("/profile");
       } catch (error) {
-        console.log(error);
         toast.error("Something went wrong with validation");
+        console.log(error);
       }
     }
   };
@@ -88,7 +88,7 @@ const SignUp = () => {
             required
           />
           <input
-            type="number"
+            type="tel"
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Phone Number"
             id="number"
@@ -100,31 +100,31 @@ const SignUp = () => {
           <div className="border border-primary border-2 rounded-pill py-1 px-5 mb-3">
             <p>Please select which account you'd like to sign up for:</p>
 
-            <div class="form-check form-check-inline">
+            <div className="form-check form-check-inline">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="user_type"
-                value="customer"
+                value="users"
                 onChange={(e) => setUserType(e.target.value)}
                 required
-                id="inlineRadioDefault"
+                id="radioTypeCustomer"
               />
-              <label class="form-check-label" for="inlineRadioDefault">
+              <label className="form-check-label" htmlFor="radioTypeCustomer">
                 Customer
               </label>
             </div>
-            <div class="form-check form-check-inline">
+            <div className="form-check form-check-inline">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="user_type"
-                value="seller"
+                value="sellers"
                 onChange={(e) => setUserType(e.target.value)}
                 required
-                id="inlineRadioChecked"
+                id="radioTypeSeller"
               />
-              <label class="form-check-label" for="inlineRadioChecked">
+              <label className="form-check-label" htmlFor="radioTypeSeller">
                 Seller
               </label>
             </div>

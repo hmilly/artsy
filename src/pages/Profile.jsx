@@ -5,7 +5,7 @@ import {
   updateDoc,
   doc,
   collection,
-  getDocs,
+  getDoc,
   query,
   where,
   orderBy,
@@ -22,34 +22,38 @@ const Profile = () => {
   const auth = getAuth();
 
   const [changeDetails, setChangeDetails] = useState(false);
+  const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
-  });
+  })
+
+  // find user
+  const fetchUser = async () => {
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      // if no user, find seller
+      const sellerRef = doc(db, "sellers", auth.currentUser.uid);
+      const sellerSnap = await getDoc(sellerRef);
+
+      if (sellerSnap.exists()) {
+        setUser(sellerSnap.data());
+      } else {
+        console.log("updating user didnt work");
+      }
+    } else {
+      setUser(userSnap.data());
+    }
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const customersRef = collection(db, "users");
-
-      // const q = query(
-      //   customersRef,
-      //   where("userRef", "==", auth.currentUser.uid)
-      // );
-      // const querySnap = await getDocs(q);
-
-      // querySnap.forEach((doc) => {
-      //   listings.push({ id: doc.id, data: doc.data() });
-      // });
-
-      console.log(auth.currentUser);
-      // setListings(listings);
-      setLoading(false);
-    };
-
+    setLoading(false);
     fetchUser();
-  }, [auth.currentUser.uid]);
+  }, [auth.currentUser.uid, auth.currentUser.displayName, auth.currentUser.email]);
 
   const onSubmit = async () => {
     try {
@@ -63,9 +67,10 @@ const Profile = () => {
       }
 
       // Update in firestore
-      const userRef = doc(db, "users", auth.currentUser.uid);
+      const userRef = doc(db, user.userRef, auth.currentUser.uid);
 
       await updateDoc(userRef, { name: formData.name, email: formData.email });
+      fetchUser();
     } catch (error) {
       console.log(error);
       toast.error("Couldn't update profile details!");
@@ -93,6 +98,7 @@ const Profile = () => {
 
   const onLogOut = () => {
     auth.signOut();
+    setUser({});
     navigate("/");
   };
 

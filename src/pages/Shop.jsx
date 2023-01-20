@@ -1,10 +1,8 @@
-import Collection from "../components/Collection";
+import ShopItem from "../components/ShopItem";
 import { useParams } from "react-router-dom";
 
 const Shop = () => {
   const params = useParams();
-
-
 
   return (
     <>
@@ -12,8 +10,12 @@ const Shop = () => {
         <h3>page name</h3>
         <p>page description</p>
       </div>
-
-      <Collection />
+      <main
+        className="container
+    border border-1 border-secondary"
+      >
+        <ShopItem />
+      </main>
     </>
   );
 };
