@@ -26,7 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
           </Route>
 
-          <Route path="/shop/:shopName" element={<Shop />} />
+          <Route path="/shop/:shopId" element={<Shop />} />
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/edit-listing/:listingId" element={<EditListing />} />
 

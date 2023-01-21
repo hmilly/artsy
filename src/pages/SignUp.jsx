@@ -22,7 +22,6 @@ const SignUp = () => {
     password: "",
   });
 
-  const { name, email, number, password } = formData;
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
@@ -32,21 +31,20 @@ const SignUp = () => {
     } else {
       try {
         const auth = getAuth();
-        const userCredentials = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredentials.user;
 
-        updateProfile(auth.currentUser, { displayName: name });
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        // update user name
+        auth.currentUser.displayName = formData.name;
 
         const formDataCopy = { ...formData, userRef: userType };
         delete formDataCopy.password;
         formDataCopy.serverTimestamp = serverTimestamp();
 
-        await setDoc(doc(db, userType, user.uid), formDataCopy);
-
+        await setDoc(doc(db, userType, userCredential.user.uid), formDataCopy);
         navigate("/profile");
       } catch (error) {
         toast.error("Something went wrong with validation");
@@ -74,7 +72,7 @@ const SignUp = () => {
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Name"
             id="name"
-            value={name}
+            value={formData.name}
             onChange={onChange}
             required
           />
@@ -83,7 +81,7 @@ const SignUp = () => {
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Email"
             id="email"
-            value={email}
+            value={formData.email}
             onChange={onChange}
             required
           />
@@ -92,7 +90,7 @@ const SignUp = () => {
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Phone Number"
             id="number"
-            value={number}
+            value={formData.number}
             onChange={onChange}
             required
           />
@@ -140,7 +138,7 @@ const SignUp = () => {
                 className="w-100 border-0"
                 placeholder="Password"
                 id="password"
-                value={password}
+                value={formData.password}
                 onChange={onChange}
                 required
               />

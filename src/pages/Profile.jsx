@@ -8,7 +8,6 @@ import {
   getDoc,
   query,
   where,
-  orderBy,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
@@ -28,32 +27,33 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
-  })
+  });
 
   // find user
   const fetchUser = async () => {
     const userRef = doc(db, "users", auth.currentUser.uid);
     const userSnap = await getDoc(userRef);
 
-    if (!userSnap.exists()) {
-      // if no user, find seller
-      const sellerRef = doc(db, "sellers", auth.currentUser.uid);
-      const sellerSnap = await getDoc(sellerRef);
+    const sellerRef = doc(db, "sellers", auth.currentUser.uid);
+    const sellerSnap = await getDoc(sellerRef);
 
-      if (sellerSnap.exists()) {
-        setUser(sellerSnap.data());
-      } else {
-        console.log("updating user didnt work");
-      }
+    if (userSnap.exists()) {
+      setUser(sellerSnap.data());
+    } else if (sellerSnap.exists()) {
+      setUser(sellerSnap.data());
     } else {
-      setUser(userSnap.data());
+      console.log("can't find user");
     }
   };
 
   useEffect(() => {
     setLoading(false);
     fetchUser();
-  }, [auth.currentUser.uid, auth.currentUser.displayName, auth.currentUser.email]);
+  }, [
+    auth.currentUser.uid,
+    auth.currentUser.displayName,
+    auth.currentUser.email,
+  ]);
 
   const onSubmit = async () => {
     try {
@@ -141,7 +141,7 @@ const Profile = () => {
               !changeDetails ? "" : "bg-secondary bg-opacity-25"
             }`}
             disabled={!changeDetails}
-            value={formData.name}
+            value={formData?.name}
             onChange={onChange}
           />
           <input
@@ -151,7 +151,7 @@ const Profile = () => {
               !changeDetails ? "" : "bg-secondary bg-opacity-25"
             }`}
             disabled={!changeDetails}
-            value={formData.email}
+            value={formData?.email}
             onChange={onChange}
           />
         </form>
