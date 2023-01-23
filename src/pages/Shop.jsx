@@ -1,51 +1,34 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  startAfter,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
 import ShopItem from "../components/ShopItem";
+import { fetchPaintings } from "../fns/fetchFns";
 
 const Shop = () => {
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [paintings, setPaintings] = useState({});
+  const [seller, setSeller] = useState({});
 
   useEffect(() => {
-    const fetchPaintings = async () => {
-      try {
-        const paintingsRef = collection(db, "paintings");
-        const q = query(paintingsRef, where("sellerId", "==", params.shopId));
-        const querySnap = await getDocs(q);
+    fetchPaintings(params.shopId)
+      .then((p) => setPaintings(p))
+      .error((e) => toast.error("Could not fetch listings"));
 
-        const paintings = [];
+    setLoading(false);
+  }, [params.shopId]);
 
-        querySnap.forEach((doc) => {
-          return paintings.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-
-        setPaintings(paintings);
-        console.log(paintings);
-
-        setLoading(false);
-      } catch (error) {
-        toast.error("Could not fetch listings");
-        console.log(error);
-      }
+  // get user info
+  useEffect(() => {
+    const fetchUser = async () => {
+      const sellerRef = doc(db, "sellers", params.shopId);
+      const sellerSnap = await getDoc(sellerRef);
+      setSeller({ ...sellerSnap.data(), id: params.shopId });
     };
-
-    fetchPaintings();
+    fetchUser();
   }, [params.shopId]);
 
   if (loading) {
@@ -53,15 +36,16 @@ const Shop = () => {
   }
   return (
     <>
-      <div>
-        <h3>page name</h3>
-        <p>page description</p>
-      </div>
-      <main
-        className="container
-    border border-1 border-secondary"
-      >
-        <ShopItem paintings={paintings} />
+      <header>
+        <h3>{seller?.name}</h3>
+        <p>{seller?.userRef}</p>
+      </header>
+      <main className="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
+        {paintings.length === 0 ? (
+          <p>No items in the shop yet!</p>
+        ) : (
+          <ShopItem paintings={paintings} />
+        )}
       </main>
     </>
   );

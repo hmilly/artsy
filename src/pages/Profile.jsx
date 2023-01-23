@@ -4,10 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   updateDoc,
   doc,
-  collection,
   getDoc,
-  query,
-  where,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
@@ -15,6 +12,7 @@ import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
 import Spinner from "../components/Spinner";
+import { fetchPaintings } from "../fns/fetchFns";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -22,14 +20,14 @@ const Profile = () => {
 
   const [changeDetails, setChangeDetails] = useState(false);
   const [user, setUser] = useState({});
-  const [listings, setListings] = useState([]);
+  const [paintings, setPaintings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
   });
 
-  // find user
+  // find user to set profile data [seller OR user]
   const fetchUser = async () => {
     const userRef = doc(db, "users", auth.currentUser.uid);
     const userSnap = await getDoc(userRef);
@@ -54,6 +52,12 @@ const Profile = () => {
     auth.currentUser.displayName,
     auth.currentUser.email,
   ]);
+
+  useEffect(() => {
+    fetchPaintings(auth.currentUser.uid)
+      .then((p) => setPaintings(p))
+      .error((e) => toast.error("Could not fetch listings"));
+  }, [auth.currentUser.uid]);
 
   const onSubmit = async () => {
     try {
@@ -85,9 +89,11 @@ const Profile = () => {
 
   const onDelete = async (id) => {
     if (window.confirm(`Are you sure you want to delete? ${id}`)) {
-      await deleteDoc(doc(db, "listings", id));
-      const updatedListings = listings.filter((listing) => listing.id !== id);
-      setListings(updatedListings);
+      await deleteDoc(doc(db, "paintings", id));
+      const updatedPaintings = paintings.filter(
+        (paintings) => paintings.id !== id
+      );
+      setPaintings(updatedPaintings);
       toast.success(`Successfully deleted listing`);
     }
   };
@@ -156,10 +162,14 @@ const Profile = () => {
           />
         </form>
       </main>
-      {!loading && listings?.length > 0 && (
+      {!loading && user?.userRef === "sellers" && paintings.length > 0 && (
         <div>
           <p className="listingText">Your listings</p>
-          <ul className="listingList"></ul>
+          <ul className="listingList">
+            {paintings.map((painting) => (
+              <p>{painting.name}</p>
+            ))}
+          </ul>
         </div>
       )}
     </div>

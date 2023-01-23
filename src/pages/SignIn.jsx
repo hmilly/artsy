@@ -36,6 +36,7 @@ const SignIn = () => {
       }
     } catch (error) {
       toast.error("Bad user credentials");
+      console.log(error)
     }
   };
 
