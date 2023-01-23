@@ -37,8 +37,9 @@ const SignUp = () => {
           formData.email,
           formData.password
         );
-        // update user name
+        // update user name & phone number
         auth.currentUser.displayName = formData.name;
+        auth.currentUser.phoneNumber = formData.number;
 
         const formDataCopy = { ...formData, userRef: userType };
         delete formDataCopy.password;

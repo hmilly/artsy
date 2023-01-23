@@ -10,7 +10,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllSellers = async () => {
       const colRef = collection(db, "sellers");
       const docSnap = await getDocs(colRef);
 
@@ -21,7 +21,7 @@ const Home = () => {
       setLoading(false);
     };
 
-    fetchData();
+    fetchAllSellers();
   }, []);
 
   const click = (e, seller) => {

@@ -16,9 +16,8 @@ const Shop = () => {
   useEffect(() => {
     fetchPaintings(params.shopId)
       .then((p) => setPaintings(p))
-      .error((e) => toast.error("Could not fetch listings"));
-
-    setLoading(false);
+      .then(() => setLoading(false))
+      .catch(() => toast.error("Could not fetch paintings"));
   }, [params.shopId]);
 
   // get user info

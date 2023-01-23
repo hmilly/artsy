@@ -5,12 +5,12 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import Oauth from "../components/Oauth";
+import { fetchUser } from "../fns/fetchFns";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const { email, password } = formData;
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -27,16 +27,22 @@ const SignIn = () => {
       const auth = getAuth();
       const userCredentials = await signInWithEmailAndPassword(
         auth,
-        email,
-        password
+        formData.email,
+        formData.password
       );
 
       if (userCredentials.user) {
-        navigate("/profile");
+        fetchUser(auth.currentUser.uid)
+          .then((user) => {
+            auth.currentUser.displayName = user.name;
+            auth.currentUser.email = user.email;
+          })
+          .then(() => navigate("/profile"))
+          .catch((e) => toast.error("Couldn't find user"));
       }
     } catch (error) {
       toast.error("Bad user credentials");
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -52,7 +58,7 @@ const SignIn = () => {
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Email"
             id="email"
-            value={email}
+            value={formData.email}
             onChange={onChange}
           />
           <div className="px-0 position-relative">
@@ -65,7 +71,7 @@ const SignIn = () => {
                 className="w-100 border-0"
                 placeholder="Password"
                 id="password"
-                value={password}
+                value={formData.password}
                 onChange={onChange}
                 required
               />
