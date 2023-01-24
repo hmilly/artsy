@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
+import Painting from "./pages/Painting";
 import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
 import SignIn from "./pages/SignIn";
@@ -27,6 +28,7 @@ function App() {
           </Route>
 
           <Route path="/shop/:shopId" element={<Shop />} />
+          <Route path="/shop/:shopId/:paintingName" element={<Painting />} />
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/edit-listing/:listingId" element={<EditListing />} />
 
