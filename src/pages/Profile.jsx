@@ -8,7 +8,7 @@ import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
 import Spinner from "../components/Spinner";
 import { fetchPaintings, fetchUser } from "../fns/fetchFns";
-import ShopItem from "../components/ShopItem";
+import PaintingCard from "../components/PaintingCard";
 
 const Profile = () => {
   const auth = getAuth();
@@ -173,7 +173,7 @@ const Profile = () => {
             <>
               <p>Your listings</p>
               <section className="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-                <ShopItem paintings={paintings} />
+                <PaintingCard paintings={paintings} />
               </section>
             </>
           ) : (

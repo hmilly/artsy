@@ -4,7 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
-import ShopItem from "../components/ShopItem";
+import PaintingCard from "../components/PaintingCard";
 import { fetchPaintings } from "../fns/fetchFns";
 
 const Shop = () => {
@@ -43,7 +43,7 @@ const Shop = () => {
         {paintings.length === 0 ? (
           <p>No items in the shop yet!</p>
         ) : (
-          <ShopItem paintings={paintings} />
+          <PaintingCard paintings={paintings} />
         )}
       </main>
     </>

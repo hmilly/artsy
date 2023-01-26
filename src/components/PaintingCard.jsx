@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 
-const ShopItem = ({ paintings }) => {
-  const updateSold = (id) => {
-    console.log(id);
-  };
+const PaintingCard = ({ paintings }) => {
+  // const updateSold = (id) => {
+  //   console.log(id);
+  // };
 
+  
   return (
     <>
       {paintings?.map((paintingData) => (
-        <Link to={`shop/${paintingData.sellerId}/${paintingData.name}`}>
-          <div key={paintingData.id} className="col">
+        <Link to={`${paintingData.name.toLowerCase().split(" ").join("-")}`}>
+          <div key={paintingData?.id} className="col">
             <div className="card">
               <img
                 src={paintingData?.imgUrl}
@@ -20,12 +21,12 @@ const ShopItem = ({ paintings }) => {
                 <h4 className="card-title">{paintingData?.name}</h4>
                 <section>
                   <p>Price {paintingData?.price}</p>
-                  <button
+                  {/* <button
                     onClick={() => updateSold(paintingData)}
                     className={paintingData?.reserved ? "red" : "green"}
                   >
                     {paintingData?.reserved ? "Reserved" : "Reserve"}
-                  </button>
+                  </button> */}
                 </section>
               </div>
             </div>
@@ -36,4 +37,4 @@ const ShopItem = ({ paintings }) => {
   );
 };
 
-export default ShopItem;
+export default PaintingCard;

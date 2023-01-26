@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { getDocs, doc, collection } from "firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
-import ShopItem from "../components/ShopItem";
 
 const Home = () => {
   const [sellersStore, setSellersStore] = useState(null);
