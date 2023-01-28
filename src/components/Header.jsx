@@ -2,22 +2,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import homeIcon from "../assets/svg/homeIcon.svg";
+import personIcon from "../assets/svg/personIcon.svg";
 
 const Header = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-
   const navigate = useNavigate();
-
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setCurrentUser(user);
-    } else {
-      setCurrentUser(null);
-    }
-  });
 
-  const onLogOut = () => {
+  const currentUser = auth.currentUser;
+ 
+  const logOut = () => {
     auth.signOut();
     navigate("/");
   };
@@ -34,8 +27,8 @@ const Header = () => {
                 <p>Logged in as: {currentUser?.displayName}</p>
               </li>
               <li>
-                <Link className="profile" to="/profile">
-                  Profile
+                <Link to="/profile" className="btn btn-sm btn-outline-light">
+                  <img src={personIcon} alt="profile" className="img-fluid" />
                 </Link>
               </li>
 
@@ -48,7 +41,7 @@ const Header = () => {
                 <button
                   className="btn btn-sm btn-success rounded-pill"
                   type="button"
-                  onClick={onLogOut}
+                  onClick={logOut}
                 >
                   Log Out
                 </button>
