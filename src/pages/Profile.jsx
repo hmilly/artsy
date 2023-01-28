@@ -5,7 +5,7 @@ import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
-import homeIcon from "../assets/svg/homeIcon.svg";
+
 import Spinner from "../components/Spinner";
 import { fetchPaintings, fetchUser } from "../fns/fetchFns";
 import PaintingCard from "../components/PaintingCard";
@@ -92,96 +92,75 @@ const Profile = () => {
     navigate(`/edit-listing/${id}`);
   };
 
-  const onLogOut = () => {
-    auth.signOut();
-    setUser({});
-    navigate("/");
-  };
-
   if (loading) {
     return <Spinner />;
   }
   return (
-    <>
-      <header className="d-flex justify-content-between">
-        <h2>My Profile</h2>
-        <Link to="/" className="btn btn-sm btn-outline-light">
-          <img src={homeIcon} alt="home" className="img-fluid" />
-        </Link>
-        <button
-          className="btn btn-sm btn-success rounded-pill"
-          type="button"
-          onClick={onLogOut}
-        >
-          Log Out
-        </button>
-      </header>
-      <main className="m-4">
-        <div className="container m-4 border border-success border-2 rounded mx-auto">
-          <div className="row d-flex justify-content-between p-3">
-            <p className="w-auto">Personal Details</p>
-            <a
-              className="btn fw-bold row text-success w-auto mx-1"
-              onClick={() => {
-                changeDetails && onSubmit();
-                setChangeDetails((prevState) => !prevState);
-              }}
-            >
-              {changeDetails ? "Done" : "Change"}
-            </a>
-          </div>
-          <h3 className="text-center">
-            Account type:{" "}
-            {user?.userRef.charAt(0).toUpperCase() + user.userRef.slice(1, -1)}
-          </h3>
-          <form className="row p-3 mx-auto">
-            <input
-              type="text"
-              id="name"
-              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-                !changeDetails ? "" : "bg-secondary bg-opacity-25"
-              }`}
-              disabled={!changeDetails}
-              value={formData?.name}
-              onChange={onChange}
-            />
-            <input
-              type="tel"
-              id="number"
-              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-                !changeDetails ? "" : "bg-secondary bg-opacity-25"
-              }`}
-              disabled={!changeDetails}
-              value={formData?.number}
-              onChange={onChange}
-            />
-            <input
-              type="text"
-              id="email"
-              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-                !changeDetails ? "" : "bg-secondary bg-opacity-25"
-              }`}
-              disabled={!changeDetails}
-              value={formData?.email}
-              onChange={onChange}
-            />
-          </form>
+    <main className="m-4">
+      <div className="container m-4 border border-success border-2 rounded mx-auto">
+        <div className="row d-flex justify-content-between p-3">
+          <p className="w-auto">Personal Details</p>
+          <a
+            className="btn fw-bold row text-success w-auto mx-1"
+            onClick={() => {
+              changeDetails && onSubmit();
+              setChangeDetails((prevState) => !prevState);
+            }}
+          >
+            {changeDetails ? "Done" : "Change"}
+          </a>
         </div>
-        <div>
-          <h3>Items for sale</h3>
-          {paintings.length !== 0 ? (
-            <>
-              <p>Your listings</p>
-              <section className="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-                <PaintingCard paintings={paintings} />
-              </section>
-            </>
-          ) : (
-            <p>No items to show</p>
-          )}
-        </div>
-      </main>
-    </>
+        <h3 className="text-center">
+          Account type:{" "}
+          {user?.userRef.charAt(0).toUpperCase() + user.userRef.slice(1, -1)}
+        </h3>
+        <form className="row p-3 mx-auto">
+          <input
+            type="text"
+            id="name"
+            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+              !changeDetails ? "" : "bg-secondary bg-opacity-25"
+            }`}
+            disabled={!changeDetails}
+            value={formData?.name}
+            onChange={onChange}
+          />
+          <input
+            type="tel"
+            id="number"
+            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+              !changeDetails ? "" : "bg-secondary bg-opacity-25"
+            }`}
+            disabled={!changeDetails}
+            value={formData?.number}
+            onChange={onChange}
+          />
+          <input
+            type="text"
+            id="email"
+            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+              !changeDetails ? "" : "bg-secondary bg-opacity-25"
+            }`}
+            disabled={!changeDetails}
+            value={formData?.email}
+            onChange={onChange}
+          />
+        </form>
+      </div>
+      <div>
+        <h3>Items for sale</h3>
+        {paintings.length !== 0 ? (
+          <>
+            <p>Your listings</p>
+            <section className="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
+              <PaintingCard paintings={paintings} />
+            </section>
+          </>
+        ) : (
+          <p>No items to show</p>
+        )}
+      </div>
+    </main>
   );
 };
 

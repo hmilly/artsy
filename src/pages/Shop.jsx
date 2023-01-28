@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
@@ -43,7 +43,17 @@ const Shop = () => {
         {paintings.length === 0 ? (
           <p>No items in the shop yet!</p>
         ) : (
-          <PaintingCard paintings={paintings} />
+          paintings?.map((painting) => (
+            <div key={painting?.id} className="col">
+              <div className="card">
+                <Link
+                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                >
+                  <PaintingCard painting={painting} />
+                </Link>
+              </div>
+            </div>
+          ))
         )}
       </main>
     </>

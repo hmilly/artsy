@@ -1,38 +1,30 @@
-import { Link } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
-const PaintingCard = ({ paintings }) => {
-  // const updateSold = (id) => {
-  //   console.log(id);
-  // };
+const PaintingCard = ({ painting }) => {
+  const updateSold = (id) => {
+    console.log(id);
+  };
 
-  
   return (
     <>
-      {paintings?.map((paintingData) => (
-        <Link to={`${paintingData.name.toLowerCase().split(" ").join("-")}`}>
-          <div key={paintingData?.id} className="col">
-            <div className="card">
-              <img
-                src={paintingData?.imgUrl}
-                alt={paintingData?.name}
-                className="img-fluid img-thumbnail"
-              />
-              <div className="card-body">
-                <h4 className="card-title">{paintingData?.name}</h4>
-                <section>
-                  <p>Price {paintingData?.price}</p>
-                  {/* <button
-                    onClick={() => updateSold(paintingData)}
-                    className={paintingData?.reserved ? "red" : "green"}
-                  >
-                    {paintingData?.reserved ? "Reserved" : "Reserve"}
-                  </button> */}
-                </section>
-              </div>
-            </div>
-          </div>
-        </Link>
-      ))}
+      <img
+        src={painting?.imgUrl}
+        alt={painting?.name}
+        className="img-fluid img-thumbnail "
+      />
+
+      <div className="card-body">
+        <h4 className="card-title">{painting?.name}</h4>
+        <section>
+          <p>Price {painting?.price}</p>
+          <button
+            onClick={() => updateSold(painting)}
+            className={painting?.reserved ? "red" : "green"}
+          >
+            {painting?.reserved ? "Reserved" : "Reserve"}
+          </button>
+        </section>
+      </div>
     </>
   );
 };

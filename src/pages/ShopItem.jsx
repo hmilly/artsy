@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchPaintings } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import { Spinner } from "react-bootstrap";
+import PaintingCard from "../components/PaintingCard";
 
 const ShopItem = () => {
   const params = useParams();
@@ -30,31 +31,10 @@ const ShopItem = () => {
     return <Spinner />;
   }
   return (
-    <main className="">
-      <div key={paintingData?.id} className="col">
-        <div className="card">
-          <img
-            src={paintingData?.imgUrl}
-            alt={paintingData?.name}
-            className="img-fluid"
-          />
-          <div className="card-body">
-            <h4 className="card-title">{paintingData?.name}</h4>
-
-            {paintingData?.description && (
-              <p className="card-text">{paintingData?.description}</p>
-            )}
-
-            <section>
-              <p>Price {paintingData?.price}</p>
-              <button
-                onClick={() => updateSold(paintingData)}
-                className={paintingData?.reserved ? "red" : "green"}
-              >
-                {paintingData?.reserved ? "Reserved" : "Reserve"}
-              </button>
-            </section>
-          </div>
+    <main className="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1">
+      <div className="col">
+        <div className="card flex-column-reverse">
+          <PaintingCard painting={paintingData} />
         </div>
       </div>
     </main>
