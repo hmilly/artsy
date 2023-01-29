@@ -47,3 +47,13 @@ export const fetchUser = async (userId) => {
     console.log("can't find user");
   }
 };
+
+export const fetchAllSellers = async () => {
+  const colRef = collection(db, "sellers");
+  const docSnap = await getDocs(colRef);
+
+  const arr = [];
+  docSnap.forEach((doc) => arr.push({ ...doc.data(), id: doc.id }));
+
+  return arr;
+};

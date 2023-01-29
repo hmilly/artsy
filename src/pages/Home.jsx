@@ -3,24 +3,18 @@ import { useState, useEffect } from "react";
 import { getDocs, doc, collection } from "firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
+import { fetchAllSellers } from "../fns/fetchFns";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [sellersStore, setSellersStore] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAllSellers = async () => {
-      const colRef = collection(db, "sellers");
-      const docSnap = await getDocs(colRef);
-
-      const storeArr = [];
-      docSnap.forEach((doc) => storeArr.push({ ...doc.data(), id: doc.id }));
-
-      setSellersStore(storeArr);
-      setLoading(false);
-    };
-
-    fetchAllSellers();
+    fetchAllSellers()
+      .then((array) => setSellersStore(array))
+      .then(() => setLoading(false))
+      .catch((e) => toast.error("Could not fetch sellers"));
   }, []);
 
   const click = (e, seller) => {

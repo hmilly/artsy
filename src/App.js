@@ -9,8 +9,8 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
 import ShopItem from "./pages/ShopItem";
-import CreateListing from "./pages/CreateListing";
-import EditListing from "./pages/EditListing";
+import CreatePaintingCard from "./pages/CreatePaintingCard";
+import EditPaintingCard from "./pages/EditPaintingCard";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -31,8 +31,8 @@ function App() {
 
           <Route exact path="/shop/:shopId" element={<Shop />} />
           <Route path="/shop/:shopId/:paintingName" element={<ShopItem />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/edit-listing/:listingId" element={<EditListing />} />
+          <Route path="/create-painting-card" element={<CreatePaintingCard />} />
+          <Route path="/edit-painting/:paintingId" element={<EditPaintingCard />} />
 
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

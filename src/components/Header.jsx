@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import homeIcon from "../assets/svg/homeIcon.svg";
 import personIcon from "../assets/svg/personIcon.svg";
 
 const Header = () => {
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const currentUser = auth.currentUser;
- 
-  const logOut = () => {
-    auth.signOut();
-    navigate("/");
-  };
+  useEffect(() => {
+    auth.currentUser !== null ? setUserLoggedIn(true) : setUserLoggedIn(false);
+  }, [auth.currentUser]);
+
+  const logOut = () => auth.signOut().then(() => navigate("/"));
 
   return (
     <header className="d-flex  justify-content-between w-100">
@@ -21,10 +22,12 @@ const Header = () => {
 
       <nav className="w-25 m-auto">
         <ul className="d-flex justify-content-between m-0 list-unstyled">
-          {currentUser !== null ? (
+          {userLoggedIn ? (
             <>
               <li>
-                <p>Logged in as: {currentUser?.displayName}</p>
+                <Link to="/" className="btn btn-sm btn-outline-light">
+                  <img src={homeIcon} alt="home" className="img-fluid" />
+                </Link>
               </li>
               <li>
                 <Link to="/profile" className="btn btn-sm btn-outline-light">
@@ -32,11 +35,6 @@ const Header = () => {
                 </Link>
               </li>
 
-              <li>
-                <Link to="/" className="btn btn-sm btn-outline-light">
-                  <img src={homeIcon} alt="home" className="img-fluid" />
-                </Link>
-              </li>
               <li>
                 <button
                   className="btn btn-sm btn-success rounded-pill"

@@ -1,4 +1,4 @@
-import { Spinner } from "react-bootstrap";
+import Spinner from "./Spinner";
 
 const PaintingCard = ({ painting }) => {
   const updateSold = (id) => {

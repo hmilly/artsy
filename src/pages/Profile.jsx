@@ -24,24 +24,24 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.userRef === "sellers") {
-      setLoading(true);
-      fetchPaintings(auth.currentUser.uid)
-        .then((p) => setPaintings(p))
-        .then(() => setLoading(false))
-        .catch((e) => toast.error("Could not fetch paintings"));
-    }
-  }, [auth.currentUser.uid]);
-
-  useEffect(() => {
     fetchUser(auth.currentUser.uid)
       .then((u) => {
-        setUser(u);
+        setUser({ ...u, id: auth.currentUser.uid });
         setFormData({ ...formData, number: u.number });
       })
       .then(() => setLoading(false))
-      .catch((e) => toast.error("Could not fetch user reference"));
+      .catch(() => toast.error("Could not fetch user"));
   }, [auth.currentUser.uid]);
+
+  useEffect(() => {
+    if (user.userRef === "sellers") {
+      setLoading(true);
+      fetchPaintings(user.id)
+        .then((p) => setPaintings(p))
+        .then(() => setLoading(false))
+        .catch(() => toast.error("Could not fetch paintings"));
+    }
+  }, [user.id]);
 
   const onSubmit = async () => {
     try {
@@ -152,8 +152,19 @@ const Profile = () => {
         {paintings.length !== 0 ? (
           <>
             <p>Your listings</p>
-            <section className="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-              <PaintingCard paintings={paintings} />
+
+            <section className="row row-cols-4 row-cols-sm-6 row-cols-md-8 row-cols-lg-10">
+              {paintings?.map((painting) => (
+                <div key={painting?.id} className="col">
+                  <div className="card">
+                    <Link
+                      to={`/edit-painting/${painting.id}`}
+                    >
+                      <PaintingCard painting={painting} />
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </section>
           </>
         ) : (
