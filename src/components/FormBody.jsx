@@ -1,5 +1,5 @@
 const FormBody = ({ formData, setFormData }) => {
-  const { description, name, price, reserved } = formData;
+  const { description, name, price } = formData;
 
   const onMutate = (e) => {
     let boolean = null;
@@ -26,7 +26,7 @@ const FormBody = ({ formData, setFormData }) => {
     <>
       <label className="formLabel">Name</label>
       <input
-        className="formInputName"
+        className="border border-primary border-2 rounded-pill"
         type="text"
         id="name"
         value={name}
@@ -35,10 +35,10 @@ const FormBody = ({ formData, setFormData }) => {
         minLength="5"
         required
       />
-
+      {/* 
       <label className="formLabel">Description</label>
       <input
-        className="formInputName"
+        className="border border-primary border-2 rounded-pill"
         type="text"
         id="description"
         value={description}
@@ -46,36 +46,11 @@ const FormBody = ({ formData, setFormData }) => {
         maxLength="300"
         minLength="10"
         required
-      />
-
-      <label className="formLabel">Reserved</label>
-      <div className="formButtons">
-        <button
-          className={reserved ? "formButtonActive" : "formButton"}
-          type="button"
-          id="reserved"
-          value={true}
-          onClick={onMutate}
-        >
-          Yes
-        </button>
-        <button
-          className={
-            !reserved !== null ? "formButtonActive" : "formButton"
-          }
-          type="button"
-          id="reserved"
-          value={false}
-          onClick={onMutate}
-        >
-          No
-        </button>
-      </div>
-
+      /> */}
       <label className="formLabel">Price</label>
       <div className="formPriceDiv">
         <input
-          className="formInputSmall"
+          className="border border-primary border-2 rounded-pill"
           type="number"
           id="price"
           value={price}
@@ -88,7 +63,7 @@ const FormBody = ({ formData, setFormData }) => {
 
       <label className="formLabel">Image</label>
       <input
-        className="formInputFile"
+        className="border border-primary border-2 rounded-pill"
         type="file"
         id="image"
         onChange={onMutate}
