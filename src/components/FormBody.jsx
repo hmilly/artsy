@@ -24,33 +24,23 @@ const FormBody = ({ formData, setFormData }) => {
 
   return (
     <>
-      <label className="formLabel">Name</label>
-      <input
-        className="border border-primary border-2 rounded-pill"
-        type="text"
-        id="name"
-        value={name}
-        onChange={onMutate}
-        maxLength="32"
-        minLength="5"
-        required
-      />
-      {/* 
-      <label className="formLabel">Description</label>
-      <input
-        className="border border-primary border-2 rounded-pill"
-        type="text"
-        id="description"
-        value={description}
-        onChange={onMutate}
-        maxLength="300"
-        minLength="10"
-        required
-      /> */}
-      <label className="formLabel">Price</label>
-      <div className="formPriceDiv">
+      <div className="row d-flex justify-content-center mb-4">
+        <label className="formLabel mb-1">Name</label>
         <input
-          className="border border-primary border-2 rounded-pill"
+          className="border border-primary border-2 rounded-pill text-center w-75"
+          type="text"
+          id="name"
+          value={name}
+          onChange={onMutate}
+          maxLength="32"
+          minLength="5"
+          required
+        />
+      </div>
+      <div className="row d-flex justify-content-center mb-4">
+        <label className="formLabel mb-1">Price in £</label>
+        <input
+          className="border border-primary border-2 rounded-pill text-center w-75"
           type="number"
           id="price"
           value={price}
@@ -60,18 +50,33 @@ const FormBody = ({ formData, setFormData }) => {
           required
         />
       </div>
+      <div className="row d-flex justify-content-center mb-4">
+        <label className="formLabel mb-1">Description</label>
+        <textarea
+          className="border border-primary border-2 rounded form-control w-75 h-50"
+          type="textarea"
+          id="description"
+          value={description}
+          onChange={onMutate}
+          maxLength="500"
+          minLength="10"
+          required
+        />
+      </div>
 
-      <label className="formLabel">Image</label>
-      <input
-        className="border border-primary border-2 rounded-pill"
-        type="file"
-        id="image"
-        onChange={onMutate}
-        max="1"
-        accept=".jpg,.png,.jpeg"
-        multiple
-        required
-      />
+      <div className="row d-flex justify-content-center mb-4 mx-1">
+        <label className="formLabel mb-1">Image</label>
+        <input
+          className="border border-primary border-2 rounded w-100 py-1 form-control-file"
+          type="file"
+          id="image"
+          onChange={onMutate}
+          max="1"
+          accept=".jpg,.png,.jpeg"
+          multiple
+          required
+        />
+      </div>
     </>
   );
 };

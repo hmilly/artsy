@@ -22,7 +22,7 @@ const EditPaintingCard = () => {
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
-    price: '',
+    price: "",
     description: "",
     imgUrl: "",
   });
@@ -33,7 +33,7 @@ const EditPaintingCard = () => {
       const paintingSnap = await getDoc(paintingsRef);
 
       setPaintingData(paintingSnap.data());
-setFormData(paintingSnap.data())
+      setFormData(paintingSnap.data());
       setLoading(false);
     };
     fetchPainting();
@@ -86,14 +86,19 @@ setFormData(paintingSnap.data())
     return <Spinner />;
   }
   return (
-    <main className="d-flex justify-content-around">
-      <form onSubmit={onSubmit} className="col p-4">
+    <main className="d-flex flex-column flex-md-row">
+      <form onSubmit={onSubmit} className="col p-2 ">
         <FormBody formData={formData} setFormData={setFormData} />
-        <button type="submit" className="btn btn-sm btn-success rounded-pill m-4">
-          Edit Listing
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="btn w-75 btn-success rounded-pill"
+          >
+            Edit Listing
+          </button>
+        </div>
       </form>
-      <div className="col-8 my-auto align-content-center">
+      <div className="col my-auto">
         <img
           src={paintingData?.imgUrl}
           alt={paintingData?.name}

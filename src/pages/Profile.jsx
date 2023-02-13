@@ -147,21 +147,22 @@ const Profile = () => {
           />
         </form>
       </div>
-      <div>
+      <div className="container">
         <h3>Items for sale</h3>
         {paintings.length !== 0 ? (
           <>
             <p>Your listings</p>
 
-            <section className="row row-cols-4 row-cols-sm-6 row-cols-md-8 row-cols-lg-10">
+            <section className="row">
               {paintings?.map((painting) => (
                 <div key={painting?.id} className="col">
                   <div className="card">
-                    <Link
-                      to={`/edit-painting/${painting.id}`}
-                    >
-                      <PaintingCard painting={painting} />
+                    <Link to={`/edit-painting/${painting.id}`}>
+                      <PaintingCard painting={painting} lgImg={false} />
                     </Link>
+                    {painting?.reservedById !== "" && (
+                      <span className="badge bg-danger rounded-pill">Reserved</span>
+                    )}
                   </div>
                 </div>
               ))}

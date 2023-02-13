@@ -31,11 +31,9 @@ const ShopItem = () => {
     return <Spinner />;
   }
   return (
-    <main className="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1">
-      <div className="col">
-        <div className="card flex-column-reverse">
-          <PaintingCard painting={paintingData} />
-        </div>
+    <main className="col">
+      <div className="card flex-column-reverse">
+        <PaintingCard painting={paintingData} lgImg={true} />
       </div>
     </main>
   );

@@ -30,31 +30,51 @@ const Shop = () => {
     fetchUser();
   }, [params.shopId]);
 
+  const updateSold = (id) => {
+    console.log(id);
+  };
+
   if (loading) {
     return <Spinner />;
   }
   return (
     <>
-      <header>
-        <h3>{seller?.name}</h3>
-        <p>{seller?.userRef}</p>
+      <header className="p-2">
+        <h3 className="mb-5">
+          Seller Name:{" "}
+          <span className="text-decoration-underline">{seller?.name}</span>
+        </h3>
+        <p>About: </p>
       </header>
-      <main className="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
-        {paintings.length === 0 ? (
-          <p>No items in the shop yet!</p>
-        ) : (
-          paintings?.map((painting) => (
-            <div key={painting?.id} className="col">
-              <div className="card">
-                <Link
-                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
-                >
-                  <PaintingCard painting={painting} />
-                </Link>
+      <main className="container">
+        <div className="row">
+          <h3>Items for sale:</h3>
+          {paintings.length === 0 ? (
+            <p>No items in the shop yet!</p>
+          ) : (
+            paintings?.map((painting) => (
+              <div key={painting?.id} className="col">
+                <div className="card">
+                  <Link
+                    to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                  >
+                    <PaintingCard painting={painting} lgImg={false} />
+                  </Link>
+                  <button
+                    onClick={() => updateSold(painting.id)}
+                    className={`m-2 btn rounded-pill ${
+                      painting?.reservedById !== ""
+                        ? "btn-success"
+                        : "btn-danger"
+                    }`}
+                  >
+                    {painting?.reservedById ? "Reserved" : "Reserve"}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </main>
     </>
   );

@@ -1,28 +1,21 @@
-import Spinner from "./Spinner";
-
-const PaintingCard = ({ painting }) => {
-  const updateSold = (id) => {
-    console.log(id);
-  };
-
+const PaintingCard = ({ painting, lgImg }) => {
   return (
     <>
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className="img-fluid img-thumbnail "
+        className="img-fluid img-thumbnail border-0"
+        style={{
+          width: !lgImg && "400px",
+          height: !lgImg && "300px",
+          objectFit: !lgImg && "scale-down",
+        }}
       />
 
-      <div className="card-body">
+      <div className="d-flex flex-column align-items-center">
         <h4 className="card-title">{painting?.name}</h4>
         <section>
           <p>Price {painting?.price}</p>
-          <button
-            onClick={() => updateSold(painting)}
-            className={painting?.reserved ? "red" : "green"}
-          >
-            {painting?.reserved ? "Reserved" : "Reserve"}
-          </button>
         </section>
       </div>
     </>

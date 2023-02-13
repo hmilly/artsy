@@ -22,13 +22,13 @@ const Header = () => {
 
       <nav className="w-25 m-auto">
         <ul className="d-flex justify-content-between m-0 list-unstyled">
+          <li>
+            <Link to="/" className="btn btn-sm btn-outline-light">
+              <img src={homeIcon} alt="home" className="img-fluid" />
+            </Link>
+          </li>
           {userLoggedIn ? (
             <>
-              <li>
-                <Link to="/" className="btn btn-sm btn-outline-light">
-                  <img src={homeIcon} alt="home" className="img-fluid" />
-                </Link>
-              </li>
               <li>
                 <Link to="/profile" className="btn btn-sm btn-outline-light">
                   <img src={personIcon} alt="profile" className="img-fluid" />
