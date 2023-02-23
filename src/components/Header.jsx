@@ -18,9 +18,9 @@ const Header = () => {
 
   return (
     <header className="d-flex  justify-content-between w-100">
-      <h1 className="w-75 text-center">Artsy</h1>
+      <h1 className="w-50 text-center">Artsy</h1>
 
-      <nav className="w-25 m-auto">
+      <nav className="w-50 m-auto">
         <ul className="d-flex justify-content-between m-0 list-unstyled">
           <li>
             <Link to="/" className="btn btn-sm btn-outline-light">

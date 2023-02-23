@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
 import ShopItem from "./pages/ShopItem";
@@ -23,7 +22,6 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
 
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
@@ -31,8 +29,14 @@ function App() {
 
           <Route exact path="/shop/:shopId" element={<Shop />} />
           <Route path="/shop/:shopId/:paintingName" element={<ShopItem />} />
-          <Route path="/create-painting-card" element={<CreatePaintingCard />} />
-          <Route path="/edit-painting/:paintingId" element={<EditPaintingCard />} />
+          <Route
+            path="/create-painting-card"
+            element={<CreatePaintingCard />}
+          />
+          <Route
+            path="/edit-painting/:paintingId"
+            element={<EditPaintingCard />}
+          />
 
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

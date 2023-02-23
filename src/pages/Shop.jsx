@@ -44,9 +44,12 @@ const Shop = () => {
           Seller Name:{" "}
           <span className="text-decoration-underline">{seller?.name}</span>
         </h3>
-        <p>About: </p>
       </header>
       <main className="container">
+        <div>
+          <p>About: {seller.description}</p>
+        </div>
+
         <div className="row">
           <h3>Items for sale:</h3>
           {paintings.length === 0 ? (

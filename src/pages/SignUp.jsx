@@ -20,6 +20,7 @@ const SignUp = () => {
     email: "",
     number: "",
     password: "",
+    description: "",
   });
 
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ const SignUp = () => {
             required
           />
 
-          <div className="border border-primary border-2 rounded-pill py-1 px-5 mb-3">
+          <div className="border border-primary border-2 rounded py-1 px-5 mb-3">
             <p>Please select which account you'd like to sign up for:</p>
 
             <div className="form-check form-check-inline">
@@ -128,7 +129,19 @@ const SignUp = () => {
               </label>
             </div>
           </div>
-
+          {userType === "sellers" && (
+            <div className="border border-primary border-2 rounded py-1 px-5 mb-3 ">
+              <p>Introduce your shop by adding an about me:</p>
+              <textarea
+                className="form-control h-50"
+                style={{ resize: "none" }}
+                type="text"
+                value={formData.description}
+                onChange={onChange}
+                id="description"
+              />
+            </div>
+          )}
           <div className="px-0">
             <span
               className="d-flex
