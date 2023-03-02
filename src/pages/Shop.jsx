@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
-import { fetchPaintings } from "../fns/fetchFns";
+import { fetchPaintings, fetchUser } from "../fns/fetchFns";
 
 const Shop = () => {
   const params = useParams();
@@ -14,21 +12,14 @@ const Shop = () => {
   const [seller, setSeller] = useState({});
 
   useEffect(() => {
-    fetchPaintings(params.shopId)
+    fetchUser(params.sellerId)
+      .then((s) => setSeller(s))
+      .catch(() => toast.error("Could not fetch User"));
+    fetchPaintings(params.sellerId)
       .then((p) => setPaintings(p))
       .then(() => setLoading(false))
       .catch(() => toast.error("Could not fetch paintings"));
-  }, [params.shopId]);
-
-  // get user info
-  useEffect(() => {
-    const fetchUser = async () => {
-      const sellerRef = doc(db, "sellers", params.shopId);
-      const sellerSnap = await getDoc(sellerRef);
-      setSeller({ ...sellerSnap.data(), id: params.shopId });
-    };
-    fetchUser();
-  }, [params.shopId]);
+  }, [params.sellerId]);
 
   const updateSold = (id) => {
     console.log(id);
@@ -47,7 +38,7 @@ const Shop = () => {
       </header>
       <main className="container">
         <div>
-          <p>About: {seller.description}</p>
+          <p>About: {seller.about}</p>
         </div>
 
         <div className="row">

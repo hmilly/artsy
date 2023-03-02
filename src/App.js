@@ -27,8 +27,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
           </Route>
 
-          <Route exact path="/shop/:shopId" element={<Shop />} />
-          <Route path="/shop/:shopId/:paintingName" element={<ShopItem />} />
+          <Route exact path="/shop/:sellerId" element={<Shop />} />
+          <Route path="/shop/:sellerId/:paintingName" element={<ShopItem />} />
           <Route
             path="/create-painting-card"
             element={<CreatePaintingCard />}

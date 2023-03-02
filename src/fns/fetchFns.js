@@ -39,10 +39,12 @@ export const fetchUser = async (userId) => {
   const sellerRef = doc(db, "sellers", userId);
   const sellerSnap = await getDoc(sellerRef);
 
-  if (userSnap.exists()) {
-    return userSnap.data();
-  } else if (sellerSnap.exists()) {
+  // either return seller
+  if (sellerSnap.exists()) {
     return sellerSnap.data();
+    // or return normal user
+  } else if (userSnap.exists()) {
+    return userSnap.data();
   } else {
     console.log("can't find user");
   }
