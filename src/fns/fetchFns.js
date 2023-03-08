@@ -59,3 +59,20 @@ export const fetchAllSellers = async () => {
 
   return arr;
 };
+
+export const fetchAllSellerData = async () => {
+  const colRef = collection(db, "sellers");
+  const docSnap = await getDocs(colRef);
+
+  const arr = [];
+
+  docSnap.forEach((doc) => {
+    arr.push({ ...doc.data(), id: doc.id, paintings: [] });
+  });
+
+  arr.map((item, i) => {
+    fetchPaintings(item.id).then((data) => (arr[i].paintings = data));
+  });
+
+  return arr;
+};

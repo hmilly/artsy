@@ -3,18 +3,21 @@ import { useState, useEffect } from "react";
 import { getDocs, doc, collection } from "firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
-import { fetchAllSellers } from "../fns/fetchFns";
+import { fetchAllSellerData } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 
 const Home = () => {
-  const [sellersStore, setSellersStore] = useState(null);
+  const [allSellers, setAllSellers] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllSellers()
-      .then((array) => setSellersStore(array))
+    fetchAllSellerData()
+      .then((data) => setAllSellers(data))
       .then(() => setLoading(false))
-      .catch((e) => toast.error("Could not fetch sellers"));
+      .catch((e) => {
+        toast.error("Could not fetch sellers");
+        console.log(e);
+      });
   }, []);
 
   const click = (e, seller) => {
@@ -27,15 +30,17 @@ const Home = () => {
   }
   return (
     <main className="row row-cols-3 align-content-around justify-content-around">
-      {sellersStore.map((seller, i) => (
+      {allSellers.map((seller, i) => (
         <Link
           key={i}
           to={`shop/${seller.id}`}
           className="card d-flex align-items-center justify-content-center m-2
                 border rounded-circle"
-          style={{ height: "100px", width: "100px" }}
         >
           <h3 className="card-text">{seller.name}</h3>
+          {seller.paintings.map((painting) => (
+            <img src={`${painting.imgUrl}`}></img>
+          ))}
         </Link>
       ))}
     </main>
