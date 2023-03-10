@@ -1,22 +1,20 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getDocs, doc, collection } from "firebase/firestore";
-import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import { fetchAllSellerData } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 
 const Home = () => {
-  const [allSellers, setAllSellers] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [allSellersData, setAllSellersData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchAllSellerData()
-      .then((data) => setAllSellers(data))
+      .then((data) => setAllSellersData(data))
       .then(() => setLoading(false))
       .catch((e) => {
-        toast.error("Could not fetch sellers");
         console.log(e);
+        toast.error("Could not set user Data");
       });
   }, []);
 
@@ -29,20 +27,23 @@ const Home = () => {
     return <Spinner />;
   }
   return (
-    <main className="row row-cols-3 align-content-around justify-content-around">
-      {allSellers.map((seller, i) => (
-        <Link
-          key={i}
-          to={`shop/${seller.id}`}
-          className="card d-flex align-items-center justify-content-center m-2
-                border rounded-circle"
-        >
-          <h3 className="card-text">{seller.name}</h3>
-          {seller.paintings.map((painting) => (
-            <img src={`${painting.imgUrl}`}></img>
-          ))}
-        </Link>
-      ))}
+    <main className="container-fluid">
+      <div className="row vh-100 row-cols-1">
+        {allSellersData?.map((seller, i) => (
+          <div
+            className="bg-image my-2 h-25 border rounded"
+            style={{ backgroundImage: `url(${seller.paintings[0].imgUrl})` }}
+          >
+            <div className="h-100 d-flex flex-column justify-content-around align-items-center">
+              <h3 className="bg-light">{seller.name}</h3>
+              <p className="bg-light">{seller.about}</p>
+              <Link key={i} to={`shop/${seller.id}`}>
+                Go to shop
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   );
 };

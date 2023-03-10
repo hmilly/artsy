@@ -60,18 +60,25 @@ export const fetchAllSellers = async () => {
   return arr;
 };
 
-export const fetchAllSellerData = async () => {
-  const colRef = collection(db, "sellers");
+export const fetchAllPaintings = async () => {
+  const colRef = collection(db, "paintings");
   const docSnap = await getDocs(colRef);
 
   const arr = [];
+  docSnap.forEach((doc) => arr.push(doc.data()));
 
-  docSnap.forEach((doc) => {
-    arr.push({ ...doc.data(), id: doc.id, paintings: [] });
-  });
+  return arr;
+};
 
-  arr.map((item, i) => {
-    fetchPaintings(item.id).then((data) => (arr[i].paintings = data));
+export const fetchAllSellerData = async () => {
+  let arr = [];
+
+  let userArr = await fetchAllSellers();
+  let paintingsArr = await fetchAllPaintings();
+
+  userArr.map((user) => {
+    const matchedPaintings = paintingsArr.filter((p) => user.id === p.sellerId);
+    arr.push({ ...user, paintings: matchedPaintings });
   });
 
   return arr;
