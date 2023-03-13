@@ -15,7 +15,7 @@ const ShopItem = () => {
   };
 
   useEffect(() => {
-    fetchPaintings(params.shopId)
+    fetchPaintings(params.sellerId)
       .then((paintingArr) => {
         const painting = paintingArr.find(
           (p) =>
@@ -25,7 +25,7 @@ const ShopItem = () => {
       })
       .then(() => setLoading(false))
       .catch(() => toast.error("Could not fetch paintings"));
-  }, [params.shopId, params.paintingData]);
+  }, [params.sellerId, params.paintingData]);
 
   if (loading) {
     return <Spinner />;

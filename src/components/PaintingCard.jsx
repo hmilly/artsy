@@ -4,7 +4,6 @@ const PaintingCard = ({ painting, lgImg }) => {
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className="img-fluid img-thumbnail border-0"
         style={{
           width: !lgImg && "400px",
           height: !lgImg && "300px",
@@ -15,7 +14,7 @@ const PaintingCard = ({ painting, lgImg }) => {
       <div className="d-flex flex-column align-items-center">
         <h4 className="card-title">{painting?.name}</h4>
         <section>
-          <p>Price {painting?.price}</p>
+          <p className="card-text">Price £{painting?.price}</p>
         </section>
       </div>
     </>

@@ -29,48 +29,41 @@ const Shop = () => {
     return <Spinner />;
   }
   return (
-    <>
-      <header className="p-2">
-        <h3 className="mb-5">
-          Seller Name:{" "}
-          <span className="text-decoration-underline">{seller?.name}</span>
-        </h3>
-      </header>
-      <main className="container">
-        <div>
-          <p>About: {seller.about}</p>
-        </div>
-
-        <div className="row">
-          <h3>Items for sale:</h3>
-          {paintings.length === 0 ? (
-            <p>No items in the shop yet!</p>
-          ) : (
-            paintings?.map((painting) => (
-              <div key={painting?.id} className="col">
-                <div className="card">
-                  <Link
-                    to={`${painting.name.toLowerCase().split(" ").join("-")}`}
-                  >
-                    <PaintingCard painting={painting} lgImg={false} />
-                  </Link>
-                  <button
-                    onClick={() => updateSold(painting.id)}
-                    className={`m-2 btn rounded-pill ${
-                      painting?.reservedById !== ""
-                        ? "btn-success"
-                        : "btn-danger"
-                    }`}
-                  >
-                    {painting?.reservedById ? "Reserved" : "Reserve"}
-                  </button>
-                </div>
+    <main className="container">
+      <h3 className="mb-5">
+        <span className="fw-bold"> Seller Name:</span> {seller?.name}
+      </h3>
+      <p>
+        <span className="fw-bold"> About:</span> {seller.about}
+      </p>
+      <h3>Items for sale:</h3>
+      <div className="row row-cols-1 row-cols-sm-2">
+        {paintings.length === 0 ? (
+          <p>No items in the shop yet!</p>
+        ) : (
+          paintings?.map((painting) => (
+            <div key={painting?.id} className="col">
+              <div className="card align-items-center">
+                <Link
+                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                  className="card-body"
+                >
+                  <PaintingCard painting={painting} lgImg={false} />
+                </Link>
+                <button
+                  onClick={() => updateSold(painting.id)}
+                  className={`m-2 btn rounded-pill ${
+                    painting?.reservedById !== "" ? "btn-danger" : "btn-success"
+                  }`}
+                >
+                  {painting?.reservedById ? "Reserved" : "Reserve"}
+                </button>
               </div>
-            ))
-          )}
-        </div>
-      </main>
-    </>
+            </div>
+          ))
+        )}
+      </div>
+    </main>
   );
 };
 
