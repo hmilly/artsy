@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
-import visibilityIcon from "../assets/svg/visibilityIcon.svg";
-import Oauth from "../components/Oauth";
 import { fetchUser } from "../fns/fetchFns";
+import Oauth from "../components/Oauth";
+import Layout from "../components/Layout";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,11 +48,9 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <header>
-        <h2>Welcome Back!</h2>
-      </header>
+    <Layout>
       <main className="container">
+        <h2>Welcome Back!</h2>
         <form className="m-4 row" onSubmit={onSubmit}>
           <input
             type="email"
@@ -107,7 +106,7 @@ const SignIn = () => {
           </Link>
         </div>
       </main>
-    </div>
+    </Layout>
   );
 };
 

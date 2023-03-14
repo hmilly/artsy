@@ -5,10 +5,10 @@ import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
-
-import Spinner from "../components/Spinner";
 import { fetchPaintings, fetchUser } from "../fns/fetchFns";
+import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
+import Layout from "../components/Layout";
 
 const Profile = () => {
   const auth = getAuth();
@@ -96,83 +96,87 @@ const Profile = () => {
     return <Spinner />;
   }
   return (
-    <main className="m-4">
-      <div className="container m-4 border border-success border-2 rounded mx-auto">
-        <div className="row d-flex justify-content-between p-3">
-          <p className="w-auto">Personal Details</p>
-          <a
-            className="btn fw-bold row text-success w-auto mx-1"
-            onClick={() => {
-              changeDetails && onSubmit();
-              setChangeDetails((prevState) => !prevState);
-            }}
-          >
-            {changeDetails ? "Done" : "Change"}
-          </a>
+    <Layout>
+      <main className="m-4">
+        <div className="container m-4 border border-success border-2 rounded mx-auto">
+          <div className="row d-flex justify-content-between p-3">
+            <p className="w-auto">Personal Details</p>
+            <a
+              className="btn fw-bold row text-success w-auto mx-1"
+              onClick={() => {
+                changeDetails && onSubmit();
+                setChangeDetails((prevState) => !prevState);
+              }}
+            >
+              {changeDetails ? "Done" : "Change"}
+            </a>
+          </div>
+          <h3 className="text-center">
+            Account type:{" "}
+            {user?.userRef.charAt(0).toUpperCase() + user.userRef.slice(1, -1)}
+          </h3>
+          <form className="row p-3 mx-auto">
+            <input
+              type="text"
+              id="name"
+              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+                !changeDetails ? "" : "bg-secondary bg-opacity-25"
+              }`}
+              disabled={!changeDetails}
+              value={formData?.name}
+              onChange={onChange}
+            />
+            <input
+              type="tel"
+              id="number"
+              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+                !changeDetails ? "" : "bg-secondary bg-opacity-25"
+              }`}
+              disabled={!changeDetails}
+              value={formData?.number}
+              onChange={onChange}
+            />
+            <input
+              type="text"
+              id="email"
+              className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+                !changeDetails ? "" : "bg-secondary bg-opacity-25"
+              }`}
+              disabled={!changeDetails}
+              value={formData?.email}
+              onChange={onChange}
+            />
+          </form>
         </div>
-        <h3 className="text-center">
-          Account type:{" "}
-          {user?.userRef.charAt(0).toUpperCase() + user.userRef.slice(1, -1)}
-        </h3>
-        <form className="row p-3 mx-auto">
-          <input
-            type="text"
-            id="name"
-            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-              !changeDetails ? "" : "bg-secondary bg-opacity-25"
-            }`}
-            disabled={!changeDetails}
-            value={formData?.name}
-            onChange={onChange}
-          />
-          <input
-            type="tel"
-            id="number"
-            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-              !changeDetails ? "" : "bg-secondary bg-opacity-25"
-            }`}
-            disabled={!changeDetails}
-            value={formData?.number}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            id="email"
-            className={`border border-light rounded-pill py-1 px-5 mb-3 ${
-              !changeDetails ? "" : "bg-secondary bg-opacity-25"
-            }`}
-            disabled={!changeDetails}
-            value={formData?.email}
-            onChange={onChange}
-          />
-        </form>
-      </div>
-      <div className="container">
-        <h3>Items for sale</h3>
-        {paintings.length !== 0 ? (
-          <>
-            <p>Your listings</p>
+        <div className="container">
+          <h3>Items for sale</h3>
+          {paintings.length !== 0 ? (
+            <>
+              <p>Your listings</p>
 
-            <section className="row">
-              {paintings?.map((painting) => (
-                <div key={painting?.id} className="col">
-                  <div className="card">
-                    <Link to={`/edit-painting/${painting.id}`}>
-                      <PaintingCard painting={painting} lgImg={false} />
-                    </Link>
-                    {painting?.reservedById !== "" && (
-                      <span className="badge bg-danger rounded-pill">Reserved</span>
-                    )}
+              <section className="row">
+                {paintings?.map((painting) => (
+                  <div key={painting?.id} className="col">
+                    <div className="card">
+                      <Link to={`/edit-painting/${painting.id}`}>
+                        <PaintingCard painting={painting} lgImg={false} />
+                      </Link>
+                      {painting?.reservedById !== "" && (
+                        <span className="badge bg-danger rounded-pill">
+                          Reserved
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </section>
-          </>
-        ) : (
-          <p>No items to show</p>
-        )}
-      </div>
-    </main>
+                ))}
+              </section>
+            </>
+          ) : (
+            <p>No items to show</p>
+          )}
+        </div>
+      </main>
+    </Layout>
   );
 };
 

@@ -11,6 +11,7 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import Oauth from "../components/Oauth";
+import Layout from "../components/Layout";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,11 +64,9 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <header>
-        <h2>Welcome</h2>
-      </header>
+    <Layout>
       <main className="container">
+        <h2>Welcome</h2>
         <form className="m-4 row" onSubmit={onSubmit}>
           <input
             type="text"
@@ -179,7 +178,7 @@ const SignUp = () => {
           </Link>
         </div>
       </main>
-    </div>
+    </Layout>
   );
 };
 

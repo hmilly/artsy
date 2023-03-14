@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import Layout from "../components/Layout";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -24,11 +25,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
-      <header>
-        <h2>Forgot Password</h2>
-      </header>
+    <Layout>
       <main className="container">
+        <h2>Forgot Password</h2>
         <form className="m-4 row" onSubmit={onSubmit}>
           <input
             type="email"
@@ -51,7 +50,7 @@ const ForgotPassword = () => {
           </div>
         </form>
       </main>
-    </div>
+    </Layout>
   );
 };
 

@@ -4,6 +4,7 @@ import { fetchPaintings } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
+import Layout from "../components/Layout";
 
 const ShopItem = () => {
   const params = useParams();
@@ -31,11 +32,13 @@ const ShopItem = () => {
     return <Spinner />;
   }
   return (
-    <main className="col">
-      <div className="card flex-column-reverse">
-        <PaintingCard painting={paintingData} lgImg={true} />
-      </div>
-    </main>
+    <Layout>
+      <main className="col p-1">
+        <div className="card border-0 flex-column-reverse">
+          <PaintingCard painting={paintingData} lgImg={true} />
+        </div>
+      </main>
+    </Layout>
   );
 };
 

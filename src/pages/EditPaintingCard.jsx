@@ -13,6 +13,7 @@ import { uuidv4 } from "@firebase/util";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import FormBody from "../components/FormBody";
+import Layout from "../components/Layout";
 
 const EditPaintingCard = () => {
   const params = useParams();
@@ -86,32 +87,31 @@ const EditPaintingCard = () => {
     return <Spinner />;
   }
   return (
-    <main className="d-flex flex-column flex-md-row">
-      <form onSubmit={onSubmit} className="col p-2 ">
-        <FormBody formData={formData} setFormData={setFormData} />
-        <div className="text-center">
-          <button
-            type="submit"
-            className="btn w-75 btn-success rounded-pill"
-          >
-            Edit Listing
-          </button>
+    <Layout>
+      <main className="d-flex flex-column flex-md-row">
+        <form onSubmit={onSubmit} className="col p-2 ">
+          <FormBody formData={formData} setFormData={setFormData} />
+          <div className="text-center">
+            <button type="submit" className="btn w-75 btn-success rounded-pill">
+              Edit Listing
+            </button>
+          </div>
+        </form>
+        <div className="col my-auto">
+          <img
+            src={paintingData?.imgUrl}
+            alt={paintingData?.name}
+            className="img-fluid"
+          />
         </div>
-      </form>
-      <div className="col my-auto">
-        <img
-          src={paintingData?.imgUrl}
-          alt={paintingData?.name}
-          className="img-fluid"
-        />
-      </div>
-      {/* <div className="card-body">
+        {/* <div className="card-body">
         <h4 className="card-title">{paintingData?.name}</h4>
         <section>
           <p>Price {paintingData?.price}</p>
         </section>
       </div> */}
-    </main>
+      </main>
+    </Layout>
   );
 };
 

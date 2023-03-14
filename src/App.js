@@ -13,13 +13,12 @@ import EditPaintingCard from "./pages/EditPaintingCard";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
-import Header from "./components/Header";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
     <>
       <Router>
-        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
 
@@ -29,10 +28,7 @@ function App() {
 
           <Route exact path="/shop/:sellerId" element={<Shop />} />
           <Route path="/shop/:sellerId/:paintingName" element={<ShopItem />} />
-          <Route
-            path="/create-painting-card"
-            element={<CreatePaintingCard />}
-          />
+          <Route path="/create-painting" element={<CreatePaintingCard />} />
           <Route
             path="/edit-painting/:paintingId"
             element={<EditPaintingCard />}
@@ -41,6 +37,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </Router>
       <ToastContainer />

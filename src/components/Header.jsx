@@ -18,7 +18,7 @@ const Header = () => {
   const logOut = () => auth.signOut().then(() => navigate("/"));
 
   return (
-    <header className="w-100 mb-4">
+    <header className="mb-4">
       <nav className="navbar sticky-top navbar-expand-sm navbar-light bg-light">
         <div className="container">
           <a className="navbar-brand w-50 text-center" href="#">
@@ -37,12 +37,12 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            className={`collapse navbar-collapse 
+            className={`collapse navbar-collapse justify-content-end 
           ${showNav && "show"}
           `}
             id="navbarBasic"
           >
-            <ul className="navbar-nav text-end">
+            <ul className="navbar-nav align-items-center">
               <li className="nav-item">
                 <Link to="/" className="nav-link active">
                   <img src={homeIcon} alt="home" className="img-fluid" />
@@ -60,13 +60,13 @@ const Header = () => {
                       />
                     </Link>
                   </li>
+
                   <li className="nav-item">
-                    <button className="nav-link" type="button" onClick={logOut}>
-                      Log Out
-                    </button>
-                  </li>
-                  <li className="nav-item">
-                    <button className="nav-link" type="button" onClick={logOut}>
+                    <button
+                      className="btn btn-link-dark"
+                      type="button"
+                      onClick={logOut}
+                    >
                       Log Out
                     </button>
                   </li>
