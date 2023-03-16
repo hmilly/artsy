@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchPaintings } from "../fns/fetchFns";
+import { fetchSellersPaintings } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
@@ -16,7 +16,7 @@ const ShopItem = () => {
   };
 
   useEffect(() => {
-    fetchPaintings(params.sellerId)
+    fetchSellersPaintings(params.sellerId)
       .then((paintingArr) => {
         const painting = paintingArr.find(
           (p) =>

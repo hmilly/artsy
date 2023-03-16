@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
-import { fetchUser } from "../fns/fetchFns";
+import { fetchUserById } from "../fns/fetchFns";
 import Oauth from "../components/Oauth";
 import Layout from "../components/Layout";
 
@@ -33,7 +33,7 @@ const SignIn = () => {
       );
 
       if (userCredentials.user) {
-        fetchUser(auth.currentUser.uid)
+        fetchUserById(auth.currentUser.uid)
           .then((user) => {
             auth.currentUser.displayName = user.name;
             auth.currentUser.email = user.email;

@@ -5,7 +5,7 @@ import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
-import { fetchPaintings, fetchUser } from "../fns/fetchFns";
+import { fetchSellersPaintings, fetchUserById } from "../fns/fetchFns";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -24,7 +24,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUser(auth.currentUser.uid)
+    fetchUserById(auth.currentUser.uid)
       .then((u) => {
         setUser({ ...u, id: auth.currentUser.uid });
         setFormData({ ...formData, number: u.number });
@@ -36,7 +36,7 @@ const Profile = () => {
   useEffect(() => {
     if (user.userRef === "sellers") {
       setLoading(true);
-      fetchPaintings(user.id)
+      fetchSellersPaintings(user.id)
         .then((p) => setPaintings(p))
         .then(() => setLoading(false))
         .catch(() => toast.error("Could not fetch paintings"));
@@ -148,12 +148,12 @@ const Profile = () => {
             />
           </form>
         </div>
-        <div className="container">
-          <h3>Items for sale</h3>
-          {paintings.length !== 0 ? (
-            <>
-              <p>Your listings</p>
-
+        {user.userRef === "users" ? (
+          <></>
+        ) : (
+          <div className="container">
+            <h3>Items for sale</h3>
+            {paintings.length !== 0 ? (
               <section className="row">
                 {paintings?.map((painting) => (
                   <div key={painting?.id} className="col">
@@ -170,11 +170,11 @@ const Profile = () => {
                   </div>
                 ))}
               </section>
-            </>
-          ) : (
-            <p>No items to show</p>
-          )}
-        </div>
+            ) : (
+              <p>No items to show</p>
+            )}
+          </div>
+        )}
       </main>
     </Layout>
   );

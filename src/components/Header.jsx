@@ -42,7 +42,7 @@ const Header = () => {
           `}
             id="navbarBasic"
           >
-            <ul className="navbar-nav align-items-center">
+            <ul className="navbar-nav align-items-end">
               <li className="nav-item">
                 <Link to="/" className="nav-link active">
                   <img src={homeIcon} alt="home" className="img-fluid" />

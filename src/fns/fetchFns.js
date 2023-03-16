@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 
-export const fetchPaintings = async (sellerId) => {
+export const fetchSellersPaintings = async (sellerId) => {
   try {
     // if sellerId matches params id (seller id) get paintings from collection
     const paintingsRef = collection(db, "paintings");
@@ -32,7 +32,7 @@ export const fetchPaintings = async (sellerId) => {
   }
 };
 
-export const fetchUser = async (userId) => {
+export const fetchUserById = async (userId) => {
   const userRef = doc(db, "users", userId);
   const userSnap = await getDoc(userRef);
 
@@ -50,7 +50,33 @@ export const fetchUser = async (userId) => {
   }
 };
 
-export const fetchAllSellers = async () => {
+
+
+export const fetchPaintingById = async (paintingId) => {
+  const paintingRef = doc(db, "paintings", paintingId);
+  const paintingSnap = await getDoc(paintingRef);
+
+  return paintingSnap.data();
+};
+
+
+
+export const fetchAllSellerData = async () => {
+  let arr = [];
+
+  let userArr = await fetchSellersCollection();
+  let paintingsArr = await fetchPaintingsCollection();
+
+  userArr.map((user) => {
+    const matchedPaintings = paintingsArr.filter((p) => user.id === p.sellerId);
+    arr.push({ ...user, paintings: matchedPaintings });
+  });
+
+  return arr;
+};
+
+// for use in fetchAllSellerData
+const fetchSellersCollection = async () => {
   const colRef = collection(db, "sellers");
   const docSnap = await getDocs(colRef);
 
@@ -60,26 +86,13 @@ export const fetchAllSellers = async () => {
   return arr;
 };
 
-export const fetchAllPaintings = async () => {
+// for use in fetchAllSellerData
+const fetchPaintingsCollection = async () => {
   const colRef = collection(db, "paintings");
   const docSnap = await getDocs(colRef);
 
   const arr = [];
   docSnap.forEach((doc) => arr.push(doc.data()));
-
-  return arr;
-};
-
-export const fetchAllSellerData = async () => {
-  let arr = [];
-
-  let userArr = await fetchAllSellers();
-  let paintingsArr = await fetchAllPaintings();
-
-  userArr.map((user) => {
-    const matchedPaintings = paintingsArr.filter((p) => user.id === p.sellerId);
-    arr.push({ ...user, paintings: matchedPaintings });
-  });
 
   return arr;
 };

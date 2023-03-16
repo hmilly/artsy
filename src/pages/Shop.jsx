@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fetchPaintings, fetchUser } from "../fns/fetchFns";
+import { fetchSellersPaintings, fetchUserById } from "../fns/fetchFns";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -13,10 +13,10 @@ const Shop = () => {
   const [seller, setSeller] = useState({});
 
   useEffect(() => {
-    fetchUser(params.sellerId)
+    fetchUserById(params.sellerId)
       .then((s) => setSeller(s))
       .catch(() => toast.error("Could not fetch User"));
-    fetchPaintings(params.sellerId)
+      fetchSellersPaintings(params.sellerId)
       .then((p) => setPaintings(p))
       .then(() => setLoading(false))
       .catch(() => toast.error("Could not fetch paintings"));
@@ -38,31 +38,19 @@ const Shop = () => {
         <p>
           <span className="fw-bold"> About:</span> {seller.about}
         </p>
-        <h3>Items for sale:</h3>
-        <div className="row row-cols-1 row-cols-sm-2">
+        <h3 className="mb-4">Items for sale:</h3>
+        <div className="row row-cols-1 row-cols-sm-2 align-items-start">
           {paintings.length === 0 ? (
             <p>No items in the shop yet!</p>
           ) : (
             paintings?.map((painting) => (
-              <div key={painting?.id} className="col">
-                <div className="card align-items-center">
-                  <Link
-                    to={`${painting.name.toLowerCase().split(" ").join("-")}`}
-                    className="card-body"
-                  >
-                    <PaintingCard painting={painting} lgImg={false} />
-                  </Link>
-                  <button
-                    onClick={() => updateSold(painting.id)}
-                    className={`m-2 btn rounded-pill ${
-                      painting?.reservedById !== ""
-                        ? "btn-danger"
-                        : "btn-success"
-                    }`}
-                  >
-                    {painting?.reservedById ? "Reserved" : "Reserve"}
-                  </button>
-                </div>
+              <div key={painting?.id} className="col ">
+                <Link
+                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                  className="card p-2 h-100 link-dark text-decoration-none"
+                >
+                  <PaintingCard painting={painting} lgImg={false} />
+                </Link>
               </div>
             ))
           )}
