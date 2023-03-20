@@ -10,13 +10,17 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllSellerData()
-      .then((data) => setAllSellersData(data))
-      .then(() => setLoading(false))
-      .catch((e) => {
+    const getData = async () => {
+      try {
+        const data = await fetchAllSellerData();
+        setAllSellersData(data);
+      } catch (e) {
         console.log(e);
         toast.error("Could not set user Data");
-      });
+      }
+      setLoading(false);
+    };
+    getData();
   }, []);
 
   const click = (e, seller) => {

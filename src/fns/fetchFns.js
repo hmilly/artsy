@@ -10,13 +10,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 
-export const fetchSellersPaintings = async (sellerId) => {
+export const fetchPaintingsArr = async (params, userId) => {
   try {
-    // if sellerId matches params id (seller id) get paintings from collection
+    // if params matches params id get paintings from collection
     const paintingsRef = collection(db, "paintings");
-    const q = query(paintingsRef, where("sellerId", "==", sellerId));
+    const q = query(paintingsRef, where(params, "==", userId));
     const querySnap = await getDocs(q);
-
     // push paintings to array
     const paintings = [];
     querySnap.forEach((doc) => {
@@ -50,16 +49,12 @@ export const fetchUserById = async (userId) => {
   }
 };
 
-
-
 export const fetchPaintingById = async (paintingId) => {
   const paintingRef = doc(db, "paintings", paintingId);
   const paintingSnap = await getDoc(paintingRef);
 
   return paintingSnap.data();
 };
-
-
 
 export const fetchAllSellerData = async () => {
   let arr = [];

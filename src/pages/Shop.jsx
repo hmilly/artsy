@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fetchSellersPaintings, fetchUserById } from "../fns/fetchFns";
+import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -13,13 +13,23 @@ const Shop = () => {
   const [seller, setSeller] = useState({});
 
   useEffect(() => {
-    fetchUserById(params.sellerId)
-      .then((s) => setSeller(s))
-      .catch(() => toast.error("Could not fetch User"));
-      fetchSellersPaintings(params.sellerId)
-      .then((p) => setPaintings(p))
-      .then(() => setLoading(false))
-      .catch(() => toast.error("Could not fetch paintings"));
+    const getUserData = async () => {
+      try {
+        const seller = await fetchUserById(params.sellerId);
+        setSeller(seller);
+      } catch (error) {
+        toast.error("Could not fetch User");
+      }
+
+      try {
+        const paintings = await fetchPaintingsArr("sellerId", params.sellerId);
+        setPaintings(paintings);
+        setLoading(false);
+      } catch (error) {
+        toast.error("Could not fetch paintings");
+      }
+    };
+    getUserData();
   }, [params.sellerId]);
 
   const updateSold = (id) => {

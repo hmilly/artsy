@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchSellersPaintings } from "../fns/fetchFns";
+import { fetchPaintingsArr } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
@@ -16,16 +16,23 @@ const ShopItem = () => {
   };
 
   useEffect(() => {
-    fetchSellersPaintings(params.sellerId)
-      .then((paintingArr) => {
-        const painting = paintingArr.find(
+    const getPaintings = async () => {
+      try {
+        const paintingsArr = await fetchPaintingsArr(
+          "sellerId",
+          params.sellerId
+        );
+        const painting = paintingsArr.find(
           (p) =>
             p.name.toLowerCase() === params.paintingName.split("-").join(" ")
         );
         setPaintingData(painting);
-      })
-      .then(() => setLoading(false))
-      .catch(() => toast.error("Could not fetch paintings"));
+        setLoading(false);
+      } catch (error) {
+        toast.error("Could not fetch paintings");
+      }
+    };
+    getPaintings();
   }, [params.sellerId, params.paintingData]);
 
   if (loading) {

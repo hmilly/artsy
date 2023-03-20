@@ -5,49 +5,61 @@ import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
-import { fetchSellersPaintings, fetchUserById } from "../fns/fetchFns";
+import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
 
 const Profile = () => {
   const auth = getAuth();
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [changeDetails, setChangeDetails] = useState(false);
-  const [user, setUser] = useState({});
+  const [profile, setProfile] = useState({});
   const [paintings, setPaintings] = useState([]);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     number: "",
     email: auth.currentUser.email,
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserById(auth.currentUser.uid)
-      .then((u) => {
-        setUser({ ...u, id: auth.currentUser.uid });
-        setFormData({ ...formData, number: u.number });
-      })
-      .then(() => setLoading(false))
-      .catch(() => toast.error("Could not fetch user"));
+    const getProfile = async () => {
+      try {
+        const user = await fetchUserById(auth.currentUser.uid);
+        await setProfile({ ...user, id: auth.currentUser.uid });
+        setFormData({ ...formData, number: await user.number });
+      } catch (error) {
+        toast.error("Could not fetch user");
+      }
+      setLoading(false);
+    };
+
+    getProfile();
   }, [auth.currentUser.uid]);
 
   useEffect(() => {
-    if (user.userRef === "sellers") {
-      setLoading(true);
-      fetchSellersPaintings(user.id)
-        .then((p) => setPaintings(p))
-        .then(() => setLoading(false))
-        .catch(() => toast.error("Could not fetch paintings"));
-    }
-  }, [user.id]);
+    const getPaintings = async () => {
+      try {
+        if (profile.userRef !== undefined) {
+          const ref =
+            profile.userRef === "sellers" ? "sellerId" : "reservedById";
+          const paintingArr = await fetchPaintingsArr(ref, profile.id);
+          setPaintings(paintingArr);
+        }
+      } catch (error) {
+        toast.error("Could not fetch paintings");
+      }
+    };
+    getPaintings();
+  }, [profile]);
 
   const onSubmit = async () => {
     try {
       if (
         auth.currentUser.displayName !== formData.name ||
-        user.number !== formData.number ||
+        profile.number !== formData.number ||
         auth.currentUser.email !== formData.email
       ) {
         // Update display name in firebase authentication
@@ -55,7 +67,7 @@ const Profile = () => {
         await updateEmail(auth.currentUser, formData.email);
       }
       // Update in firestore db
-      const userRef = doc(db, user.userRef, auth.currentUser.uid);
+      const userRef = doc(db, profile.userRef, auth.currentUser.uid);
       await updateDoc(userRef, {
         name: formData.name,
         number: formData.number,
@@ -113,7 +125,8 @@ const Profile = () => {
           </div>
           <h3 className="text-center">
             Account type:{" "}
-            {user?.userRef.charAt(0).toUpperCase() + user.userRef.slice(1, -1)}
+            {profile?.userRef.charAt(0).toUpperCase() +
+              profile.userRef.slice(1, -1)}
           </h3>
           <form className="row p-3 mx-auto">
             <input
@@ -148,33 +161,43 @@ const Profile = () => {
             />
           </form>
         </div>
-        {user.userRef === "users" ? (
-          <></>
-        ) : (
-          <div className="container">
-            <h3>Items for sale</h3>
-            {paintings.length !== 0 ? (
-              <section className="row">
-                {paintings?.map((painting) => (
-                  <div key={painting?.id} className="col">
-                    <div className="card">
-                      <Link to={`/edit-painting/${painting.id}`}>
-                        <PaintingCard painting={painting} lgImg={false} />
-                      </Link>
-                      {painting?.reservedById !== "" && (
-                        <span className="badge bg-danger rounded-pill">
-                          Reserved
-                        </span>
-                      )}
-                    </div>
+
+        <div className="container">
+          <h3>
+            {profile.userRef === "sellers"
+              ? "Items for sale"
+              : "Reserved by you"}
+          </h3>
+          {paintings.length !== 0 ? (
+            <section className="row">
+              {paintings?.map((painting) => (
+                <div key={painting?.id} className="col">
+                  <div className="card">
+                    <Link
+                      to={
+                        profile.userRef === "sellers"
+                          ? `/edit-painting/${painting.id}`
+                          : `${painting.name
+                              .toLowerCase()
+                              .split(" ")
+                              .join("-")}`
+                      }
+                    >
+                      <PaintingCard painting={painting} lgImg={false} />
+                    </Link>
+                    {painting?.reservedById !== "" && (
+                      <span className="badge bg-danger rounded-pill">
+                        Reserved
+                      </span>
+                    )}
                   </div>
-                ))}
-              </section>
-            ) : (
-              <p>No items to show</p>
-            )}
-          </div>
-        )}
+                </div>
+              ))}
+            </section>
+          ) : (
+            <p>No items to show</p>
+          )}
+        </div>
       </main>
     </Layout>
   );
