@@ -36,6 +36,7 @@ const Shop = () => {
     console.log(id);
   };
 
+
   if (loading) {
     return <Spinner />;
   }
@@ -54,13 +55,16 @@ const Shop = () => {
             <p>No items in the shop yet!</p>
           ) : (
             paintings?.map((painting) => (
-              <div key={painting?.id} className="col ">
-                <Link
-                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
-                  className="card p-2 h-100 link-dark text-decoration-none"
-                >
-                  <PaintingCard painting={painting} lgImg={false} />
-                </Link>
+              <div key={painting?.id} className="col">
+                <div className="card">
+
+                  <Link
+                    className="h-100 link-dark text-decoration-none "
+                    to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                  >
+                    <PaintingCard painting={painting} lgImg={false} />
+                  </Link>
+                </div>
               </div>
             ))
           )}

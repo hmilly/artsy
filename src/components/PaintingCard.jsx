@@ -9,11 +9,20 @@ const PaintingCard = ({ painting, lgImg }) => {
   const auth = getAuth();
 
   const updateReserved = async (id) => {
-    console.log(id);
+    // const userRef = doc(db, user.userRef, auth.currentUser.uid);
+    // await updateDoc(userRef, {
+    //   name: formData.name,
+    //   number: formData.number,
+    //   email: formData.email,
+    // });
+    // return await db
+    //   .collection("paintings")
+    //   .doc(id)
+    //   .update({ reservedById: auth.currentUser.uid });
   };
 
   return (
-    <div className="d-flex flex-column h-100 align-items-center gap-4">
+    <div className="d-flex flex-column h-100 align-items-center gap-4 p-1">
       <section className="d-flex w-100 align-items-center justify-content-around">
         <h4 className="card-title text-center m-0">{painting?.name}</h4>
         <p className="card-text m-0">Price £{painting?.price}</p>
@@ -39,7 +48,7 @@ const PaintingCard = ({ painting, lgImg }) => {
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className={`img-fluid ${lgImg && "w-75"}`}
+        className={`img-fluid ${lgImg ? "w-75" : "w-50"}`}
       />
     </div>
   );

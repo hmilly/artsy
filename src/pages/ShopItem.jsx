@@ -40,9 +40,11 @@ const ShopItem = () => {
   }
   return (
     <Layout>
-      <main className="col p-1">
-        <div className="card border-0 flex-column-reverse">
-          <PaintingCard painting={paintingData} lgImg={true} />
+      <main className="container p-1">
+        <div className="col">
+          <div className="card border-0 flex-column-reverse">
+            <PaintingCard painting={paintingData} lgImg={true} />
+          </div>
         </div>
       </main>
     </Layout>

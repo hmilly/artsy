@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import homeIcon from "../assets/svg/homeIcon.svg";
+import { AiFillHome } from "react-icons/ai";
+import { BsFillPersonVcardFill } from "react-icons/bs";
 import personIcon from "../assets/svg/personIcon.svg";
 
 const Header = () => {
@@ -45,7 +46,7 @@ const Header = () => {
             <ul className="navbar-nav align-items-end">
               <li className="nav-item">
                 <Link to="/" className="nav-link active">
-                  <img src={homeIcon} alt="home" className="img-fluid" />
+                  <AiFillHome className="img-fluid" />
                 </Link>
               </li>
 
@@ -53,14 +54,9 @@ const Header = () => {
                 <>
                   <li className="nav-item">
                     <Link to="/profile" className="nav-link">
-                      <img
-                        src={personIcon}
-                        alt="profile"
-                        className="img-fluid"
-                      />
+                      <BsFillPersonVcardFill className="img-fluid text-dark" />
                     </Link>
                   </li>
-
                   <li className="nav-item">
                     <button
                       className="btn btn-link-dark"
