@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
+import Accordion from "react-bootstrap/esm/Accordion";
 import Spinner from "../components/Spinner";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -36,7 +37,6 @@ const Shop = () => {
     console.log(id);
   };
 
-
   if (loading) {
     return <Spinner />;
   }
@@ -44,11 +44,16 @@ const Shop = () => {
     <Layout>
       <main className="container p-2">
         <h3 className="mb-5">
-          <span className="fw-bold"> Seller Name:</span> {seller?.name}
+          <span className="fw-bold"> Seller: </span>
+          {seller?.name.charAt(0).toUpperCase() + seller?.name.slice(1)}
         </h3>
-        <p>
-          <span className="fw-bold"> About:</span> {seller.about}
-        </p>
+        <Accordion defaultActiveKey="0" flush>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header> About:</Accordion.Header>
+            <Accordion.Body>{seller.about}</Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
         <h3 className="mb-4">Items for sale:</h3>
         <div className="row row-cols-1 row-cols-sm-2 align-items-start">
           {paintings.length === 0 ? (
@@ -57,7 +62,6 @@ const Shop = () => {
             paintings?.map((painting) => (
               <div key={painting?.id} className="col">
                 <div className="card">
-
                   <Link
                     className="h-100 link-dark text-decoration-none "
                     to={`${painting.name.toLowerCase().split(" ").join("-")}`}

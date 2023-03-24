@@ -1,3 +1,5 @@
+import { Row, Form } from "react-bootstrap";
+
 const FormBody = ({ formData, setFormData }) => {
   const { description, name, price } = formData;
 
@@ -23,10 +25,10 @@ const FormBody = ({ formData, setFormData }) => {
   };
 
   return (
-    <>
-      <div className="row d-flex justify-content-center mb-4">
-        <label className="formLabel mb-1">Name</label>
-        <input
+    <Form.Group>
+      <Row className="justify-content-center mb-4">
+        <Form.Label className="formForm.Label mb-1">Name</Form.Label>
+        <Form.Control
           className="border border-primary border-2 rounded-pill text-center w-75"
           type="text"
           id="name"
@@ -36,10 +38,10 @@ const FormBody = ({ formData, setFormData }) => {
           minLength="5"
           required
         />
-      </div>
-      <div className="row d-flex justify-content-center mb-4">
-        <label className="formLabel mb-1">Price in £</label>
-        <input
+      </Row>
+      <Row className="justify-content-center mb-4">
+        <Form.Label className="formForm.Label mb-1">Price in £</Form.Label>
+        <Form.Control
           className="border border-primary border-2 rounded-pill text-center w-75"
           type="number"
           id="price"
@@ -49,10 +51,10 @@ const FormBody = ({ formData, setFormData }) => {
           max="500"
           required
         />
-      </div>
-      <div className="row d-flex justify-content-center mb-4">
-        <label className="formLabel mb-1">Description</label>
-        <textarea
+      </Row>
+      <Row className="justify-content-center mb-4">
+        <Form.Label className="formForm.Label mb-1">Description</Form.Label>
+        <Form.Control
           className="border border-primary border-2 rounded form-control w-75 h-50"
           type="textarea"
           id="description"
@@ -62,11 +64,11 @@ const FormBody = ({ formData, setFormData }) => {
           minLength="10"
           required
         />
-      </div>
+      </Row>
 
-      <div className="row d-flex justify-content-center mb-4 mx-1">
-        <label className="formLabel mb-1">Image</label>
-        <input
+      <Row className="justify-content-center mb-4 mx-1">
+        <Form.Label className="formForm.Label mb-1">Image</Form.Label>
+        <Form.Control
           className="border border-primary border-2 rounded w-100 py-1 form-control-file"
           type="file"
           id="image"
@@ -76,8 +78,8 @@ const FormBody = ({ formData, setFormData }) => {
           multiple
           required
         />
-      </div>
-    </>
+      </Row>
+    </Form.Group>
   );
 };
 

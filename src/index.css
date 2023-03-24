@@ -29,7 +29,8 @@ h5,
 h6,
 p,
 button,
-a {
+a,
+svg {
   font-size: 1.2rem;
 }
 
@@ -78,4 +79,3 @@ input::-webkit-inner-spin-button {
     transform: rotate(360deg);
   }
 }
-

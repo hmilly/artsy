@@ -3,6 +3,7 @@ import { getAuth, updateProfile, updateEmail } from "firebase/auth";
 import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
+import { Container, Row, Form } from "react-bootstrap";
 
 const ProfileDetails = ({ profile, formData, setFormData }) => {
   const auth = getAuth();
@@ -43,8 +44,8 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
     }));
 
   return (
-    <div className="container m-4 border border-success border-2 rounded mx-auto">
-      <div className="row d-flex justify-content-between p-3">
+    <Container className="border border-success border-2 rounded my-4 mx-auto">
+      <Row className="justify-content-between p-3">
         <p className="w-auto">Personal Details</p>
         <a
           className="btn fw-bold row text-success w-auto mx-1"
@@ -55,14 +56,14 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         >
           {changeDetails ? "Done" : "Change"}
         </a>
-      </div>
+      </Row>
       <h3 className="text-center">
         Account type:{" "}
         {profile?.userRef.charAt(0).toUpperCase() +
           profile.userRef.slice(1, -1)}
       </h3>
-      <form className="row p-3 mx-auto">
-        <input
+      <Form className="p-3 mx-auto">
+        <Form.Control
           type="text"
           id="name"
           className={`border border-light rounded-pill py-1 px-5 mb-3 ${
@@ -72,7 +73,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
           value={formData?.name}
           onChange={onChange}
         />
-        <input
+        <Form.Control
           type="tel"
           id="number"
           className={`border border-light rounded-pill py-1 px-5 mb-3 ${
@@ -82,7 +83,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
           value={formData?.number}
           onChange={onChange}
         />
-        <input
+        <Form.Control
           type="text"
           id="email"
           className={`border border-light rounded-pill py-1 px-5 mb-3 ${
@@ -92,8 +93,8 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
           value={formData?.email}
           onChange={onChange}
         />
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 };
 

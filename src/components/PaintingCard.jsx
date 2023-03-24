@@ -2,6 +2,7 @@ import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 import { db } from "../firebase.config";
 import { updateDoc, doc } from "firebase/firestore";
+import { Card } from "react-bootstrap";
 
 import { fetchPaintingById } from "../fns/fetchFns";
 
@@ -24,8 +25,8 @@ const PaintingCard = ({ painting, lgImg }) => {
   return (
     <div className="d-flex flex-column h-100 align-items-center gap-4 p-1">
       <section className="d-flex w-100 align-items-center justify-content-around">
-        <h4 className="card-title text-center m-0">{painting?.name}</h4>
-        <p className="card-text m-0">Price £{painting?.price}</p>
+        <Card.Title className="text-center m-0">{painting?.name}</Card.Title>
+        <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
 
         {lgImg && (
           <button
