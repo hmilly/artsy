@@ -2,11 +2,11 @@ import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 import { db } from "../firebase.config";
 import { updateDoc, doc } from "firebase/firestore";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 import { fetchPaintingById } from "../fns/fetchFns";
 
-const PaintingCard = ({ painting, lgImg }) => {
+const PaintingCard = ({ painting, ShopItem }) => {
   const auth = getAuth();
 
   const updateReserved = async (id) => {
@@ -28,19 +28,19 @@ const PaintingCard = ({ painting, lgImg }) => {
         <Card.Title className="text-center m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
 
-        {lgImg && (
-          <button
+        {ShopItem && (
+          <Button
             onClick={() => updateReserved(painting.id)}
-            className={`m-2 btn rounded-pill ${
+            className={`${
               painting?.reservedById !== "" ? "btn-danger" : "btn-success"
             }`}
           >
             {painting?.reservedById ? "Reserved" : "Reserve"}
-          </button>
+          </Button>
         )}
       </section>
 
-      {lgImg && (
+      {ShopItem && painting?.description && (
         <p className="w-75 border border-secondary p-2 rounded">
           {painting?.description}
         </p>
@@ -49,7 +49,7 @@ const PaintingCard = ({ painting, lgImg }) => {
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className={`img-fluid ${lgImg ? "w-75" : "w-50"}`}
+        className={`img-fluid ${ShopItem ? "w-75" : "w-50"}`}
       />
     </div>
   );

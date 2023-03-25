@@ -6,6 +6,8 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiImageAdd } from "react-icons/bi";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import Spinner from "../components/Spinner";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
@@ -76,26 +78,38 @@ const Profile = () => {
   }
   return (
     <Layout>
-      <main className="m-4">
+      <main className="m-sm-4 m-2">
         <ProfileDetails
           profile={profile}
           formData={formData}
           setFormData={setFormData}
         />
 
-        <div className="container">
-          <h3>
-            {profile.userRef === "sellers"
-              ? "Items for sale"
-              : "Your reserved items:"}
-          </h3>
+        <Container>
+          <Row className="my-3 mx-1 justify-content-between w-100">
+            <Col className="col-auto">
+              <h3>
+                {profile.userRef === "sellers"
+                  ? "Items for sale"
+                  : "Your reserved items:"}
+              </h3>
+            </Col>
+            {profile.userRef === "sellers" && (
+              <Col className="col-2 d-flex justify-content-end ">
+                <Link to={`/create-painting/${auth.currentUser.uid}`} className="btn btn-primary">
+                  <BiImageAdd className="fs-3" />
+                </Link>
+              </Col>
+            )}
+          </Row>
+
           {paintings.length !== 0 ? (
-            <section className="row row-cols-1 row-cols-sm-2 align-items-start">
+            <Row className="row-cols-1 row-cols-sm-2 align-items-start">
               {paintings?.map((painting) => (
-                <div key={painting?.id} className="col">
-                  <div className="card">
+                <Col key={painting?.id} className="p-2">
+                  <Card>
                     <button
-                      className="border-0 align-self-end"
+                      className="border-0 align-self-end "
                       onClick={() => onDelete(painting)}
                     >
                       <AiOutlineClose className="img-fluid align-self-end" />
@@ -111,16 +125,16 @@ const Profile = () => {
                               .join("-")}`
                       }
                     >
-                      <PaintingCard painting={painting} lgImg={false} />
+                      <PaintingCard painting={painting} ShopItem={false} />
                     </Link>
-                  </div>
-                </div>
+                  </Card>
+                </Col>
               ))}
-            </section>
+            </Row>
           ) : (
             <p>No items to show</p>
           )}
-        </div>
+        </Container>
       </main>
     </Layout>
   );

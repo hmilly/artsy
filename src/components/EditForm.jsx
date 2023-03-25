@@ -25,11 +25,11 @@ const FormBody = ({ formData, setFormData }) => {
   };
 
   return (
-    <Form.Group>
-      <Row className="justify-content-center mb-4">
-        <Form.Label className="formForm.Label mb-1">Name</Form.Label>
+    <>
+      <Form.Group className="d-flex flex-column mb-3">
+        <Form.Label className=" mb-1">Name</Form.Label>
         <Form.Control
-          className="border border-primary border-2 rounded-pill text-center w-75"
+          className=" border-primary border-2 rounded-pill text-center"
           type="text"
           id="name"
           value={name}
@@ -38,11 +38,11 @@ const FormBody = ({ formData, setFormData }) => {
           minLength="5"
           required
         />
-      </Row>
-      <Row className="justify-content-center mb-4">
-        <Form.Label className="formForm.Label mb-1">Price in £</Form.Label>
+      </Form.Group>
+      <Form.Group className="d-flex flex-column mb-3">
+        <Form.Label className=" mb-1">Price in £</Form.Label>
         <Form.Control
-          className="border border-primary border-2 rounded-pill text-center w-75"
+          className=" border-primary border-2 rounded-pill text-center"
           type="number"
           id="price"
           value={price}
@@ -51,11 +51,12 @@ const FormBody = ({ formData, setFormData }) => {
           max="500"
           required
         />
-      </Row>
-      <Row className="justify-content-center mb-4">
-        <Form.Label className="formForm.Label mb-1">Description</Form.Label>
+      </Form.Group>
+      <Form.Group className="d-flex flex-column mb-3">
+        <Form.Label className=" mb-1">Description</Form.Label>
         <Form.Control
-          className="border border-primary border-2 rounded form-control w-75 h-50"
+          as="textarea"
+          className=" border-primary border-2 rounded form-control"
           type="textarea"
           id="description"
           value={description}
@@ -64,12 +65,12 @@ const FormBody = ({ formData, setFormData }) => {
           minLength="10"
           required
         />
-      </Row>
+      </Form.Group>
 
-      <Row className="justify-content-center mb-4 mx-1">
-        <Form.Label className="formForm.Label mb-1">Image</Form.Label>
+      <Form.Group className="d-flex flex-column mb-3">
+        <Form.Label className=" mb-1">Image</Form.Label>
         <Form.Control
-          className="border border-primary border-2 rounded w-100 py-1 form-control-file"
+          className=" border-primary border-2 rounded w-100 py-1 form-control-file"
           type="file"
           id="image"
           onChange={onMutate}
@@ -78,8 +79,8 @@ const FormBody = ({ formData, setFormData }) => {
           multiple
           required
         />
-      </Row>
-    </Form.Group>
+      </Form.Group>
+    </>
   );
 };
 

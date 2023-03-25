@@ -43,7 +43,7 @@ const ShopItem = () => {
       <main className="container p-1">
         <div className="col">
           <div className="card border-0 flex-column-reverse">
-            <PaintingCard painting={paintingData} lgImg={true} />
+            <PaintingCard painting={paintingData} ShopItem={true} />
           </div>
         </div>
       </main>

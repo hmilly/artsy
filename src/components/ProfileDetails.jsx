@@ -62,11 +62,11 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         {profile?.userRef.charAt(0).toUpperCase() +
           profile.userRef.slice(1, -1)}
       </h3>
-      <Form className="p-3 mx-auto">
+      <Form className="p-1 p-sm-3 mx-auto">
         <Form.Control
           type="text"
           id="name"
-          className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+          className={` rounded-pill py-1 px-3 px-sm-5 mb-3 ${
             !changeDetails ? "" : "bg-secondary bg-opacity-25"
           }`}
           disabled={!changeDetails}
@@ -76,7 +76,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         <Form.Control
           type="tel"
           id="number"
-          className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+          className={` rounded-pill py-1 px-3 px-sm-5 mb-3 ${
             !changeDetails ? "" : "bg-secondary bg-opacity-25"
           }`}
           disabled={!changeDetails}
@@ -86,7 +86,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         <Form.Control
           type="text"
           id="email"
-          className={`border border-light rounded-pill py-1 px-5 mb-3 ${
+          className={`rounded-pill py-1 px-3 px-sm-5 mb-3 ${
             !changeDetails ? "" : "bg-secondary bg-opacity-25"
           }`}
           disabled={!changeDetails}

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import Layout from "../components/Layout";
 import { fetchAllSellerData } from "../fns/fetchFns";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const Home = () => {
   const [allSellersData, setAllSellersData] = useState(null);
@@ -33,33 +34,33 @@ const Home = () => {
   }
   return (
     <Layout>
-      <main className="container">
-        <div className="py-2 row row-cols-1 row-cols-lg-2 g-3">
+      <Container as="main">
+        <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
           {allSellersData?.map((seller, i) => (
-            <div key={i}>
+            <Col key={i}>
               <div
                 className="rounded"
                 style={{
                   background: `url(${seller.paintings[0].imgUrl}) left 50% / cover no-repeat`,
                 }}
               >
-                <div className="card align-items-center py-2 text-bg-dark bg-opacity-25">
-                  <h3 className="card-title">{seller.name}</h3>
-                  <p className="card-body text-center d-none d-sm-block">
+                <Card className="align-items-center py-2 text-bg-dark bg-opacity-25">
+                  <Card.Title>{seller.name}</Card.Title>
+                  <Card.Body className="text-center d-none d-sm-block">
                     {seller.about.slice(0, 140) + "..."}
-                  </p>
+                  </Card.Body>
                   <Link
                     to={`shop/${seller.id}`}
                     className="btn btn-primary border-dark fw-bolder"
                   >
                     Go to shop
                   </Link>
-                </div>
+                </Card>
               </div>
-            </div>
+            </Col>
           ))}
-        </div>
-      </main>
+        </Row>
+      </Container>
     </Layout>
   );
 };

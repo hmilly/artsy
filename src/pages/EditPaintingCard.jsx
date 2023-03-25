@@ -11,8 +11,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { uuidv4 } from "@firebase/util";
 import { db } from "../firebase.config";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Spinner from "../components/Spinner";
-import FormBody from "../components/FormBody";
+import EditForm from "../components/EditForm";
 import Layout from "../components/Layout";
 
 const EditPaintingCard = () => {
@@ -88,29 +89,23 @@ const EditPaintingCard = () => {
   }
   return (
     <Layout>
-      <main className="d-flex flex-column flex-md-row">
-        <form onSubmit={onSubmit} className="col p-2 ">
-          <FormBody formData={formData} setFormData={setFormData} />
-          <div className="text-center">
-            <button type="submit" className="btn w-75 btn-success rounded-pill">
+      <Container as="main" className="h-100">
+        <Row className="flex-column flex-md-row gap-3">
+          <Col as="form" onSubmit={onSubmit} className="p-2">
+            <EditForm formData={formData} setFormData={setFormData} />
+            <Button type="submit" className="btn-success my-2 w-100">
               Edit Listing
-            </button>
-          </div>
-        </form>
-        <div className="col my-auto">
-          <img
-            src={paintingData?.imgUrl}
-            alt={paintingData?.name}
-            className="img-fluid"
-          />
-        </div>
-        {/* <div className="card-body">
-        <h4 className="card-title">{paintingData?.name}</h4>
-        <section>
-          <p>Price {paintingData?.price}</p>
-        </section>
-      </div> */}
-      </main>
+            </Button>
+          </Col>
+          <Col>
+            <img
+              src={paintingData?.imgUrl}
+              alt={paintingData?.name}
+              className="img-fluid"
+            />
+          </Col>
+        </Row>
+      </Container>
     </Layout>
   );
 };
