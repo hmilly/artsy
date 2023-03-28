@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { uuidv4 } from "@firebase/util";
 import { db } from "../firebase.config";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Spinner from "../components/Spinner";
+import LoadingState from "../components/LoadingState";
 import EditForm from "../components/EditForm";
 import Layout from "../components/Layout";
 
@@ -85,7 +85,7 @@ const EditPaintingCard = () => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>

@@ -3,7 +3,7 @@ import { getDoc, doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase.config";
 import { Card } from "react-bootstrap";
-import Spinner from "../components/Spinner";
+import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
 import EditForm from "../components/EditForm";
 import { Form, Button } from "react-bootstrap";
@@ -19,7 +19,7 @@ const CreatePaintingCard = () => {
   const [loading, setLoading] = useState(false);
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>

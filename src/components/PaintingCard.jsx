@@ -2,8 +2,7 @@ import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 import { db } from "../firebase.config";
 import { updateDoc, doc } from "firebase/firestore";
-import { Card, Button } from "react-bootstrap";
-
+import { Card, Button, Accordion } from "react-bootstrap";
 import { fetchPaintingById } from "../fns/fetchFns";
 
 const PaintingCard = ({ painting, ShopItem }) => {
@@ -23,11 +22,10 @@ const PaintingCard = ({ painting, ShopItem }) => {
   };
 
   return (
-    <div className="d-flex flex-column h-100 align-items-center gap-4 p-1">
-      <section className="d-flex w-100 align-items-center justify-content-around">
-        <Card.Title className="text-center m-0">{painting?.name}</Card.Title>
+    <Card className="gap-4 p-1">
+      <div className="w-100 d-flex flex-sm-row flex-columnalign-items-center justify-content-around gap-2">
+        <Card.Title className=" m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
-
         {ShopItem && (
           <Button
             onClick={() => updateReserved(painting.id)}
@@ -38,20 +36,23 @@ const PaintingCard = ({ painting, ShopItem }) => {
             {painting?.reservedById ? "Reserved" : "Reserve"}
           </Button>
         )}
-      </section>
-
+      </div>
       {ShopItem && painting?.description && (
-        <p className="w-75 border border-secondary p-2 rounded">
-          {painting?.description}
-        </p>
+        <Card.Text className="m-sm-4 mx-0">
+          <Accordion defaultActiveKey="0" className=" p-2 rounded">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header> About:</Accordion.Header>
+              <Accordion.Body>{painting?.description}</Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </Card.Text>
       )}
-
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className={`img-fluid ${ShopItem ? "w-75" : "w-50"}`}
+        className={`img-fluid ${ShopItem ? "w-75" : "w-50"} align-self-center`}
       />
-    </div>
+    </Card>
   );
 };
 

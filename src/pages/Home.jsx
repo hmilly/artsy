@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Spinner from "../components/Spinner";
+import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
 import { fetchAllSellerData } from "../fns/fetchFns";
 import { Container, Row, Col, Card } from "react-bootstrap";
@@ -30,7 +30,7 @@ const Home = () => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>
@@ -39,15 +39,16 @@ const Home = () => {
           {allSellersData?.map((seller, i) => (
             <Col key={i}>
               <div
-                className="rounded"
+                className="rounded d-flex"
                 style={{
-                  background: `url(${seller.paintings[0].imgUrl}) left 50% / cover no-repeat`,
+                  background: `url(${seller.paintings[0].imgUrl}) center 50% / cover no-repeat`,
+                  height: "230px",
                 }}
               >
-                <Card className="align-items-center py-2 text-bg-dark bg-opacity-25">
+                <Card className="align-items-center justify-content-around py-2 text-bg-dark bg-opacity-25 w-100">
                   <Card.Title>{seller.name}</Card.Title>
                   <Card.Body className="text-center d-none d-sm-block">
-                    {seller.about.slice(0, 140) + "..."}
+                    {seller.about.slice(0, 230) + "..."}
                   </Card.Body>
                   <Link
                     to={`shop/${seller.id}`}

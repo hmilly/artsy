@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
-import Spinner from "../components/Spinner";
+import LoadingState from "../components/LoadingState";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -74,7 +74,7 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>
@@ -96,7 +96,10 @@ const Profile = () => {
             </Col>
             {profile.userRef === "sellers" && (
               <Col className="col-2 d-flex justify-content-end ">
-                <Link to={`/create-painting/${auth.currentUser.uid}`} className="btn btn-primary">
+                <Link
+                  to={`/create-painting/${auth.currentUser.uid}`}
+                  className="btn btn-primary"
+                >
                   <BiImageAdd className="fs-3" />
                 </Link>
               </Col>

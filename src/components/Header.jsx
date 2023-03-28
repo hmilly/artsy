@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Nav from "react-bootstrap/Nav";
 import { AiFillHome } from "react-icons/ai";
 import { BsFillPersonVcardFill } from "react-icons/bs";
+import { Nav } from "react-bootstrap";
 
 const Header = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -53,13 +53,19 @@ const Header = () => {
         ) : (
           <>
             <Nav.Item as="li">
-              <Link to="/sign-in" className="text-decoration-underline p-1 text-dark">
+              <Link
+                to="/sign-in"
+                className="text-decoration-underline p-1 text-dark"
+              >
                 Sign in
               </Link>
             </Nav.Item>
 
             <Nav.Item as="li">
-              <Link to="/sign-up" className="text-decoration-underline p-1 text-dark">
+              <Link
+                to="/sign-up"
+                className="text-decoration-underline p-1 text-dark"
+              >
                 Sign Up
               </Link>
             </Nav.Item>

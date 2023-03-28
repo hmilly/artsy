@@ -3,7 +3,8 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
-import googleIcon from "../assets/svg/googleIcon.svg";
+import { FcGoogle } from "react-icons/fc";
+import { Button } from "react-bootstrap";
 
 const Oauth = () => {
   const navigate = useNavigate();
@@ -34,14 +35,14 @@ const Oauth = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <p>Sign {location.pathname === "/sign-up" ? "up" : "in"} with: </p>
-      <button
-        className="d-flex flex-column align-items-center justify-content-center m-5"
-        onClick={onGoogleClick}
-      >
-        <img className="w-50 h-50" src={googleIcon} alt="google" />
-      </button>
+    <div className="d-flex flex-column align-items-center  mb-5">
+      <p className="text-center">
+        Sign {location.pathname === "/sign-up" ? "up" : "in"} with google
+        instead:
+      </p>
+      <Button className="btn-dark" onClick={onGoogleClick}>
+        <FcGoogle className="img-fluid" />
+      </Button>
     </div>
   );
 };

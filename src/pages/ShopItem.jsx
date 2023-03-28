@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPaintingsArr } from "../fns/fetchFns";
 import { toast } from "react-toastify";
-import Spinner from "../components/Spinner";
+import { Container, Row, Col } from "react-bootstrap";
+import LoadingState from "../components/LoadingState";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
 
@@ -36,17 +37,19 @@ const ShopItem = () => {
   }, [params.sellerId, params.paintingData]);
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>
-      <main className="container p-1">
-        <div className="col">
-          <div className="card border-0 flex-column-reverse">
-            <PaintingCard painting={paintingData} ShopItem={true} />
-          </div>
-        </div>
-      </main>
+      <Container as="main" className="container p-1">
+        <Row>
+          <Col>
+            <div className="card border-0 flex-column-reverse">
+              <PaintingCard painting={paintingData} ShopItem={true} />
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </Layout>
   );
 };

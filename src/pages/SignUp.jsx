@@ -8,15 +8,12 @@ import {
 } from "firebase/auth";
 import { db } from "../firebase.config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
-import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Row, Col } from "react-bootstrap";
 import {
   AiFillEye,
   AiFillEyeInvisible,
   AiOutlineArrowRight,
 } from "react-icons/ai";
-
-import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import Oauth from "../components/Oauth";
 import Layout from "../components/Layout";
 
@@ -73,11 +70,11 @@ const SignUp = () => {
   return (
     <Layout>
       <Container as="main">
-        <h2>Welcome</h2>
-        <Form className="m-4" onSubmit={onSubmit}>
+        <h2 className="my-3">Welcome</h2>
+        <Form onSubmit={onSubmit}>
           <Form.Control
             type="text"
-            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
             placeholder="Name"
             id="name"
             value={formData.name}
@@ -86,7 +83,7 @@ const SignUp = () => {
           />
           <Form.Control
             type="email"
-            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
             placeholder="Email"
             id="email"
             value={formData.email}
@@ -95,15 +92,14 @@ const SignUp = () => {
           />
           <Form.Control
             type="tel"
-            className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
             placeholder="Phone Number"
             id="number"
             value={formData.number}
             onChange={onChange}
             required
           />
-
-          <div className="border border-primary border-2 rounded py-1 px-5 mb-3">
+          <div className="border border-primary border-1 rounded py-2 px-5 mb-3">
             <p>Please select which account you'd like to sign up for:</p>
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
@@ -117,7 +113,6 @@ const SignUp = () => {
                   id="radioTypeCustomer"
                   label="Customer"
                 />
-
                 <Form.Check
                   inline
                   type={type}
@@ -131,12 +126,8 @@ const SignUp = () => {
               </div>
             ))}
           </div>
-
           {userType === "sellers" && (
-            <Form.Group
-              controlId="exampleForm.ControlTextarea1"
-              className="border border-primary border-2 rounded py-2 px-4 mb-3"
-            >
+            <Form.Group className="border border-primary border-1 rounded py-2 px-4 mb-3">
               <Form.Label>
                 Introduce your shop by adding an about me:
               </Form.Label>
@@ -152,23 +143,18 @@ const SignUp = () => {
               />
             </Form.Group>
           )}
-
-          <Form.Group
-            className="d-flex
-            border border-primary border-2 rounded-pill py-1 px-5 w-100 mb-3"
-          >
+          <Form.Group className="border border-primary border-1 rounded-pill px-2 px-sm-5 py-1 gap-1 d-flex">
             <Form.Control
               type={showPassword ? "text" : "password"}
-              className="w-100 border-0"
+              className="border-0 p-1"
               placeholder="Password"
               id="password"
               value={formData.password}
               onChange={onChange}
               required
             />
-
             <button
-              className="btn btn-sm btn-dark rounded-pill "
+              className="btn btn-dark rounded-pill py-0"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -178,21 +164,23 @@ const SignUp = () => {
               )}
             </button>
           </Form.Group>
-
-          <div className="mt-5 d-flex justify-content-between align-items-center ">
-            <div className="fw-bolder">Click to sign up</div>
-            <button className="btn btn-sm btn-success rounded-pill py-2 px-3 ">
-              <AiOutlineArrowRight className="img-fluid" />
-            </button>
-          </div>
+          <Row className="my-5 justify-content-between align-items-center ">
+            <Col className="col-auto">
+              <p className="m-0">Click to sign up</p>
+            </Col>
+            <Col className="col-auto">
+              <button className="btn btn-success rounded-pill">
+                <AiOutlineArrowRight className="img-fluid" />
+              </button>
+            </Col>
+          </Row>
         </Form>
         <Oauth />
-
-        <div className="row justify-content-center">
-          <Link to="/sign-in" className="btn fw-bold row text-success w-auto">
+        <Row>
+          <Link to="/sign-in" className="btn fw-bold text-success">
             Sign In Instead
           </Link>
-        </div>
+        </Row>
       </Container>
     </Layout>
   );
