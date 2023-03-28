@@ -25,7 +25,8 @@ h2 {
 }
 
 h3,
-h4 {
+h4,
+svg  {
   font-size: 1.5rem;
 }
 
@@ -33,8 +34,7 @@ h5,
 h6,
 p,
 button,
-a,
-svg {
+a{
   font-size: 1.2rem;
 }
 

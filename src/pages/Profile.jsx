@@ -90,7 +90,7 @@ const Profile = () => {
             <Col className="col-auto">
               <h3>
                 {profile.userRef === "sellers"
-                  ? "Items for sale"
+                  ? "Items for sale (click card to edit listing)"
                   : "Your reserved items:"}
               </h3>
             </Col>

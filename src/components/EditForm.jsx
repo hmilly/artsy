@@ -1,4 +1,4 @@
-import { Row, Form } from "react-bootstrap";
+import {  Form } from "react-bootstrap";
 
 const FormBody = ({ formData, setFormData }) => {
   const { description, name, price } = formData;

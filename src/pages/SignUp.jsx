@@ -9,6 +9,13 @@ import {
 import { db } from "../firebase.config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import { Container, Form } from "react-bootstrap";
+import {
+  AiFillEye,
+  AiFillEyeInvisible,
+  AiOutlineArrowRight,
+} from "react-icons/ai";
+
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import Oauth from "../components/Oauth";
 import Layout from "../components/Layout";
@@ -65,10 +72,10 @@ const SignUp = () => {
 
   return (
     <Layout>
-      <main className="container">
+      <Container as="main">
         <h2>Welcome</h2>
-        <form className="m-4 row" onSubmit={onSubmit}>
-          <input
+        <Form className="m-4" onSubmit={onSubmit}>
+          <Form.Control
             type="text"
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Name"
@@ -77,7 +84,7 @@ const SignUp = () => {
             onChange={onChange}
             required
           />
-          <input
+          <Form.Control
             type="email"
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Email"
@@ -86,7 +93,7 @@ const SignUp = () => {
             onChange={onChange}
             required
           />
-          <input
+          <Form.Control
             type="tel"
             className="border border-primary border-2 rounded-pill py-1 px-5 mb-3"
             placeholder="Phone Number"
@@ -98,78 +105,87 @@ const SignUp = () => {
 
           <div className="border border-primary border-2 rounded py-1 px-5 mb-3">
             <p>Please select which account you'd like to sign up for:</p>
+            {["radio"].map((type) => (
+              <div key={`default-${type}`} className="mb-3">
+                <Form.Check
+                  inline
+                  type={type}
+                  name="user_type"
+                  value="users"
+                  required
+                  onChange={(e) => setUserType(e.target.value)}
+                  id="radioTypeCustomer"
+                  label="Customer"
+                />
 
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="user_type"
-                value="users"
-                onChange={(e) => setUserType(e.target.value)}
-                required
-                id="radioTypeCustomer"
-              />
-              <label className="form-check-label" htmlFor="radioTypeCustomer">
-                Customer
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="user_type"
-                value="sellers"
-                onChange={(e) => setUserType(e.target.value)}
-                required
-                id="radioTypeSeller"
-              />
-              <label className="form-check-label" htmlFor="radioTypeSeller">
-                Seller
-              </label>
-            </div>
+                <Form.Check
+                  inline
+                  type={type}
+                  name="user_type"
+                  value="sellers"
+                  required
+                  onChange={(e) => setUserType(e.target.value)}
+                  id="radioTypeSeller"
+                  label="Seller"
+                />
+              </div>
+            ))}
           </div>
+
           {userType === "sellers" && (
-            <div className="border border-primary border-2 rounded py-1 px-5 mb-3 ">
-              <p>Introduce your shop by adding an about me:</p>
-              <textarea
-                className="form-control h-50"
+            <Form.Group
+              controlId="exampleForm.ControlTextarea1"
+              className="border border-primary border-2 rounded py-2 px-4 mb-3"
+            >
+              <Form.Label>
+                Introduce your shop by adding an about me:
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                className="form-control h-75"
                 style={{ resize: "none" }}
                 type="text"
                 value={formData.description}
                 onChange={onChange}
                 id="description"
+                rows={4}
               />
-            </div>
+            </Form.Group>
           )}
-          <div className="px-0">
-            <span
-              className="d-flex
+
+          <Form.Group
+            className="d-flex
             border border-primary border-2 rounded-pill py-1 px-5 w-100 mb-3"
+          >
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              className="w-100 border-0"
+              placeholder="Password"
+              id="password"
+              value={formData.password}
+              onChange={onChange}
+              required
+            />
+
+            <button
+              className="btn btn-sm btn-dark rounded-pill "
+              onClick={() => setShowPassword(!showPassword)}
             >
-              <input
-                type={showPassword ? "text" : "password"}
-                className="w-100 border-0"
-                placeholder="Password"
-                id="password"
-                value={formData.password}
-                onChange={onChange}
-                required
-              />
-              <img
-                src={visibilityIcon}
-                alt="show password"
-                className="btn"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            </span>
-            <div className="mt-5 d-flex justify-content-between align-items-center ">
-              <div className="fw-bolder">Click to sign up</div>
-              <button className="btn btn-sm btn-success rounded-pill">
-                <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-              </button>
-            </div>
+              {showPassword ? (
+                <AiFillEyeInvisible className="img-fluid" />
+              ) : (
+                <AiFillEye className="img-fluid" />
+              )}
+            </button>
+          </Form.Group>
+
+          <div className="mt-5 d-flex justify-content-between align-items-center ">
+            <div className="fw-bolder">Click to sign up</div>
+            <button className="btn btn-sm btn-success rounded-pill py-2 px-3 ">
+              <AiOutlineArrowRight className="img-fluid" />
+            </button>
           </div>
-        </form>
+        </Form>
         <Oauth />
 
         <div className="row justify-content-center">
@@ -177,7 +193,7 @@ const SignUp = () => {
             Sign In Instead
           </Link>
         </div>
-      </main>
+      </Container>
     </Layout>
   );
 };
