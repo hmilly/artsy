@@ -1,6 +1,6 @@
 import {  Form } from "react-bootstrap";
 
-const FormBody = ({ formData, setFormData }) => {
+const PaintingForm = ({ formData, setFormData }) => {
   const { description, name, price } = formData;
 
   const onMutate = (e) => {
@@ -84,4 +84,4 @@ const FormBody = ({ formData, setFormData }) => {
   );
 };
 
-export default FormBody;
+export default PaintingForm;

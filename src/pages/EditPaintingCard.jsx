@@ -13,7 +13,7 @@ import { uuidv4 } from "@firebase/util";
 import { db } from "../firebase.config";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
-import EditForm from "../components/EditForm";
+import PaintingForm from "../components/PaintingForm";
 import Layout from "../components/Layout";
 
 const EditPaintingCard = () => {
@@ -92,7 +92,7 @@ const EditPaintingCard = () => {
       <Container as="main" className="h-100">
         <Row className="flex-column flex-md-row gap-3">
           <Col as="form" onSubmit={onSubmit} className="p-2">
-            <EditForm formData={formData} setFormData={setFormData} />
+            <PaintingForm formData={formData} setFormData={setFormData} />
             <Button type="submit" className="btn-success my-2 w-100">
               Edit Listing
             </Button>

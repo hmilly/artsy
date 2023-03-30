@@ -35,6 +35,12 @@ const Home = () => {
   return (
     <Layout>
       <Container as="main">
+        <Row as='section'>
+          <h2>Welcome to Artsy</h2>
+          <p>Please take the time to look around at our registered sellers art pages below.</p>
+          <p>If there is anything you like the look of, please 'Reserve' the item and the seller will be in touch!</p>
+          <p>Head to the profile page to manage your saved items.</p>
+        </Row>
         <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
           {allSellersData?.map((seller, i) => (
             <Col key={i}>

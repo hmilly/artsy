@@ -25,7 +25,7 @@ const SignIn = () => {
     }));
   };
 
-  const onSubmit = async (e) => {
+  const sumbitForm = async (e) => {
     e.preventDefault();
 
     try {
@@ -53,10 +53,10 @@ const SignIn = () => {
 
   return (
     <Layout>
-      <Container as='main'>
+      <Container as="main">
         <h2 className="my-3">Welcome Back!</h2>
-        
-        <Form onSubmit={onSubmit}>
+
+        <Form onSubmit={sumbitForm}>
           <Form.Control
             type="email"
             className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
@@ -67,7 +67,7 @@ const SignIn = () => {
             required
           />
 
-          <Form.Group className="border border-primary border-1 rounded-pill px-2 px-sm-5 py-1 gap-1 d-flex ">
+          <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5 gap-1 d-flex ">
             <Form.Control
               type={showPassword ? "text" : "password"}
               className="border-0 p-1"
@@ -79,7 +79,10 @@ const SignIn = () => {
             />
             <button
               className="btn btn-dark rounded-pill py-0"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}
             >
               {showPassword ? (
                 <AiFillEyeInvisible className="img-fluid" />

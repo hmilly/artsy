@@ -143,7 +143,7 @@ const SignUp = () => {
               />
             </Form.Group>
           )}
-          <Form.Group className="border border-primary border-1 rounded-pill px-2 px-sm-5 py-1 gap-1 d-flex">
+          <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5  d-flex">
             <Form.Control
               type={showPassword ? "text" : "password"}
               className="border-0 p-1"
@@ -155,7 +155,10 @@ const SignUp = () => {
             />
             <button
               className="btn btn-dark rounded-pill py-0"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}
             >
               {showPassword ? (
                 <AiFillEyeInvisible className="img-fluid" />
