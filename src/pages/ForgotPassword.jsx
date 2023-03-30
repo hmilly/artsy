@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
-import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import Layout from "../components/Layout";
 
@@ -28,32 +28,35 @@ const ForgotPassword = () => {
   return (
     <Layout>
       <Container as="main">
-        <h2>Forgot Password</h2>
-        <Row as="form" onSubmit={onSubmit} className="m-2 m-sm-4">
+        <h2 className="my-3">Forgot Password</h2>
+        <Form onSubmit={onSubmit}>
           <Form.Control
             type="email"
-            className="border-primary border-2 rounded-pill py-1 px-5 mb-3"
+            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
             placeholder="Email"
             id="email"
             value={email}
             onChange={onChange}
+            required
           />
-        </Row>
-        <Row className="m-2 m-sm-4 justify-content-end">
-          <Link to="/sign-in" className="btn fw-bold row text-success w-auto">
-            Sign in Instead
-          </Link>
-        </Row>
-        <Row className="m-2 m-sm-4 flex-row mt-4 justify-content-between align-items-center">
-          <Col className="col-auto">
-            <div className="fw-bolder">Send Reset Link</div>
-          </Col>
-          <Col className="d-flex justify-content-end col-3">
-            <button className="btn btn-success rounded-pill">
-              <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-            </button>
-          </Col>
-        </Row>
+
+          <Row className="justify-content-end">
+            <Link to="/sign-in" className="btn fw-bold text-success w-auto">
+              Sign in Instead
+            </Link>
+          </Row>
+
+          <Row className="my-5 justify-content-between align-items-center ">
+            <Col className="col-auto">
+              <p className="m-0">Click to sign in</p>
+            </Col>
+            <Col className="col-auto">
+              <button className="btn btn-success rounded-pill">
+                <AiOutlineArrowRight className="img-fluid" />
+              </button>
+            </Col>
+          </Row>
+        </Form>
       </Container>
     </Layout>
   );

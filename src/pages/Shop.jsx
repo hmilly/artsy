@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
-import Accordion from "react-bootstrap/esm/Accordion";
-import Spinner from "../components/Spinner";
+import { Container, Col, Row, Accordion } from "react-bootstrap";
+import LoadingState from "../components/LoadingState";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
 
@@ -38,30 +38,29 @@ const Shop = () => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>
-      <main className="container p-2">
+      <Container as="main" className="p-2">
         <h3 className="mb-5">
           <span className="fw-bold"> Seller: </span>
           {seller?.name.charAt(0).toUpperCase() + seller?.name.slice(1)}
         </h3>
-        <Accordion defaultActiveKey="0" flush>
+        <Accordion defaultActiveKey="0" className="my-4">
           <Accordion.Item eventKey="0">
             <Accordion.Header> About:</Accordion.Header>
             <Accordion.Body>{seller.about}</Accordion.Body>
           </Accordion.Item>
         </Accordion>
-
         <h3 className="mb-4">Items for sale:</h3>
-        <div className="row row-cols-1 row-cols-sm-2 align-items-start">
+        <Row className="row-cols-1 row-cols-sm-2 align-items-start">
           {paintings.length === 0 ? (
             <p>No items in the shop yet!</p>
           ) : (
             paintings?.map((painting) => (
-              <div key={painting?.id} className="col">
-                <div className="card">
+              <Col key={painting?.id} className="mb-2">
+                <div className="border border-secondary rounded">
                   <Link
                     className="h-100 link-dark text-decoration-none "
                     to={`${painting.name.toLowerCase().split(" ").join("-")}`}
@@ -69,11 +68,11 @@ const Shop = () => {
                     <PaintingCard painting={painting} lgImg={false} />
                   </Link>
                 </div>
-              </div>
+              </Col>
             ))
           )}
-        </div>
-      </main>
+        </Row>
+      </Container>
     </Layout>
   );
 };

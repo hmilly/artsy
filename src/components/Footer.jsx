@@ -9,6 +9,9 @@ const Footer = () => {
       <Link to="/privacy-policy" onClick={() => window.scrollTo(0, 0)}>
         Privacy Policy
       </Link>
+      <Link to="/about" onClick={() => window.scrollTo(0, 0)}>
+        About
+      </Link>
     </footer>
   );
 };

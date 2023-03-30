@@ -3,10 +3,10 @@ import { getDoc, doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase.config";
 import { Card } from "react-bootstrap";
-import Spinner from "../components/Spinner";
+import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
-import EditForm from "../components/EditForm";
-import { Form, Button } from "react-bootstrap";
+import PaintingForm from "../components/PaintingForm";
+import { Form, Button, Container } from "react-bootstrap";
 
 const CreatePaintingCard = () => {
   const params = useParams();
@@ -19,16 +19,19 @@ const CreatePaintingCard = () => {
   const [loading, setLoading] = useState(false);
 
   if (loading) {
-    return <Spinner />;
+    return <LoadingState />;
   }
   return (
     <Layout>
-      <Form>
-        <EditForm formData={formData} setFormData={setFormData} />
-        <Button type="submit" className="btn-success my-2 w-100">
-          Upload
-        </Button>
-      </Form>
+      <Container>
+        <h2 className="my-5">Create Painting card</h2>
+        <Form>
+          <PaintingForm formData={formData} setFormData={setFormData} />
+          <Button type="submit" className="btn-success my-2 w-100">
+            Upload
+          </Button>
+        </Form>
+      </Container>
     </Layout>
   );
 };
