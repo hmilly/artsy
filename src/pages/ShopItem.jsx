@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPaintingsArr } from "../fns/fetchFns";
 import { toast } from "react-toastify";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -42,13 +42,9 @@ const ShopItem = () => {
   return (
     <Layout>
       <Container as="main" className="container p-1">
-        <Row>
-          <Col>
-            <div className="card border-0 flex-column-reverse">
-              <PaintingCard painting={paintingData} ShopItem={true} />
-            </div>
-          </Col>
-        </Row>
+        <div>
+          <PaintingCard painting={paintingData} ShopItem={true} />
+        </div>
       </Container>
     </Layout>
   );

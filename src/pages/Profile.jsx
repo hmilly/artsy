@@ -85,7 +85,6 @@ const Profile = () => {
           formData={formData}
           setFormData={setFormData}
         />
-
         <Row className="my-3 mx-1 justify-content-between w-100">
           <Col className="col-auto">
             <h3>
@@ -105,7 +104,6 @@ const Profile = () => {
             </Col>
           )}
         </Row>
-
         {paintings.length !== 0 ? (
           <Row className="row-cols-1 row-cols-sm-2 align-items-start">
             {paintings?.map((painting) => (

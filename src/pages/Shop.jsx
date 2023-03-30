@@ -47,14 +47,12 @@ const Shop = () => {
           <span className="fw-bold"> Seller: </span>
           {seller?.name.charAt(0).toUpperCase() + seller?.name.slice(1)}
         </h3>
-
         <Accordion defaultActiveKey="0" className="my-4">
           <Accordion.Item eventKey="0">
             <Accordion.Header> About:</Accordion.Header>
             <Accordion.Body>{seller.about}</Accordion.Body>
           </Accordion.Item>
         </Accordion>
-
         <h3 className="mb-4">Items for sale:</h3>
         <Row className="row-cols-1 row-cols-sm-2 align-items-start">
           {paintings.length === 0 ? (
@@ -62,7 +60,7 @@ const Shop = () => {
           ) : (
             paintings?.map((painting) => (
               <Col key={painting?.id} className="mb-2">
-                <div>
+                <div className="border border-secondary rounded">
                   <Link
                     className="h-100 link-dark text-decoration-none "
                     to={`${painting.name.toLowerCase().split(" ").join("-")}`}

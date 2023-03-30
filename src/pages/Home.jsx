@@ -35,11 +35,20 @@ const Home = () => {
   return (
     <Layout>
       <Container as="main">
-        <Row as='section'>
-          <h2>Welcome to Artsy</h2>
-          <p>Please take the time to look around at our registered sellers art pages below.</p>
-          <p>If there is anything you like the look of, please 'Reserve' the item and the seller will be in touch!</p>
-          <p>Head to the profile page to manage your saved items.</p>
+        <Row as="section" className="row-cols-1">
+          <Col as="h2" className="mb-4">
+            Welcome to Artsy
+          </Col>
+          <Col as="p">
+            Please take the time to look around at our registered sellers art
+            pages below.
+          </Col>
+          <Col as="p">
+            If there is anything you like the look of, please 'Reserve' the item
+            and the seller will be in touch!
+          </Col>
+          <Col as="p">Head to the profile page to manage your saved items.</Col>
+          <Col as="p">Enjoy!</Col>
         </Row>
         <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
           {allSellersData?.map((seller, i) => (

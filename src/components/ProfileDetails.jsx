@@ -45,7 +45,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
 
   return (
     <Container as='section' className="border border-success border-2 rounded my-4 mx-auto">
-      <Row className="justify-content-between p-3">
+      <Row className="justify-content-center justify-content-sm-between  p-3">
         <p className="w-auto">Personal Details</p>
         <a
           className="btn fw-bold row text-success w-auto mx-1"

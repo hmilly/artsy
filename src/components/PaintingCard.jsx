@@ -22,8 +22,8 @@ const PaintingCard = ({ painting, ShopItem }) => {
   };
 
   return (
-    <Card className="gap-4 p-1">
-      <div className="w-100 d-flex flex-sm-row flex-columnalign-items-center justify-content-around gap-2">
+    <Card className="gap-4 p-1 border-0">
+      <div className="w-100 d-flex flex-sm-row flex-column align-items-center justify-content-around gap-2">
         <Card.Title className=" m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
         {ShopItem && (

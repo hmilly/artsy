@@ -24,6 +24,7 @@ const CreatePaintingCard = () => {
   return (
     <Layout>
       <Container>
+        <h2 className="my-5">Create Painting card</h2>
         <Form>
           <PaintingForm formData={formData} setFormData={setFormData} />
           <Button type="submit" className="btn-success my-2 w-100">

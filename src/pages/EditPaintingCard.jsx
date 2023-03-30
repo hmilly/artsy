@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { uuidv4 } from "@firebase/util";
 import { db } from "../firebase.config";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import PaintingForm from "../components/PaintingForm";
 import Layout from "../components/Layout";
@@ -89,19 +89,25 @@ const EditPaintingCard = () => {
   }
   return (
     <Layout>
-      <Container as="main" className="h-100">
-        <Row className="flex-column flex-md-row gap-3">
-          <Col as="form" onSubmit={onSubmit} className="p-2">
-            <PaintingForm formData={formData} setFormData={setFormData} />
-            <Button type="submit" className="btn-success my-2 w-100">
-              Edit Listing
-            </Button>
+      <Container as="main">
+        <h2 className="my-5">Edit Painting card</h2>
+        <Row className="flex-column flex-md-row ">
+          <Col>
+            <Form
+              onSubmit={onSubmit}
+              className="h-100 d-flex flex-column justify-content-between"
+            >
+              <PaintingForm formData={formData} setFormData={setFormData} />
+              <Button type="submit" className="btn-success my-2 w-100">
+                Edit Listing
+              </Button>
+            </Form>
           </Col>
           <Col>
             <img
               src={paintingData?.imgUrl}
               alt={paintingData?.name}
-              className="img-fluid"
+              className="img-fluid p-2"
             />
           </Col>
         </Row>
