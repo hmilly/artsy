@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
 import { doc, deleteDoc } from "firebase/firestore";
@@ -7,7 +7,7 @@ import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
@@ -15,10 +15,8 @@ import Layout from "../components/Layout";
 
 const Profile = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-
   const [profile, setProfile] = useState({});
   const [paintings, setPaintings] = useState([]);
   const [formData, setFormData] = useState({
@@ -57,10 +55,6 @@ const Profile = () => {
     };
     getPaintings();
   }, [profile]);
-
-  const onEdit = (id) => {
-    navigate(`/edit-listing/${id}`);
-  };
 
   const onDelete = async (painting) => {
     if (window.confirm(`Are you sure you want to delete ${painting.name}?`)) {
