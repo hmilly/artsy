@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { AiFillHome } from "react-icons/ai";
@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  useEffect(() => {
+  useMemo(() => {
     auth.currentUser !== null ? setUserLoggedIn(true) : setUserLoggedIn(false);
   }, [auth.currentUser]);
 

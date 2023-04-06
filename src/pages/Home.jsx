@@ -61,7 +61,10 @@ const Home = () => {
                 }}
               >
                 <Card className="align-items-center justify-content-around py-2 text-bg-dark bg-opacity-25 w-100">
-                  <Card.Title>{seller.name}</Card.Title>
+                  <Card.Title>
+                    {seller?.name.charAt(0).toUpperCase() +
+                      seller?.name.slice(1)}
+                  </Card.Title>
                   <Card.Body className="text-center d-none d-sm-block">
                     {seller.about.slice(0, 230) + "..."}
                   </Card.Body>

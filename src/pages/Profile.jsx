@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
@@ -56,9 +56,26 @@ const Profile = () => {
     getPaintings();
   }, [profile]);
 
-  const onDelete = async (painting) => {
+  const onDeleteForUser = async (painting) => {
+    if (
+      window.confirm(`Are you sure you want to unreserve ${painting.name}?`)
+    ) {
+      const paintingRef = doc(db, "paintings", painting.id);
+      await updateDoc(paintingRef, {
+        reservedById: "",
+      });
+      const updatedPaintings = paintings.filter(
+        (paintings) => paintings.id !== painting.id
+      );
+      setPaintings(updatedPaintings);
+      toast.success(`Successfully unreserved painting`);
+    }
+  };
+
+  const onDeleteForSeller = async (painting) => {
     if (window.confirm(`Are you sure you want to delete ${painting.name}?`)) {
       await deleteDoc(doc(db, "paintings", painting.id));
+
       const updatedPaintings = paintings.filter(
         (paintings) => paintings.id !== painting.id
       );
@@ -105,7 +122,11 @@ const Profile = () => {
                 <Card>
                   <button
                     className="border-0 align-self-end "
-                    onClick={() => onDelete(painting)}
+                    onClick={() =>
+                      profile.userRef === "sellers"
+                        ? onDeleteForSeller(painting)
+                        : onDeleteForUser(painting)
+                    }
                   >
                     <AiOutlineClose className="img-fluid align-self-end" />
                   </button>

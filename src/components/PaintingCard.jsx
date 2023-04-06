@@ -1,28 +1,50 @@
+import { useRef, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
-import { Card, Button, Accordion } from "react-bootstrap";
-import { fetchPaintingById } from "../fns/fetchFns";
+import {
+  Card,
+  Button,
+  Accordion,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 
 const PaintingCard = ({ painting, ShopItem }) => {
+  const [reserved, setReserved] = useState(
+    painting?.reservedById === "" ? false : true
+  );
   const auth = getAuth();
-  console.log(auth.currentUser.uid);
+  const ref = useRef();
 
   const updateReserved = async (id) => {
-    console.log("click");
-
     if (auth.currentUser) {
-      // const userRef = doc(db, user.userRef, auth.currentUser.uid);
-      // await updateDoc(userRef, {
-      //   name: formData.name,
-      //   number: formData.number,
-      //   email: formData.email,
-      // });
-      // return await db
-      //   .collection("paintings")
-      //   .doc(id)
-      //   .update({ reservedById: auth.currentUser.uid });
+      // if no user signed in, exit
+      // otherwise get painting data bby id
+      const paintingRef = doc(db, "paintings", id);
+      const paintingSnap = await getDoc(paintingRef);
+
+      const pRef = await paintingSnap.data();
+
+      if (pRef.reservedById === auth.currentUser?.uid) {
+        // if user has same id as painting seller
+        // unreserve item
+        await updateDoc(paintingRef, {
+          reservedById: "",
+        });
+        toast.success(`Successfully unreserved item`);
+        setReserved(false);
+      } else if (pRef.reservedById === "") {
+        // if painting unreserved, update painting adding user id
+        await updateDoc(paintingRef, {
+          reservedById: auth.currentUser?.uid,
+        });
+        toast.success(`Reserved item!`);
+        setReserved(true);
+      } else {
+        toast.error("Painting has all ready been reserved!");
+      }
     } else {
       toast.error("No user logged in please, try again later");
     }
@@ -33,26 +55,32 @@ const PaintingCard = ({ painting, ShopItem }) => {
       <div className="w-100 d-flex flex-sm-row flex-column align-items-center justify-content-around gap-2">
         <Card.Title className=" m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
-        {ShopItem && (
-          <Button
-            onClick={() => updateReserved(painting.id)}
-            disabled={
-              auth.currentUser
-                ? auth.currentUser.uid === painting.sellerId
-                  ? true
-                  : false
-                : false
-            }
-            className={`${
-              auth.currentUser
-                ? painting?.reservedById !== ""
-                  ? "btn-danger"
-                  : "btn-success"
-                : "btn-secondary"
-            }`}
-          >
-            {painting?.reservedById ? "Reserved" : "Reserve"}
-          </Button>
+        {ShopItem && auth.currentUser?.uid !== painting?.sellerId && (
+          <div ref={ref}>
+            <OverlayTrigger
+              placement="bottom"
+              container={ref}
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Tooltip id="button-tooltip" className="position-absolute">
+                  {!reserved
+                    ? "Click to register your interest"
+                    : painting.reservedById === auth.currentUser?.uid
+                    ? "Reserved by you!"
+                    : "Reserved by another user"}
+                </Tooltip>
+              }
+            >
+              <Button
+                variant="success"
+                onClick={() => updateReserved(painting.id)}
+                disabled={auth.currentUser ? false : true}
+                className={`${reserved ? "btn-danger" : "btn-success"}`}
+              >
+                {reserved ? "Reserved" : "Reserve"}
+              </Button>
+            </OverlayTrigger>
+          </div>
         )}
       </div>
       {ShopItem && painting?.description && (
