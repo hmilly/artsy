@@ -1,4 +1,4 @@
-import {  Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const PaintingForm = ({ formData, setFormData }) => {
   const { description, name, price } = formData;
@@ -13,7 +13,11 @@ const PaintingForm = ({ formData, setFormData }) => {
       boolean = false;
     }
     if (e.target.files) {
-      setFormData((prevState) => ({ ...prevState, image: e.target.files }));
+      setFormData((prevState) => ({
+        ...prevState,
+        imgData: e.target.files,
+        imgUrl: URL.createObjectURL(e.target.files[0]),
+      }));
     }
 
     if (!e.target.files) {
@@ -29,7 +33,7 @@ const PaintingForm = ({ formData, setFormData }) => {
       <Form.Group className="d-flex flex-column mb-3">
         <Form.Label className=" mb-1">Name</Form.Label>
         <Form.Control
-          className=" border-primary border-2 rounded-pill text-center"
+          className=" border-primary border-2 rounded-pill"
           type="text"
           id="name"
           value={name}
@@ -42,7 +46,7 @@ const PaintingForm = ({ formData, setFormData }) => {
       <Form.Group className="d-flex flex-column mb-3">
         <Form.Label className=" mb-1">Price in £</Form.Label>
         <Form.Control
-          className=" border-primary border-2 rounded-pill text-center"
+          className=" border-primary border-2 rounded-pill"
           type="number"
           id="price"
           value={price}
@@ -56,7 +60,7 @@ const PaintingForm = ({ formData, setFormData }) => {
         <Form.Label className=" mb-1">Description</Form.Label>
         <Form.Control
           as="textarea"
-          className=" border-primary border-2 rounded form-control"
+          className="border-primary border-2 rounded form-control"
           type="textarea"
           id="description"
           value={description}

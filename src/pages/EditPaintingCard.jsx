@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, updateDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import {
   getStorage,
   ref,
@@ -15,30 +15,31 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import PaintingForm from "../components/PaintingForm";
 import Layout from "../components/Layout";
+import { fetchPaintingById } from "../fns/fetchFns";
 
 const EditPaintingCard = () => {
   const params = useParams();
   const auth = getAuth();
   const navigate = useNavigate();
-  const [paintingData, setPaintingData] = useState({});
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     imgUrl: "",
+    imgData: "",
   });
 
-  useEffect(() => {
-    const fetchPainting = async () => {
-      const paintingsRef = doc(db, "paintings", params.paintingId);
-      const paintingSnap = await getDoc(paintingsRef);
 
-      setPaintingData(paintingSnap.data());
-      setFormData(paintingSnap.data());
+  console.log(auth.currentUser.displayName)
+  
+  useEffect(() => {
+    const getPaintingData = async () => {
+      const painting = await fetchPaintingById(params.paintingId);
+      setFormData(painting);
       setLoading(false);
     };
-    fetchPainting();
+    getPaintingData();
   }, [params.paintingId]);
 
   const onSubmit = async (e) => {
@@ -49,9 +50,9 @@ const EditPaintingCard = () => {
     const storeImage = async (image) => {
       return new Promise((res, rej) => {
         const storage = getStorage();
-        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+        const fileName = `${params.paintingId}-${formData.name}-${uuidv4()}`;
 
-        const storageRef = ref(storage, "images/" + fileName);
+        const storageRef = ref(storage, "paintings/" + fileName);
 
         const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -67,7 +68,7 @@ const EditPaintingCard = () => {
       });
     };
 
-    const img = await storeImage(formData.imgUrl);
+    const img = await storeImage(formData.imgData);
 
     const formDataCopy = {
       ...formData,
@@ -76,6 +77,7 @@ const EditPaintingCard = () => {
     };
 
     delete formDataCopy.imgUrl;
+    delete formDataCopy.imgData;
 
     const paintingRef = doc(db, "paintings", params.paintingId);
     await updateDoc(paintingRef, formDataCopy);
@@ -105,8 +107,8 @@ const EditPaintingCard = () => {
           </Col>
           <Col>
             <img
-              src={paintingData?.imgUrl}
-              alt={paintingData?.name}
+              src={formData?.imgUrl}
+              alt={formData?.name}
               className="img-fluid p-2"
             />
           </Col>
