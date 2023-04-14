@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
@@ -12,9 +12,11 @@ import LoadingState from "../components/LoadingState";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
+import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 
 const Profile = () => {
   const auth = getAuth();
+  const storage = getStorage();
 
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
@@ -25,6 +27,7 @@ const Profile = () => {
     email: auth.currentUser.email,
   });
 
+  // get user by id
   useEffect(() => {
     const getProfile = async () => {
       try {
@@ -40,6 +43,7 @@ const Profile = () => {
     getProfile();
   }, [auth.currentUser.uid]);
 
+  // get users paintings
   useEffect(() => {
     const getPaintings = async () => {
       try {
@@ -56,6 +60,7 @@ const Profile = () => {
     getPaintings();
   }, [profile]);
 
+  // unreserve painting for normal user
   const onDeleteForUser = async (painting) => {
     if (
       window.confirm(`Are you sure you want to unreserve ${painting.name}?`)
@@ -72,15 +77,24 @@ const Profile = () => {
     }
   };
 
+  // delete painting for seller
   const onDeleteForSeller = async (painting) => {
     if (window.confirm(`Are you sure you want to delete ${painting.name}?`)) {
+      // delete from painting collection
       await deleteDoc(doc(db, "paintings", painting.id));
-
+      // update paintings shown on page
       const updatedPaintings = paintings.filter(
         (paintings) => paintings.id !== painting.id
       );
       setPaintings(updatedPaintings);
       toast.success(`Successfully deleted listing`);
+
+      const imgRef = ref(
+        storage,
+        `paintings/${painting.name.replace(" ", "-")}-${auth.currentUser.uid}`
+      );
+      // if painting url came from firebase storage, delete item from here too.
+      deleteObject(imgRef).catch((e) => console.log(e));
     }
   };
 
