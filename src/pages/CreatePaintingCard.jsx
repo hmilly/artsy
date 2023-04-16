@@ -84,7 +84,7 @@ const CreatePaintingCard = () => {
 
     const paintingRef = await addDoc(collection(db, "paintings"), formDataCopy);
     setLoading(false);
-    toast.success("Painting saved");
+    toast.success(`Painting card for ${formData.name} created`);
     navigate(`/profile`);
   };
 

@@ -80,7 +80,6 @@ const PaintingForm = ({ formData, setFormData }) => {
           onChange={onMutate}
           max="1"
           accept=".jpg,.png,.jpeg"
-          required
         />
       </Form.Group>
     </>
