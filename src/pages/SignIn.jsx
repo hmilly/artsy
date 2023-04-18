@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { fetchUserById } from "../fns/fetchFns";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import {
   AiFillEye,
@@ -27,7 +26,6 @@ const SignIn = () => {
 
   const sumbitForm = async (e) => {
     e.preventDefault();
-
     try {
       const auth = getAuth();
       const userCredentials = await signInWithEmailAndPassword(
@@ -37,13 +35,8 @@ const SignIn = () => {
       );
 
       if (userCredentials.user) {
-        fetchUserById(auth.currentUser.uid)
-          .then((user) => {
-            auth.currentUser.displayName = user.name;
-            auth.currentUser.email = user.email;
-          })
-          .then(() => navigate("/profile"))
-          .catch((e) => toast.error("Couldn't find user"));
+        localStorage.setItem("user", `${auth.currentUser.uid}`);
+        navigate("/profile");
       }
     } catch (error) {
       toast.error("Bad user credentials");

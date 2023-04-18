@@ -29,7 +29,10 @@ function App() {
 
           <Route exact path="/shop/:sellerId" element={<Shop />} />
           <Route path="/shop/:sellerId/:paintingName" element={<ShopItem />} />
-          <Route path="/create-painting/:sellerId" element={<CreatePaintingCard />} />
+          <Route
+            path="/create-painting/:sellerId"
+            element={<CreatePaintingCard />}
+          />
           <Route
             path="/edit-painting/:paintingId"
             element={<EditPaintingCard />}
@@ -42,7 +45,11 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </Router>
-      <ToastContainer />
+      <ToastContainer
+        position="top-left"
+        autoClose={1000}
+      
+      />
     </>
   );
 }

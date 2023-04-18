@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { getAuth } from "firebase/auth";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
@@ -15,21 +14,20 @@ const PaintingCard = ({ painting, ShopItem }) => {
   const [reserved, setReserved] = useState(
     painting?.reservedById === "" ? false : true
   );
-  const auth = getAuth();
+  const [userId] = useState(localStorage.getItem("user"));
+
   const ref = useRef();
 
   const updateReserved = async (id) => {
-    if (auth.currentUser) {
-      // if no user signed in, exit
-      // otherwise get painting data bby id
+    // if no user signed in (using localstorage)
+    if (userId !== null) {
+      // otherwise get painting data by id
       const paintingRef = doc(db, "paintings", id);
       const paintingSnap = await getDoc(paintingRef);
-
       const pRef = await paintingSnap.data();
-
-      if (pRef.reservedById === auth.currentUser?.uid) {
-        // if user has same id as painting seller
-        // unreserve item
+      // if user has same id as painting seller
+      // unreserve item
+      if (pRef.reservedById === userId) {
         await updateDoc(paintingRef, {
           reservedById: "",
         });
@@ -38,7 +36,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
       } else if (pRef.reservedById === "") {
         // if painting unreserved, update painting adding user id
         await updateDoc(paintingRef, {
-          reservedById: auth.currentUser?.uid,
+          reservedById: userId,
         });
         toast.success(`Reserved item!`);
         setReserved(true);
@@ -55,7 +53,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
       <div className="w-100 d-flex flex-sm-row flex-column align-items-center justify-content-around gap-2">
         <Card.Title className=" m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
-        {ShopItem && auth.currentUser?.uid !== painting?.sellerId && (
+        {ShopItem && userId !== painting?.sellerId && (
           <div ref={ref}>
             <OverlayTrigger
               placement="bottom"
@@ -65,7 +63,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
                 <Tooltip id="button-tooltip" className="position-absolute">
                   {!reserved
                     ? "Click to register your interest"
-                    : painting.reservedById === auth.currentUser?.uid
+                    : painting.reservedById === userId
                     ? "Reserved by you!"
                     : "Reserved by another user"}
                 </Tooltip>
@@ -74,7 +72,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
               <Button
                 variant="success"
                 onClick={() => updateReserved(painting.id)}
-                disabled={auth.currentUser ? false : true}
+                disabled={userId !== null ? false : true}
                 className={`${reserved ? "btn-danger" : "btn-success"}`}
               >
                 {reserved ? "Reserved" : "Reserve"}

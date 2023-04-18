@@ -1,21 +1,20 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { AiFillHome } from "react-icons/ai";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { Nav } from "react-bootstrap";
 
 const Header = () => {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userId] = useState(localStorage.getItem("user"));
 
-  const navigate = useNavigate();
   const auth = getAuth();
+  const navigate = useNavigate();
 
-  useMemo(() => {
-    auth.currentUser !== null ? setUserLoggedIn(true) : setUserLoggedIn(false);
-  }, [auth.currentUser]);
-
-  const logOut = () => auth.signOut().then(() => navigate("/"));
+  const logOut = () => {
+    localStorage.removeItem("user");
+    auth.signOut().then(() => navigate("/"));
+  };
 
   return (
     <header className="mb-4 navbar sticky-top navbar-light bg-light flex-sm-row flex-column">
@@ -33,7 +32,7 @@ const Header = () => {
           </Link>
         </Nav.Item>
 
-        {userLoggedIn ? (
+        {userId !== null ? (
           <>
             <Nav.Item as="li">
               <Link to="/profile" className="p-3 text-dark">
