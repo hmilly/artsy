@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, updateDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 import { toast } from "react-toastify";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
@@ -18,27 +19,28 @@ import { fetchPaintingById } from "../fns/fetchFns";
 
 const EditPaintingCard = () => {
   const auth = getAuth();
+  const storage = getStorage();
   const isMounted = useRef(true);
   const params = useParams();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    imgUrl: "",
-    imgData: "",
-    reservedById: "",
-    sellerId: "",
-  });
+  const [prevRef, setPrevRef] = useState("");
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     if (isMounted) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          setFormData({ ...formData, sellerId: user.uid });
+          const getPaintingData = async () => {
+            const painting = await fetchPaintingById(params.paintingId);
+            setFormData({ imgData: "", ...painting });
+            setPrevRef(painting.imgUrl);
+            setLoading(false);
+          };
+          getPaintingData();
         } else {
+          toast.error("You cannot edit that listing");
           navigate("/sign-in");
         }
       });
@@ -47,23 +49,7 @@ const EditPaintingCard = () => {
       isMounted.current = false;
     };
     // eslint-disable-next-line
-  }, [isMounted]);
-
-  useEffect(() => {
-    const getPaintingData = async () => {
-      const painting = await fetchPaintingById(params.paintingId);
-      setLoading(false);
-      if (painting.sellerId === auth.currentUser.uid) {
-        setFormData({ ...formData, ...painting });
-      } else {
-        toast.error("You cannot edit that listing");
-        navigate("/");
-      }
-    };
-    getPaintingData();
-  }, [params.paintingId]);
-
-  console.log(formData);
+  }, [isMounted, params.paintingId]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -92,11 +78,16 @@ const EditPaintingCard = () => {
     };
 
     let formDataCopy = { ...formData, timestamp: serverTimestamp() };
-    // need to update name of painting in storage file
-    // in case of  name change
-    // in case of new picture added
 
     if (formData.imgData !== "") {
+      // delete old painting from storage bucket
+      const imgRef = ref(
+        storage,
+        `paintings/${prevRef.split("%2F").pop().split("?")[0]}`
+      );
+      deleteObject(imgRef).catch((e) => console.log(e));
+
+      // upload new painting
       const img = await storeImage(formData.imgData[0]);
       formDataCopy = { ...formDataCopy, imgUrl: img };
     }

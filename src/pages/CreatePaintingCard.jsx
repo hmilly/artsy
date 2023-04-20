@@ -82,7 +82,7 @@ const CreatePaintingCard = () => {
     };
     delete formDataCopy.imgData;
 
-    const paintingRef = await addDoc(collection(db, "paintings"), formDataCopy);
+    await addDoc(collection(db, "paintings"), formDataCopy);
     setLoading(false);
     toast.success(`Painting card for ${formData.name} created`);
     navigate(`/profile`);

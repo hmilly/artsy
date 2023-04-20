@@ -88,12 +88,11 @@ const Profile = () => {
       );
       setPaintings(updatedPaintings);
       toast.success(`Successfully deleted listing`);
-
+      // also delete from strorage bucket
       const imgRef = ref(
         storage,
-        `paintings/${painting.name.replace(" ", "-")}-${auth.currentUser.uid}`
+        `paintings/${painting.imgUrl.split("%2F").pop().split("?")[0]}`
       );
-      // if painting url came from firebase storage, delete item from here too.
       deleteObject(imgRef).catch((e) => console.log(e));
     }
   };
