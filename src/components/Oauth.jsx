@@ -35,7 +35,7 @@ const Oauth = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center  mb-5">
+    <div className="d-flex flex-column align-items-center mb-5">
       <p className="text-center">
         Sign {location.pathname === "/sign-up" ? "up" : "in"} with google
         instead:

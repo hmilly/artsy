@@ -69,7 +69,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         <Form.Control
           type="text"
           id="name"
-          className={` rounded-pill py-1 px-3 px-sm-5 mb-3 ${
+          className={`rounded-pill py-1 px-3 px-sm-5 mb-3 ${
             !changeDetails ? "" : "bg-secondary bg-opacity-25"
           }`}
           disabled={!changeDetails}
@@ -79,7 +79,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
         <Form.Control
           type="tel"
           id="number"
-          className={` rounded-pill py-1 px-3 px-sm-5 mb-3 ${
+          className={`rounded-pill py-1 px-3 px-sm-5 mb-3 ${
             !changeDetails ? "" : "bg-secondary bg-opacity-25"
           }`}
           disabled={!changeDetails}

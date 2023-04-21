@@ -6,10 +6,10 @@ import { BsFillPersonVcardFill } from "react-icons/bs";
 import { Nav } from "react-bootstrap";
 
 const Header = () => {
-  const [userId] = useState(localStorage.getItem("user"));
-
   const auth = getAuth();
   const navigate = useNavigate();
+
+  const [userId] = useState(localStorage.getItem("user"));
 
   const logOut = () => {
     localStorage.removeItem("user");
@@ -17,9 +17,12 @@ const Header = () => {
   };
 
   return (
-    <header className="mb-4 navbar sticky-top navbar-light bg-light flex-sm-row flex-column">
-      <Link to="/" className="navbar-brand text-center m-0 w-25 flex-fill">
-        Artsy
+    <header className="navbar fixed-top bg-dark flex-sm-row flex-column">
+      <Link
+        to="/"
+        className="navbar-brand text-center text-light m-0 w-25 flex-fill"
+      >
+        <h1 className="d-inline">Artsy</h1>
       </Link>
       <Nav
         activeKey="/home"
@@ -27,21 +30,21 @@ const Header = () => {
         className="p-2 gap-1 flex-fill align-items-center justify-content-end"
       >
         <Nav.Item as="li">
-          <Link to="/" className="p-3 text-dark">
+          <Link to="/" className="p-3 text-light">
             <AiFillHome className="img-fluid" />
           </Link>
         </Nav.Item>
-
         {userId !== null ? (
+          // user logged in - show profile btn & log out
           <>
             <Nav.Item as="li">
-              <Link to="/profile" className="p-3 text-dark">
+              <Link to="/profile" className="p-3 text-light">
                 <BsFillPersonVcardFill className="img-fluid " />
               </Link>
             </Nav.Item>
             <Nav.Item as="li">
               <button
-                className="btn btn-link-dark text-decoration-underline"
+                className="btn btn-link link-light text-decoration-underline"
                 type="button"
                 onClick={logOut}
               >
@@ -50,11 +53,12 @@ const Header = () => {
             </Nav.Item>
           </>
         ) : (
+          // no user logged in - sign in / out btn
           <>
             <Nav.Item as="li">
               <Link
                 to="/sign-in"
-                className="text-decoration-underline p-1 text-dark"
+                className="text-decoration-underline p-1 text-light"
               >
                 Sign in
               </Link>
@@ -63,7 +67,7 @@ const Header = () => {
             <Nav.Item as="li">
               <Link
                 to="/sign-up"
-                className="text-decoration-underline p-1 text-dark"
+                className="text-decoration-underline p-1 text-light"
               >
                 Sign Up
               </Link>
