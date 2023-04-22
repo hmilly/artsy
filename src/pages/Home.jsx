@@ -24,11 +24,6 @@ const Home = () => {
     getData();
   }, []);
 
-  const click = (e, seller) => {
-    e.preventDefault();
-    console.log(seller);
-  };
-
   if (loading) {
     return <LoadingState />;
   }

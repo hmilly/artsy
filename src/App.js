@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
+import Paintings from "./pages/Paintings";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
 import ShopItem from "./pages/ShopItem";
@@ -22,6 +23,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/paintings" element={<Paintings />} />
 
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
@@ -45,11 +47,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </Router>
-      <ToastContainer
-        position="top-left"
-        autoClose={1000}
-      
-      />
+      <ToastContainer position="top-left" autoClose={1000} />
     </>
   );
 }

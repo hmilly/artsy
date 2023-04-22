@@ -3,17 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
 import PaintingForm from "../components/PaintingForm";
 import Layout from "../components/Layout";
+import { storeImage } from "../fns/fetchFns";
 
 const CreatePaintingCard = () => {
   const auth = getAuth();
@@ -52,28 +47,7 @@ const CreatePaintingCard = () => {
     setLoading(true);
 
     // store image in firebase
-    const storeImage = async (image) => {
-      return new Promise((res, rej) => {
-        const storage = getStorage();
-        const fileName = `${formData.name.trim().replace(" ", "-")}-${
-          auth.currentUser.uid
-        }`;
-
-        const storageRef = ref(storage, "paintings/" + fileName);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-        uploadTask.on(
-          "state_changed",
-          () => console.log("Upload is running"),
-          (error) => rej(error),
-          () =>
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              res(downloadURL);
-            })
-        );
-      });
-    };
-
-    const img = await storeImage(formData.imgData[0]);
+    const img = await storeImage(formData.imgData[0], formData.name);
 
     const formDataCopy = {
       ...formData,

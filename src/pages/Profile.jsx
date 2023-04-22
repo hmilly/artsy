@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { getStorage, ref, deleteObject } from "firebase/storage";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
@@ -12,11 +11,14 @@ import LoadingState from "../components/LoadingState";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
-import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
+import {
+  fetchPaintingsArr,
+  fetchUserById,
+  deleteFromStorage,
+} from "../fns/fetchFns";
 
 const Profile = () => {
   const auth = getAuth();
-  const storage = getStorage();
 
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState({});
@@ -41,7 +43,7 @@ const Profile = () => {
     };
 
     getProfile();
-  }, [auth.currentUser.uid]);
+  }, [auth.currentUser.uid, formData]);
 
   // get users paintings
   useEffect(() => {
@@ -89,11 +91,7 @@ const Profile = () => {
       setPaintings(updatedPaintings);
       toast.success(`Successfully deleted listing`);
       // also delete from strorage bucket
-      const imgRef = ref(
-        storage,
-        `paintings/${painting.imgUrl.split("%2F").pop().split("?")[0]}`
-      );
-      deleteObject(imgRef).catch((e) => console.log(e));
+      await deleteFromStorage(painting.imgUrl);
     }
   };
 

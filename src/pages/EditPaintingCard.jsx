@@ -3,23 +3,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
 import { toast } from "react-toastify";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import PaintingForm from "../components/PaintingForm";
 import Layout from "../components/Layout";
-import { fetchPaintingById } from "../fns/fetchFns";
+import {
+  fetchPaintingById,
+  deleteFromStorage,
+  storeImage,
+} from "../fns/fetchFns";
 
 const EditPaintingCard = () => {
   const auth = getAuth();
-  const storage = getStorage();
   const isMounted = useRef(true);
   const params = useParams();
   const navigate = useNavigate();
@@ -55,40 +51,14 @@ const EditPaintingCard = () => {
     e.preventDefault();
     setLoading(true);
 
-    // store image in firebase
-    const storeImage = async (image) => {
-      return new Promise((res, rej) => {
-        const storage = getStorage();
-        const fileName = `${formData.name.trim().replace(" ", "-")}-${
-          auth.currentUser.uid
-        }`;
-
-        const storageRef = ref(storage, "paintings/" + fileName);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-        uploadTask.on(
-          "state_changed",
-          () => console.log("Upload is running"),
-          (error) => rej(error),
-          () =>
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              res(downloadURL);
-            })
-        );
-      });
-    };
-
     let formDataCopy = { ...formData, timestamp: serverTimestamp() };
 
     if (formData.imgData !== "") {
       // delete old painting from storage bucket
-      const imgRef = ref(
-        storage,
-        `paintings/${prevRef.split("%2F").pop().split("?")[0]}`
-      );
-      deleteObject(imgRef).catch((e) => console.log(e));
+      deleteFromStorage(prevRef);
 
       // upload new painting
-      const img = await storeImage(formData.imgData[0]);
+      const img = await storeImage(formData.imgData[0], formData.name);
       formDataCopy = { ...formDataCopy, imgUrl: img };
     }
 
