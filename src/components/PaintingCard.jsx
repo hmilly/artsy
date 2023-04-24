@@ -49,7 +49,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
   };
 
   return (
-    <Card className="gap-4 p-1 border-0">
+    <Card className="gap-4 p-1 border-0 h-100">
       <div className="w-100 d-flex flex-sm-row flex-column align-items-center justify-content-around gap-2">
         <Card.Title className=" m-0">{painting?.name}</Card.Title>
         <Card.Text className="m-0">Price £{painting?.price}</Card.Text>
@@ -92,7 +92,7 @@ const PaintingCard = ({ painting, ShopItem }) => {
       <img
         src={painting?.imgUrl}
         alt={painting?.name}
-        className={`img-fluid ${ShopItem ? "w-75" : "w-50"} align-self-center`}
+        className={`img-fluid w-75 m-auto`}
       />
     </Card>
   );

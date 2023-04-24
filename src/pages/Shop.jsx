@@ -54,13 +54,13 @@ const Shop = () => {
           </Accordion.Item>
         </Accordion>
         <h3 className="mb-4">Items for sale:</h3>
-        <Row className="row-cols-1 row-cols-sm-2 align-items-start">
+        <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
           {paintings.length === 0 ? (
             <p>No items in the shop yet!</p>
           ) : (
             paintings?.map((painting) => (
               <Col key={painting?.id} className="mb-2">
-                <div className="border border-secondary rounded">
+                <div className="border border-secondary rounded h-100">
                   <Link
                     className="h-100 link-dark text-decoration-none "
                     to={`${painting.name.toLowerCase().split(" ").join("-")}`}
