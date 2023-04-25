@@ -4,19 +4,19 @@ import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
 import { fetchPaintingsCollection } from "../fns/fetchFns";
-import { Container, Row, Col, Form, button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import PaintingCard from "../components/PaintingCard";
-import { BiSearch } from "react-icons/bi";
+import PaintingsPgFilters from "../components/PaintingsPgFilters";
 
 const Paintings = () => {
-  const [allPaintings, setAllPaintings] = useState(null);
+  const [paintings, setPaintings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchPaintingsCollection();
-        setAllPaintings(data);
+        setPaintings(data);
       } catch (e) {
         console.log(e);
         toast.error("Could not fetch paintings");
@@ -51,33 +51,10 @@ const Paintings = () => {
           <Col as="p">Enjoy!</Col>
         </Row>
 
-        <Row className="p-2 gap-2 row-cols-3">
-          <Form.Group className="col-4 border border-primary border-1 rounded-pill p-1 pe-1 ps-2 gap-1 d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search by name"
-              className="border-0 p-1"
-              aria-label="Search"
-            />
+        <PaintingsPgFilters setPaintings={setPaintings} paintings={paintings} />
 
-            <button className="btn btn-dark rounded-pill py-0">
-              <BiSearch />
-            </button>
-          </Form.Group>
-
-          <Form.Group className="col-7 border border-primary border-1 rounded-pill p-1 pe-1 ps-2 gap-1 d-flex justify-content-between align-items-center">
-            {["checkbox"].map((type) => (
-              <>
-                <Form.Check inline label="Abstract" type={type} />
-                <Form.Check inline label="Surreal" type={type} />
-                <Form.Check inline label="Colourful" type={type} />
-                <Form.Check inline label="Pop Art" type={type} />
-              </>
-            ))}
-          </Form.Group>
-        </Row>
         <Row className="py-2 row-cols-2 row-cols-lg-3 g-3">
-          {allPaintings?.slice(0, 4).map((painting) => (
+          {paintings?.map((painting) => (
             <Col key={painting?.id} className="mb-2">
               <div className="border border-secondary rounded h-100">
                 <Link
