@@ -6,7 +6,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
-import PaintingForm from "../components/PaintingForm";
+import SellerPaintingForm from "../components/SellerPaintingForm";
 import Layout from "../components/Layout";
 import { storeImage } from "../fns/fetchFns";
 
@@ -75,7 +75,7 @@ const CreatePaintingCard = () => {
               onSubmit={onSubmit}
               className="h-100 d-flex flex-column justify-content-between"
             >
-              <PaintingForm formData={formData} setFormData={setFormData} />
+              <SellerPaintingForm formData={formData} setFormData={setFormData} />
               <Button type="submit" className="btn-success my-2 w-100">
                 Upload
               </Button>

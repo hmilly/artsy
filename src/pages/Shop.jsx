@@ -33,10 +33,6 @@ const Shop = () => {
     getUserData();
   }, [params.sellerId]);
 
-  const updateSold = (id) => {
-    console.log(id);
-  };
-
   if (loading) {
     return <LoadingState />;
   }
