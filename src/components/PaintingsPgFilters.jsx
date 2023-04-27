@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { Row, Col, Form, Dropdown } from "react-bootstrap";
+import { Col, Form, Dropdown } from "react-bootstrap";
 
 const PaintingsPgFilters = ({ paintings, setPaintings }) => {
   const [allPaintings] = useState(paintings);
@@ -25,10 +25,7 @@ const PaintingsPgFilters = ({ paintings, setPaintings }) => {
   };
 
   return (
-    <Row
-      as="form"
-      className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
-    >
+    <>
       <Col className="mb-3">
         <Form.Group className="border border-primary border-1 rounded p-1 pe-1 ps-2 gap-1 d-flex">
           <BiSearch className="m-auto" />
@@ -154,7 +151,7 @@ const PaintingsPgFilters = ({ paintings, setPaintings }) => {
           </Dropdown.Menu>
         </Dropdown>
       </Col>
-    </Row>
+    </>
   );
 };
 

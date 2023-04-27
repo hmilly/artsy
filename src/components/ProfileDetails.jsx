@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getAuth, updateProfile, updateEmail } from "firebase/auth";
-import { updateDoc, doc, getDoc, deleteDoc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import { Container, Row, Form } from "react-bootstrap";
@@ -49,8 +49,8 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
       className="border border-success border-2 rounded my-4 mx-auto"
     >
       <Row className="justify-content-center justify-content-sm-between  p-3">
-        <p className="w-auto">Personal Details</p>
-        <a
+        <p className="w-auto my-auto">Personal Details</p>
+        <button
           className="btn fw-bold row text-success w-auto mx-1"
           onClick={() => {
             changeDetails && onSubmit();
@@ -58,7 +58,7 @@ const ProfileDetails = ({ profile, formData, setFormData }) => {
           }}
         >
           {changeDetails ? "Done" : "Change"}
-        </a>
+        </button>
       </Row>
       <h3 className="text-center">
         Account type:{" "}

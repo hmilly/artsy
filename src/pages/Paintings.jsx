@@ -34,26 +34,27 @@ const Paintings = () => {
       <Container as="main">
         <Row as="section" className="row-cols-1">
           <Col as="h2" className="mb-4">
-            Welcome to Artsy
+            Paintings
           </Col>
           <Col as="p">
-            Please take the time to look around at our registered sellers art
-            below.
+            Please take the time to look around at our listed paintings below
           </Col>
           <Col as="p">
-            If there is anything you like the look of, please take a closer
-            look. You can also 'Reserve' the item and the seller will be in
-            touch!
+            Remember to reserve anything you like the look of by clicking the
+            item, then head to your profile page to manage your saved items.
           </Col>
-          <Col as="p">
-            Head to your profile page to manage your saved items.
-          </Col>
-          <Col as="p">Enjoy!</Col>
         </Row>
 
-        <PaintingsPgFilters setPaintings={setPaintings} paintings={paintings} />
-
-        <Row className="py-2 row-cols-2 row-cols-lg-3 g-3">
+        <Row
+          as="form"
+          className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
+        >
+          <PaintingsPgFilters
+            setPaintings={setPaintings}
+            paintings={paintings}
+          />
+        </Row>
+        <Row className="py-2 row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
           {paintings?.map((painting) => (
             <Col key={painting?.id} className="mb-2">
               <div className="border border-secondary rounded h-100">
