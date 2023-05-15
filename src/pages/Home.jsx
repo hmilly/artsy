@@ -59,7 +59,7 @@ const Home = () => {
     <Layout>
       <Container as="main">
         {/* page intro */}
-        <Row as="section" className="row-cols-1">
+        <Row as="section" className="row-cols-1 mx-sm-5 text-center">
           <Col as="h2" className="mb-4">
             Welcome to Artsy
           </Col>
@@ -76,15 +76,17 @@ const Home = () => {
         </Row>
 
         {/* 1 Randomly highlighted artist */}
-        <Row className="my-5 border">
-          <h2>Artist of the month</h2>
+        <Row className="my-5 justify-content-center border rounded">
+          <h2>Featured Artist</h2>
           <Row className="py-2">
             <Col>
-              <SellersCard
-                seller={randomSeller}
-                about={randomSeller.about}
-                height="450px"
-              />
+              {randomSeller && (
+                <SellersCard
+                  seller={randomSeller}
+                  about={randomSeller.about}
+                  height="450px"
+                />
+              )}
             </Col>
           </Row>
         </Row>
