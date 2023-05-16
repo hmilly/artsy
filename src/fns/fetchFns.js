@@ -83,7 +83,7 @@ export const fetchPaintingsCollection = async () => {
   const docSnap = await getDocs(colRef);
 
   const arr = [];
-  docSnap.forEach((doc) => arr.push(doc.data()));
+  docSnap.forEach((doc) => arr.push({ ...doc.data(), id: doc.id }));
 
   return arr;
 };

@@ -7,7 +7,9 @@ import { fetchAllSellerData, fetchPaintingsCollection } from "../fns/fetchFns";
 import { Container, Row, Col } from "react-bootstrap";
 import SellersCard from "../components/SellersCard";
 import PaintingCard from "../components/PaintingCard";
-import PaintingsPgFilters from "../components/PaintingsPgFilters";
+import FilteredSearch from "../components/FilteredSearch";
+import FilteredRangeSlider from "../components/FilteredRangeSlider";
+import FilteredDropdown from "../components/FilteredDropdown";
 import WhatIsArtsyCard from "../components/WhatIsArtsyCard";
 
 const Home = () => {
@@ -96,7 +98,7 @@ const Home = () => {
           <h2>Sellers</h2>
           <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 justify-content-evenly">
             {allSellersData?.slice(0, 3).map((seller, i) => (
-              <Col key={i}>
+              <Col key={seller.id}>
                 <SellersCard seller={seller} />
               </Col>
             ))}
@@ -110,7 +112,12 @@ const Home = () => {
             as="form"
             className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
           >
-            <PaintingsPgFilters
+            <FilteredSearch setPaintings={setPaintings} paintings={paintings} />
+            <FilteredRangeSlider
+              setPaintings={setPaintings}
+              paintings={paintings}
+            />
+            <FilteredDropdown
               setPaintings={setPaintings}
               paintings={paintings}
             />

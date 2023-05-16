@@ -6,7 +6,9 @@ import Layout from "../components/Layout";
 import { fetchPaintingsCollection } from "../fns/fetchFns";
 import { Container, Row, Col } from "react-bootstrap";
 import PaintingCard from "../components/PaintingCard";
-import PaintingsPgFilters from "../components/PaintingsPgFilters";
+import FilteredSearch from "../components/FilteredSearch";
+import FilteredRangeSlider from "../components/FilteredRangeSlider";
+import FilteredDropdown from "../components/FilteredDropdown";
 
 const Paintings = () => {
   const [paintings, setPaintings] = useState(null);
@@ -49,10 +51,12 @@ const Paintings = () => {
           as="form"
           className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
         >
-          <PaintingsPgFilters
+          <FilteredSearch setPaintings={setPaintings} paintings={paintings} />
+          <FilteredRangeSlider
             setPaintings={setPaintings}
             paintings={paintings}
           />
+          <FilteredDropdown setPaintings={setPaintings} paintings={paintings} />
         </Row>
         <Row className="py-2 row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
           {paintings?.map((painting) => (
