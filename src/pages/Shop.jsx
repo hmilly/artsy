@@ -43,12 +43,12 @@ const Shop = () => {
           <span className="fw-bold"> Seller: </span>
           {seller?.name.charAt(0).toUpperCase() + seller?.name.slice(1)}
         </h3>
-        <Accordion defaultActiveKey="0" className="my-4">
-          <Accordion.Item eventKey="0">
-            <Accordion.Header> About:</Accordion.Header>
-            <Accordion.Body>{seller.about}</Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+        <Row className="my-5 bg-success bg-opacity-25 border rounded">
+          <h3 className="bg-success bg-opacity-50 py-3 text-decoration-underline text-center">
+            About the artist
+          </h3>
+          <p>{seller.about}</p>
+        </Row>
         <h3 className="mb-4">Items for sale:</h3>
         <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
           {paintings.length === 0 ? (

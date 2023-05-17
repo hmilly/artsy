@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { AiFillHome } from "react-icons/ai";
+import { AiFillHome, AiOutlinePicture } from "react-icons/ai";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { Nav } from "react-bootstrap";
 
@@ -34,6 +34,11 @@ const Header = () => {
             <AiFillHome className="img-fluid" />
           </Link>
         </Nav.Item>
+        <Nav.Item as="li">
+          <Link to="/paintings" className="p-3 text-light">
+            <AiOutlinePicture className="img-fluid" />
+          </Link>
+        </Nav.Item>
         {userId !== null ? (
           // user logged in - show profile btn & log out
           <>
@@ -53,7 +58,7 @@ const Header = () => {
             </Nav.Item>
           </>
         ) : (
-          // no user logged in - sign in / out btn
+          // no user logged in - sign in / up btn
           <>
             <Nav.Item as="li">
               <Link

@@ -12,7 +12,7 @@ const FilteredRangeSlider = ({ paintings, setPaintings }) => {
 
   return (
     <Col className="mb-3">
-      <Form.Group className="border border-primary border-1 rounded p-1 pe-1 ps-2 gap-1 d-flex flex-column">
+      <Form.Group className="bg-light border rounded border-secondary border-opacity-50  p-1 gap-1 d-flex flex-column">
         <Form.Label className="d-flex justify-content-between">
           <p className="m-0 p-0">£{costs[0]}</p>
           <p className="m-0 p-0">Price</p>

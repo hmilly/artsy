@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Paintings from "./pages/Paintings";
@@ -24,6 +23,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/paintings" element={<Paintings />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/about" element={<About />} />
 
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
@@ -31,6 +35,7 @@ function App() {
 
           <Route exact path="/shop/:sellerId" element={<Shop />} />
           <Route path="/shop/:sellerId/:paintingName" element={<ShopItem />} />
+
           <Route
             path="/create-painting/:sellerId"
             element={<CreatePaintingCard />}
@@ -39,12 +44,6 @@ function App() {
             path="/edit-painting/:paintingId"
             element={<EditPaintingCard />}
           />
-
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
       <ToastContainer position="top-left" autoClose={1000} />

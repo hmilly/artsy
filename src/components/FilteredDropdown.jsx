@@ -30,7 +30,7 @@ const FilteredDropdown = ({ paintings, setPaintings }) => {
       <Dropdown>
         <Dropdown.Toggle
           variant="light"
-          className=" border rounded border-primary w-100"
+          className="border rounded border-secondary border-opacity-50 w-100"
           id="dropdown-button"
         >
           Painting Style

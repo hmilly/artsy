@@ -17,7 +17,7 @@ const FilteredSearch = ({ paintings, setPaintings }) => {
 
   return (
     <Col className="mb-3">
-      <Form.Group className="border border-primary border-1 rounded p-1 pe-1 ps-2 gap-1 d-flex">
+      <Form.Group className="bg-light border rounded border-secondary border-opacity-50 p-1 pe-1 ps-2 gap-1 d-flex">
         <BiSearch className="m-auto" />
         <Form.Control
           type="search"

@@ -36,7 +36,6 @@ const EditPaintingCard = () => {
           };
           getPaintingData();
         } else {
-          toast.error("You cannot edit that listing");
           navigate("/sign-in");
         }
       });
