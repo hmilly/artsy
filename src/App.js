@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Paintings from "./pages/Paintings";
+import Sellers from "./pages/Sellers";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
 import ShopItem from "./pages/ShopItem";
@@ -23,6 +24,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/paintings" element={<Paintings />} />
+          <Route path="/sellers" element={<Sellers />} />
+          
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

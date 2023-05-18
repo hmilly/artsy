@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
 import { fetchAllSellerData, fetchPaintingsCollection } from "../fns/fetchFns";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Carousel } from "react-bootstrap";
 import SellersCard from "../components/SellersCard";
 import PaintingCard from "../components/PaintingCard";
 import FilteredSearch from "../components/FilteredSearch";
@@ -14,24 +14,14 @@ import WhatIsArtsyCard from "../components/WhatIsArtsyCard";
 
 const Home = () => {
   const [allSellersData, setAllSellersData] = useState(null);
-  const [randomSeller, setRandomSeller] = useState(null);
   const [paintings, setPaintings] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const randomNumber = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await fetchAllSellerData();
         setAllSellersData(data);
-
-        randomNumber(0, data.length);
-        setRandomSeller(data[randomNumber(0, data.length)]);
       } catch (e) {
         console.log(e);
         toast.error("Could not set user Data");
@@ -77,36 +67,20 @@ const Home = () => {
           <Col as="p">Enjoy!</Col>
         </Row>
 
-        {/* 1 Randomly highlighted artist */}
-        <Row className="my-5 justify-content-center border rounded">
-          <h2>Featured Artist</h2>
-          <Row className="py-2">
-            <Col>
-              {randomSeller && (
-                <SellersCard
-                  seller={randomSeller}
-                  about={randomSeller.about}
-                  height="450px"
-                />
-              )}
-            </Col>
-          </Row>
-        </Row>
-
-        {/* Sellers banner */}
-        <Row className="bg-secondary bg-opacity-25 py-5">
+        {/* All artists slideshow - pause on hover */}
+        <Row as="section" className="my-5">
           <h2>Sellers</h2>
-          <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 justify-content-evenly">
-            {allSellersData?.slice(0, 3).map((seller, i) => (
-              <Col key={seller.id}>
-                <SellersCard seller={seller} />
-              </Col>
+          <Carousel pause="hover">
+            {allSellersData?.map((seller) => (
+              <Carousel.Item key={seller.id}>
+                <SellersCard seller={seller} height="450px" />
+              </Carousel.Item>
             ))}
-          </Row>
+          </Carousel>
         </Row>
 
         {/* Paintings available */}
-        <Row className="py-5">
+        <Row as="section" className="my-5">
           <h2>Paintings</h2>
           <Row
             as="form"
