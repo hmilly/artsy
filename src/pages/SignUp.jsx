@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
 import { db } from "../firebase.config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
@@ -16,6 +15,7 @@ import {
 } from "react-icons/ai";
 import Oauth from "../components/Oauth";
 import Layout from "../components/Layout";
+import ProfileForm from "../components/ProfileForm";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +25,7 @@ const SignUp = () => {
     email: "",
     number: "",
     password: "",
-    description: "",
+    about: "",
   });
 
   const navigate = useNavigate();
@@ -72,33 +72,7 @@ const SignUp = () => {
       <Container as="main">
         <h2 className="my-3">Welcome</h2>
         <Form onSubmit={onSubmit}>
-          <Form.Control
-            type="text"
-            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
-            placeholder="Name"
-            id="name"
-            value={formData.name}
-            onChange={onChange}
-            required
-          />
-          <Form.Control
-            type="email"
-            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
-            placeholder="Email"
-            id="email"
-            value={formData.email}
-            onChange={onChange}
-            required
-          />
-          <Form.Control
-            type="tel"
-            className="border border-primary border-1 rounded-pill py-2 px-5 mb-3"
-            placeholder="Phone Number"
-            id="number"
-            value={formData.number}
-            onChange={onChange}
-            required
-          />
+          <ProfileForm formData={formData} onChange={onChange} changeDetails={true}/>
           <div className="border border-primary border-1 rounded py-2 px-5 mb-3">
             <p>Please select which account you'd like to sign up for:</p>
             {["radio"].map((type) => (
@@ -134,13 +108,17 @@ const SignUp = () => {
               <Form.Control
                 as="textarea"
                 className="form-control h-75"
-                style={{ resize: "none" }}
                 type="text"
-                value={formData.description}
+                value={formData.about}
                 onChange={onChange}
-                id="description"
+                maxLength="400"
+                minLength="10"
+                id="about"
                 rows={4}
               />
+              <p className="text-end">{`${
+                400 - formData.about.length
+              } characters remaining`}</p>
             </Form.Group>
           )}
           <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5  d-flex">

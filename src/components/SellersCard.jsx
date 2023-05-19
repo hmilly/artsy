@@ -6,7 +6,7 @@ const SellersCard = ({ seller }) => {
     <div
       className="rounded d-flex"
       style={{
-        background: `url(${seller.paintings[0].imgUrl}) center 50% / cover no-repeat`,
+        background: `url(${seller?.paintings[0]?.imgUrl}) center 50% / cover no-repeat`,
         height: "450px",
       }}
     >

@@ -48,7 +48,6 @@ const SignIn = () => {
     <Layout>
       <Container as="main">
         <h2 className="my-3">Welcome Back!</h2>
-
         <Form onSubmit={sumbitForm}>
           <Form.Control
             type="email"
@@ -59,7 +58,6 @@ const SignIn = () => {
             onChange={onChange}
             required
           />
-
           <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5 gap-1 d-flex ">
             <Form.Control
               type={showPassword ? "text" : "password"}
@@ -84,7 +82,6 @@ const SignIn = () => {
               )}
             </button>
           </Form.Group>
-
           <Row className="justify-content-end">
             <Link
               to="/forgot-password"
@@ -93,7 +90,6 @@ const SignIn = () => {
               Forgot Password
             </Link>
           </Row>
-
           <Row className="my-5 justify-content-between align-items-center ">
             <Col className="col-auto">
               <p className="m-0">Click to sign in</p>
@@ -105,9 +101,8 @@ const SignIn = () => {
             </Col>
           </Row>
         </Form>
-
+        {/* oauth */}
         <Oauth />
-
         <Row>
           <Link to="/sign-up" className="btn fw-bold text-success">
             Sign Up Instead

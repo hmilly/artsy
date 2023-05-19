@@ -44,10 +44,10 @@ const Sellers = () => {
           as="form"
           className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
         >
-          <FilteredSearch setPaintings={setSellers} paintings={sellers} />
+          <FilteredSearch setArr={setSellers} arr={sellers} />
         </Row>
 
-        <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
+        <Row className="py-2 row-cols-1 row-cols-xl-2 g-4">
           {sellers?.map((seller) => (
             <Col>
               <SellersCard seller={seller} />

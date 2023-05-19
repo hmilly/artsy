@@ -24,9 +24,10 @@ const Profile = () => {
   const [profile, setProfile] = useState({});
   const [paintings, setPaintings] = useState([]);
   const [formData, setFormData] = useState({
-    name: auth.currentUser.displayName,
+    name: auth?.currentUser?.displayName,
     number: "",
-    email: auth.currentUser.email,
+    email: auth?.currentUser?.email,
+    about: ''
   });
 
   // get user by id
@@ -35,7 +36,7 @@ const Profile = () => {
       try {
         const user = await fetchUserById(auth.currentUser.uid);
         await setProfile({ ...user, id: auth.currentUser.uid });
-        setFormData({ ...formData, number: await user.number });
+        setFormData({ ...formData, number: await user.number, about: await user.about });
       } catch (error) {
         toast.error("Could not fetch user");
       }
@@ -105,7 +106,6 @@ const Profile = () => {
         <ProfileDetails
           profile={profile}
           formData={formData}
-          setFormData={setFormData}
         />
         <Row className="my-3 mx-1 justify-content-between w-100">
           <Col className="col-auto">

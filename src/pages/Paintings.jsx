@@ -51,7 +51,7 @@ const Paintings = () => {
           as="form"
           className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
         >
-          <FilteredSearch setPaintings={setPaintings} paintings={paintings} />
+          <FilteredSearch setArr={setPaintings} arr={paintings} />
           <FilteredRangeSlider
             setPaintings={setPaintings}
             paintings={paintings}

@@ -56,7 +56,7 @@ const SellerPaintingForm = ({ formData, setFormData }) => {
           required
         />
       </Form.Group>
-      <Form.Group className="d-flex flex-column mb-3">
+      <Form.Group className="d-flex flex-column mb-3 h-100">
         <Form.Label className=" mb-1">Description</Form.Label>
         <Form.Control
           as="textarea"
@@ -69,6 +69,9 @@ const SellerPaintingForm = ({ formData, setFormData }) => {
           minLength="10"
           required
         />
+        <p className="text-end">{`${
+          500 - description.length
+        } characters remaining`}</p>
       </Form.Group>
 
       <Form.Group className="d-flex flex-column mb-3">
