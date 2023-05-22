@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../firebase.config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
-import { Container, Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import {
   AiFillEye,
   AiFillEyeInvisible,
@@ -69,100 +66,100 @@ const SignUp = () => {
 
   return (
     <Layout>
-      <Container as="main">
-        <h2 className="my-3">Welcome</h2>
-        <Form onSubmit={onSubmit}>
-          <ProfileForm formData={formData} onChange={onChange} changeDetails={true}/>
-          <div className="border border-primary border-1 rounded py-2 px-5 mb-3">
-            <p>Please select which account you'd like to sign up for:</p>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  inline
-                  type={type}
-                  name="user_type"
-                  value="users"
-                  required
-                  onChange={(e) => setUserType(e.target.value)}
-                  id="radioTypeCustomer"
-                  label="Customer"
-                />
-                <Form.Check
-                  inline
-                  type={type}
-                  name="user_type"
-                  value="sellers"
-                  required
-                  onChange={(e) => setUserType(e.target.value)}
-                  id="radioTypeSeller"
-                  label="Seller"
-                />
-              </div>
-            ))}
-          </div>
-          {userType === "sellers" && (
-            <Form.Group className="border border-primary border-1 rounded py-2 px-4 mb-3">
-              <Form.Label>
-                Introduce your shop by adding an about me:
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                className="form-control h-75"
-                type="text"
-                value={formData.about}
-                onChange={onChange}
-                maxLength="400"
-                minLength="10"
-                id="about"
-                rows={4}
+      <h2 className="my-3">Welcome</h2>
+      <Form onSubmit={onSubmit}>
+        <ProfileForm
+          formData={formData}
+          onChange={onChange}
+          changeDetails={true}
+        />
+        <div className="border border-primary border-1 rounded py-2 px-5 mb-3">
+          <p>Please select which account you'd like to sign up for:</p>
+          {["radio"].map((type) => (
+            <div key={`default-${type}`} className="mb-3">
+              <Form.Check
+                inline
+                type={type}
+                name="user_type"
+                value="users"
+                required
+                onChange={(e) => setUserType(e.target.value)}
+                id="radioTypeCustomer"
+                label="Customer"
               />
-              <p className="text-end">{`${
-                400 - formData.about.length
-              } characters remaining`}</p>
-            </Form.Group>
-          )}
-          <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5  d-flex">
+              <Form.Check
+                inline
+                type={type}
+                name="user_type"
+                value="sellers"
+                required
+                onChange={(e) => setUserType(e.target.value)}
+                id="radioTypeSeller"
+                label="Seller"
+              />
+            </div>
+          ))}
+        </div>
+        {userType === "sellers" && (
+          <Form.Group className="border border-primary border-1 rounded py-2 px-4 mb-3">
+            <Form.Label>Introduce your shop by adding an about me:</Form.Label>
             <Form.Control
-              type={showPassword ? "text" : "password"}
-              className="border-0 p-1"
-              placeholder="Password"
-              id="password"
-              value={formData.password}
+              as="textarea"
+              className="form-control h-75"
+              type="text"
+              value={formData.about}
               onChange={onChange}
-              required
+              maxLength="400"
+              minLength="10"
+              id="about"
+              rows={4}
             />
-            <button
-              className="btn btn-dark rounded-pill py-0"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowPassword(!showPassword);
-              }}
-            >
-              {showPassword ? (
-                <AiFillEyeInvisible className="img-fluid" />
-              ) : (
-                <AiFillEye className="img-fluid" />
-              )}
-            </button>
+            <p className="text-end">{`${
+              400 - formData.about.length
+            } characters remaining`}</p>
           </Form.Group>
-          <Row className="my-5 justify-content-between align-items-center ">
-            <Col className="col-auto">
-              <p className="m-0">Click to sign up</p>
-            </Col>
-            <Col className="col-auto">
-              <button className="btn btn-success rounded-pill">
-                <AiOutlineArrowRight className="img-fluid" />
-              </button>
-            </Col>
-          </Row>
-        </Form>
-        <Oauth />
-        <Row>
-          <Link to="/sign-in" className="btn fw-bold text-success">
-            Sign In Instead
-          </Link>
+        )}
+        <Form.Group className="border border-primary border-1 rounded-pill py-1 pe-1 ps-5  d-flex">
+          <Form.Control
+            type={showPassword ? "text" : "password"}
+            className="border-0 p-1"
+            placeholder="Password"
+            id="password"
+            value={formData.password}
+            onChange={onChange}
+            required
+          />
+          <button
+            className="btn btn-dark rounded-pill py-0"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowPassword(!showPassword);
+            }}
+          >
+            {showPassword ? (
+              <AiFillEyeInvisible className="img-fluid" />
+            ) : (
+              <AiFillEye className="img-fluid" />
+            )}
+          </button>
+        </Form.Group>
+        <Row className="my-5 justify-content-between align-items-center ">
+          <Col className="col-auto">
+            <p className="m-0">Click to sign up</p>
+          </Col>
+          <Col className="col-auto">
+            <button className="btn btn-success rounded-pill">
+              <AiOutlineArrowRight className="img-fluid" />
+            </button>
+          </Col>
         </Row>
-      </Container>
+      </Form>
+      <Oauth />
+      <Row>
+        <Link to="/sign-in" className="btn fw-bold text-success">
+          Sign In Instead
+        </Link>
+      </Row>
     </Layout>
   );
 };

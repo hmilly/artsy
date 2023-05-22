@@ -1,13 +1,14 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import { Container } from "react-bootstrap";
 
 const Layout = ({ children }) => {
   return (
     <div className="vh-100 d-flex flex-column justify-content-between">
       <Header />
-      <div className="flex-fill" style={{ marginTop: "130px" }}>
-        {children}
-      </div>
+      <main className="flex-fill" style={{ marginTop: "150px" }}>
+        <Container className="p-2">{children}</Container>
+      </main>
       <Footer />
     </div>
   );

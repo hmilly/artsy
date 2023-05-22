@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPaintingsArr } from "../fns/fetchFns";
 import { toast } from "react-toastify";
-import { Container } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
@@ -12,6 +11,7 @@ const ShopItem = () => {
   const [loading, setLoading] = useState(true);
   const [paintingData, setPaintingData] = useState({});
 
+  // eslint-disable-next-line no-unused-vars
   const updateSold = (id) => {
     console.log(id);
   };
@@ -34,6 +34,7 @@ const ShopItem = () => {
       }
     };
     getPaintings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.sellerId, params.paintingData]);
 
   if (loading) {
@@ -41,11 +42,9 @@ const ShopItem = () => {
   }
   return (
     <Layout>
-      <Container as="main" className="container p-1">
-        <div>
-          <PaintingCard painting={paintingData} ShopItem={true} />
-        </div>
-      </Container>
+      <div>
+        <PaintingCard painting={paintingData} ShopItem={true} />
+      </div>
     </Layout>
   );
 };

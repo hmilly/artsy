@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
 import SellerPaintingForm from "../components/SellerPaintingForm";
@@ -67,31 +67,29 @@ const CreatePaintingCard = () => {
   }
   return (
     <Layout>
-      <Container>
-        <h2 className="my-5">Create Painting card</h2>
-        <Row className="flex-column flex-md-row ">
+      <h2 className="my-5">Create Painting card</h2>
+      <Row className="flex-column flex-md-row ">
+        <Col>
+          <Form
+            onSubmit={onSubmit}
+            className="h-100 d-flex flex-column justify-content-between"
+          >
+            <SellerPaintingForm formData={formData} setFormData={setFormData} />
+            <Button type="submit" className="btn-success my-2 w-100">
+              Upload
+            </Button>
+          </Form>
+        </Col>
+        {formData.imgData !== "" && (
           <Col>
-            <Form
-              onSubmit={onSubmit}
-              className="h-100 d-flex flex-column justify-content-between"
-            >
-              <SellerPaintingForm formData={formData} setFormData={setFormData} />
-              <Button type="submit" className="btn-success my-2 w-100">
-                Upload
-              </Button>
-            </Form>
+            <img
+              src={formData?.imgUrl}
+              alt={formData?.name}
+              className="img-fluid p-2"
+            />
           </Col>
-          {formData.imgData !== "" && (
-            <Col>
-              <img
-                src={formData?.imgUrl}
-                alt={formData?.name}
-                className="img-fluid p-2"
-              />
-            </Col>
-          )}
-        </Row>
-      </Container>
+        )}
+      </Row>
     </Layout>
   );
 };

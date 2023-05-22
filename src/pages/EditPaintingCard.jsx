@@ -4,7 +4,7 @@ import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import SellerPaintingForm from "../components/SellerPaintingForm";
 import Layout from "../components/Layout";
@@ -75,32 +75,27 @@ const EditPaintingCard = () => {
   }
   return (
     <Layout>
-      <Container as="main">
-        <h2 className="my-5">Edit Painting card</h2>
-        <Row className="flex-column flex-md-row ">
-          <Col>
-            <Form
-              onSubmit={onSubmit}
-              className="h-100 d-flex flex-column justify-content-between"
-            >
-              <SellerPaintingForm
-                formData={formData}
-                setFormData={setFormData}
-              />
-              <Button type="submit" className="btn-success my-2 w-100">
-                Edit Listing
-              </Button>
-            </Form>
-          </Col>
-          <Col>
-            <img
-              src={formData?.imgUrl}
-              alt={formData?.name}
-              className="img-fluid p-2"
-            />
-          </Col>
-        </Row>
-      </Container>
+      <h2 className="my-5">Edit Painting card</h2>
+      <Row className="flex-column flex-md-row ">
+        <Col>
+          <Form
+            onSubmit={onSubmit}
+            className="h-100 d-flex flex-column justify-content-between"
+          >
+            <SellerPaintingForm formData={formData} setFormData={setFormData} />
+            <Button type="submit" className="btn-success my-2 w-100">
+              Edit Listing
+            </Button>
+          </Form>
+        </Col>
+        <Col>
+          <img
+            src={formData?.imgUrl}
+            alt={formData?.name}
+            className="img-fluid p-2"
+          />
+        </Col>
+      </Row>
     </Layout>
   );
 };

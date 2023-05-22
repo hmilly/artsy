@@ -6,7 +6,7 @@ import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import LoadingState from "../components/LoadingState";
 import ProfileDetails from "../components/ProfileDetails";
 import PaintingCard from "../components/PaintingCard";
@@ -27,7 +27,7 @@ const Profile = () => {
     name: auth?.currentUser?.displayName,
     number: "",
     email: auth?.currentUser?.email,
-    about: ''
+    about: "",
   });
 
   // get user by id
@@ -36,15 +36,19 @@ const Profile = () => {
       try {
         const user = await fetchUserById(auth.currentUser.uid);
         await setProfile({ ...user, id: auth.currentUser.uid });
-        setFormData({ ...formData, number: await user.number, about: await user.about });
+        setFormData({
+          ...formData,
+          number: await user.number,
+          about: await user.about,
+        });
       } catch (error) {
         toast.error("Could not fetch user");
       }
       setLoading(false);
     };
-
     getProfile();
-  }, [auth.currentUser.uid, formData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // get users paintings
   useEffect(() => {
@@ -101,67 +105,62 @@ const Profile = () => {
   }
   return (
     <Layout>
-      <Container as="main">
-        <h2>Profile</h2>
-        <ProfileDetails
-          profile={profile}
-          formData={formData}
-        />
-        <Row className="my-3 mx-1 justify-content-between w-100">
-          <Col className="col-auto">
-            <h3>
-              {profile.userRef === "sellers"
-                ? "Items for sale (click card to edit listing)"
-                : "Your reserved items:"}
-            </h3>
+      <h2>Profile</h2>
+      <ProfileDetails profile={profile} formData={formData} />
+      <Row className="my-3 mx-1 justify-content-between w-100">
+        <Col className="col-auto">
+          <h3>
+            {profile.userRef === "sellers"
+              ? "Items for sale (click card to edit listing)"
+              : "Your reserved items:"}
+          </h3>
+        </Col>
+        {profile.userRef === "sellers" && (
+          <Col className="col-2 d-flex justify-content-end ">
+            <Link
+              to={`/create-painting/${auth.currentUser.uid}`}
+              className="btn btn-primary"
+            >
+              <BiImageAdd className="fs-3" />
+            </Link>
           </Col>
-          {profile.userRef === "sellers" && (
-            <Col className="col-2 d-flex justify-content-end ">
-              <Link
-                to={`/create-painting/${auth.currentUser.uid}`}
-                className="btn btn-primary"
-              >
-                <BiImageAdd className="fs-3" />
-              </Link>
-            </Col>
-          )}
-        </Row>
-        {paintings.length !== 0 ? (
-          <Row className="row-cols-1 row-cols-sm-2 align-items-start">
-            {paintings?.map((painting) => (
-              <Col key={painting?.id} className="p-2">
-                <Card>
-                  <button
-                    className="border-0 align-self-end "
-                    onClick={() =>
-                      profile.userRef === "sellers"
-                        ? onDeleteForSeller(painting)
-                        : onDeleteForUser(painting)
-                    }
-                  >
-                    <AiOutlineClose className="img-fluid align-self-end" />
-                  </button>
-                  <Link
-                    className="p-2 h-100 link-dark text-decoration-none"
-                    to={
-                      profile.userRef === "sellers"
-                        ? `/edit-painting/${painting.id}`
-                        : `/shop/${painting.sellerId}/${painting.name
-                            .toLowerCase()
-                            .split(" ")
-                            .join("-")}`
-                    }
-                  >
-                    <PaintingCard painting={painting} ShopItem={false} />
-                  </Link>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          <p>No items to show</p>
         )}
-      </Container>
+      </Row>
+      {paintings.length !== 0 ? (
+        <Row className="row-cols-1 row-cols-sm-2 align-items-start">
+          {paintings?.map((painting) => (
+            <Col key={painting?.id} className="p-2">
+              <Card>
+                <button
+                  className="border-0 align-self-end "
+                  onClick={() =>
+                    profile.userRef === "sellers"
+                      ? onDeleteForSeller(painting)
+                      : onDeleteForUser(painting)
+                  }
+                >
+                  <AiOutlineClose className="img-fluid align-self-end" />
+                </button>
+                <Link
+                  className="p-2 h-100 link-dark text-decoration-none"
+                  to={
+                    profile.userRef === "sellers"
+                      ? `/edit-painting/${painting.id}`
+                      : `/shop/${painting.sellerId}/${painting.name
+                          .toLowerCase()
+                          .split(" ")
+                          .join("-")}`
+                  }
+                >
+                  <PaintingCard painting={painting} ShopItem={false} />
+                </Link>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <p>No items to show</p>
+      )}
     </Layout>
   );
 };
