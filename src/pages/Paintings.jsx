@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";
 import { fetchPaintingsCollection } from "../fns/fetchFns";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import PaintingCard from "../components/PaintingCard";
-import FilteredSearch from "../components/FilteredSearch";
-import FilteredRangeSlider from "../components/FilteredRangeSlider";
 import FilteredDropdown from "../components/FilteredDropdown";
+import FilteredSearch from "../components/FilteredSearch";
+import FilterByPriceOrName from "../components/FilterByPriceOrName";
 
 const Paintings = () => {
   const [paintings, setPaintings] = useState(null);
@@ -33,49 +33,46 @@ const Paintings = () => {
   }
   return (
     <Layout>
-      <Container as="main">
-        <Row as="section" className="row-cols-1">
-          <Col as="h2" className="mb-4">
-            Paintings
+      <Row as="section" className="row-cols-1">
+        <Col as="h2" className="mb-4">
+          Paintings
+        </Col>
+        <Col as="p">
+          Please take the time to look around at our listed paintings below
+        </Col>
+        <Col as="p">
+          Remember to reserve anything you like the look of by clicking the
+          item, then head to your profile page to manage your saved items.
+        </Col>
+      </Row>
+      <Row
+        as="form"
+        className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
+      >
+        <FilteredSearch setArr={setPaintings} arr={paintings} />
+        <FilterByPriceOrName
+          setPaintings={setPaintings}
+          paintings={paintings}
+        />
+        <FilteredDropdown setPaintings={setPaintings} paintings={paintings} />
+      </Row>
+      <Row className="py-2 row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        {paintings.map((painting) => (
+          <Col key={painting?.id} className="mb-2">
+            <div className="border border-secondary rounded h-100">
+              <Link
+                className="h-100 link-dark text-decoration-none "
+                to={`/shop/${painting?.sellerId}/${painting.name
+                  .toLowerCase()
+                  .split(" ")
+                  .join("-")}`}
+              >
+                <PaintingCard painting={painting} lgImg={false} />
+              </Link>
+            </div>
           </Col>
-          <Col as="p">
-            Please take the time to look around at our listed paintings below
-          </Col>
-          <Col as="p">
-            Remember to reserve anything you like the look of by clicking the
-            item, then head to your profile page to manage your saved items.
-          </Col>
-        </Row>
-
-        <Row
-          as="form"
-          className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
-        >
-          <FilteredSearch setArr={setPaintings} arr={paintings} />
-          <FilteredRangeSlider
-            setPaintings={setPaintings}
-            paintings={paintings}
-          />
-          <FilteredDropdown setPaintings={setPaintings} paintings={paintings} />
-        </Row>
-        <Row className="py-2 row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-          {paintings?.map((painting) => (
-            <Col key={painting?.id} className="mb-2">
-              <div className="border border-secondary rounded h-100">
-                <Link
-                  className="h-100 link-dark text-decoration-none "
-                  to={`/shop/${painting.sellerId}/${painting.name
-                    .toLowerCase()
-                    .split(" ")
-                    .join("-")}`}
-                >
-                  <PaintingCard painting={painting} lgImg={false} />
-                </Link>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+        ))}
+      </Row>
     </Layout>
   );
 };

@@ -2,14 +2,14 @@ import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { Col, Form } from "react-bootstrap";
 
-const FilteredSearch = ({ paintings, setPaintings }) => {
-  const [allPaintings] = useState(paintings);
+const FilteredSearch = ({ arr, setArr }) => {
+  const [arrCopy] = useState(arr);
 
   const searchByName = (e) => {
-    const match = allPaintings.filter((painting) =>
-      painting.name.toLowerCase().includes(e.target.value.toLowerCase())
+    const match = arrCopy.filter((item) =>
+      item.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setPaintings(match);
+    setArr(match);
   };
 
   const searchByPrice = (e) => {};
