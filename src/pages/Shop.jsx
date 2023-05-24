@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import { Col, Row } from "react-bootstrap";
+import { fetchPaintingsArr, fetchUserById } from "../fns/fetchFns";
 import LoadingState from "../components/LoadingState";
-import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
+import FilteredSearch from "../components/FilteredSearch";
+import FilterByPriceOrName from "../components/FilterByPriceOrName";
+import FilteredDropdown from "../components/FilteredDropdown";
+import PaintingCard from "../components/PaintingCard";
+import Paginate from "../components/Paginate";
 
 const Shop = () => {
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [paintings, setPaintings] = useState({});
+  const [paintingsCount, setPaintingsCount] = useState(0);
   const [seller, setSeller] = useState({});
+  const [pageNo, setPageNo] = useState(1);
+  const [noToDisplay] = useState(4);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -25,6 +32,7 @@ const Shop = () => {
       try {
         const paintings = await fetchPaintingsArr("sellerId", params.sellerId);
         setPaintings(paintings);
+        setPaintingsCount(paintings.length);
         setLoading(false);
       } catch (error) {
         toast.error("Could not fetch paintings");
@@ -49,24 +57,56 @@ const Shop = () => {
         <p>{seller.about}</p>
       </Row>
       <h3 className="mb-4">Items for sale:</h3>
-      <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
-        {paintings.length === 0 ? (
-          <p>No items in the shop yet!</p>
-        ) : (
-          paintings?.map((painting) => (
-            <Col key={painting?.id} className="mb-2">
-              <div className="border border-secondary rounded h-100">
-                <Link
-                  className="h-100 link-dark text-decoration-none "
-                  to={`${painting.name.toLowerCase().split(" ").join("-")}`}
-                >
-                  <PaintingCard painting={painting} lgImg={false} />
-                </Link>
-              </div>
-            </Col>
-          ))
-        )}
-      </Row>
+      {paintingsCount === 0 ? (
+        <p className="text-center py-5">No items in the shop yet!</p>
+      ) : (
+        <>
+          <Row
+            as="form"
+            className="p-2 row-cols-1 row-cols-md-3 align-items-center justify-content-center"
+          >
+            <FilteredSearch
+              setArr={setPaintings}
+              arr={paintings}
+              setPageNo={setPageNo}
+            />
+            <FilterByPriceOrName
+              setPaintings={setPaintings}
+              paintings={paintings}
+              setPageNo={setPageNo}
+            />
+            <FilteredDropdown
+              setPaintings={setPaintings}
+              paintings={paintings}
+              setPageNo={setPageNo}
+            />
+          </Row>
+          <Row className="py-2 row-cols-1 row-cols-lg-2 g-3">
+            {paintings
+              ?.slice(pageNo * noToDisplay - noToDisplay, pageNo * noToDisplay)
+              .map((painting) => (
+                <Col key={painting?.id} className="mb-2">
+                  <div className="border border-secondary rounded h-100">
+                    <Link
+                      className="h-100 link-dark text-decoration-none "
+                      to={`${painting.name.toLowerCase().split(" ").join("-")}`}
+                    >
+                      <PaintingCard painting={painting} lgImg={false} />
+                    </Link>
+                  </div>
+                </Col>
+              ))}
+          </Row>
+          <Row as="section" className="p-3">
+            <Paginate
+              arrLength={paintings.length}
+              pageNo={pageNo}
+              setPageNo={setPageNo}
+              noToDisplay={noToDisplay}
+            />
+          </Row>
+        </>
+      )}
     </Layout>
   );
 };

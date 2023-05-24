@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Row, Col, Card } from "react-bootstrap";
+import { AiOutlineClose } from "react-icons/ai";
+import { BiImageAdd } from "react-icons/bi";
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { toast } from "react-toastify";
-import { AiOutlineClose } from "react-icons/ai";
-import { BiImageAdd } from "react-icons/bi";
-import { Row, Col, Card } from "react-bootstrap";
-import LoadingState from "../components/LoadingState";
-import ProfileDetails from "../components/ProfileDetails";
-import PaintingCard from "../components/PaintingCard";
-import Layout from "../components/Layout";
 import {
   fetchPaintingsArr,
   fetchUserById,
   deleteFromStorage,
 } from "../fns/fetchFns";
+import LoadingState from "../components/LoadingState";
+import Layout from "../components/Layout";
+import ProfileDetails from "../components/ProfileDetails";
+import PaintingCard from "../components/PaintingCard";
+import Paginate from "../components/Paginate";
 
 const Profile = () => {
   const auth = getAuth();
@@ -29,6 +30,8 @@ const Profile = () => {
     email: auth?.currentUser?.email,
     about: "",
   });
+  const [pageNo, setPageNo] = useState(1);
+  const [noToDisplay] = useState(4);
 
   // get user by id
   useEffect(() => {
@@ -47,7 +50,7 @@ const Profile = () => {
       setLoading(false);
     };
     getProfile();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // get users paintings
@@ -127,37 +130,49 @@ const Profile = () => {
         )}
       </Row>
       {paintings.length !== 0 ? (
-        <Row className="row-cols-1 row-cols-sm-2 align-items-start">
-          {paintings?.map((painting) => (
-            <Col key={painting?.id} className="p-2">
-              <Card>
-                <button
-                  className="border-0 align-self-end "
-                  onClick={() =>
-                    profile.userRef === "sellers"
-                      ? onDeleteForSeller(painting)
-                      : onDeleteForUser(painting)
-                  }
-                >
-                  <AiOutlineClose className="img-fluid align-self-end" />
-                </button>
-                <Link
-                  className="p-2 h-100 link-dark text-decoration-none"
-                  to={
-                    profile.userRef === "sellers"
-                      ? `/edit-painting/${painting.id}`
-                      : `/shop/${painting.sellerId}/${painting.name
-                          .toLowerCase()
-                          .split(" ")
-                          .join("-")}`
-                  }
-                >
-                  <PaintingCard painting={painting} ShopItem={false} />
-                </Link>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row className="row-cols-1 row-cols-sm-2 align-items-start">
+            {paintings
+              ?.slice(pageNo * noToDisplay - noToDisplay, pageNo * noToDisplay)
+              .map((painting) => (
+                <Col key={painting?.id} className="p-2">
+                  <Card>
+                    <button
+                      className="border-0 align-self-end "
+                      onClick={() =>
+                        profile.userRef === "sellers"
+                          ? onDeleteForSeller(painting)
+                          : onDeleteForUser(painting)
+                      }
+                    >
+                      <AiOutlineClose className="img-fluid align-self-end" />
+                    </button>
+                    <Link
+                      className="p-2 h-100 link-dark text-decoration-none"
+                      to={
+                        profile.userRef === "sellers"
+                          ? `/edit-painting/${painting.id}`
+                          : `/shop/${painting.sellerId}/${painting.name
+                              .toLowerCase()
+                              .split(" ")
+                              .join("-")}`
+                      }
+                    >
+                      <PaintingCard painting={painting} ShopItem={false} />
+                    </Link>
+                  </Card>
+                </Col>
+              ))}
+          </Row>
+          <Row as="section" className="p-3">
+            <Paginate
+              arrLength={paintings.length}
+              pageNo={pageNo}
+              setPageNo={setPageNo}
+              noToDisplay={noToDisplay}
+            />
+          </Row>
+        </>
       ) : (
         <p>No items to show</p>
       )}

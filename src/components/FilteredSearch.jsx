@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { BiSearch } from "react-icons/bi";
 import { Col, Form } from "react-bootstrap";
+import { BiSearch } from "react-icons/bi";
 
-const FilteredSearch = ({ arr, setArr }) => {
+const FilteredSearch = ({ arr, setArr, setPageNo }) => {
   const [arrCopy] = useState(arr);
 
   const searchByName = (e) => {
+    setPageNo(1);
     const match = arrCopy.filter((item) =>
       item.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setArr(match);
   };
-
-  const searchByPrice = (e) => {};
-  searchByPrice();
 
   return (
     <Col className="mb-3">
