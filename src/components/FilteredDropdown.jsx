@@ -1,36 +1,49 @@
-import { useState } from "react";
+/* eslint-disable array-callback-return */
+import { useEffect, useState } from "react";
 import { Col, Form, Dropdown } from "react-bootstrap";
 
-const FilteredDropdown = ({ paintings, setPaintings }) => {
+const FilteredDropdown = ({ paintings, setPaintings, setPageNo }) => {
   // eslint-disable-next-line no-unused-vars
   const [allPaintings] = useState(paintings);
   const [styles, setStyles] = useState([]);
 
-  const searchByStyle = (e) => {
-    const findMatch = styles.find((style) => style.match(e.target.id));
-    // provides array with all styles that are clicked - ON
-    if (findMatch === undefined) {
-      setStyles([...styles, e.target.id]);
+  const updateStylesArray = (e) => {
+    if (e.target.checked) {
+      setStyles([...styles, e.target.id.toLowerCase()]);
     } else {
-      const arr = styles;
-      arr.splice(arr.indexOf(e.target.id), 1);
+      const arr = [...styles];
+      arr.splice(arr.indexOf(e.target.id.toLowerCase()), 1);
       setStyles(arr);
     }
-
-    // matches paintings with singular style
-    // const match = allPaintings.filter((painting) =>
-    //   painting.description.toLowerCase().includes(e.target.id.toLowerCase())
-    // );
-
-    //  setPaintings(match);
   };
+
+  useEffect(() => {
+    const updatePics = () => {
+      if (styles.length === 0) {
+        setPaintings(allPaintings);
+      } else {
+        let arr = [];
+        styles.forEach((s) => {
+          allPaintings.map((p) => {
+            if (p.description.toLowerCase().includes(s)) arr.push(p);
+          });
+        });
+        setPaintings(arr);
+      }
+      setPageNo(1);
+    };
+    updatePics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [styles, allPaintings]);
 
   return (
     <Col className="mb-3">
       <Dropdown>
         <Dropdown.Toggle
           variant="light"
-          className="border rounded border-secondary border-opacity-50 w-100"
+          className={`border rounded border-secondary border-opacity-50 w-100 ${
+            styles.length > 0 && "bg-secondary bg-opacity-50"
+          }`}
           id="dropdown-button"
         >
           Painting Style
@@ -41,91 +54,91 @@ const FilteredDropdown = ({ paintings, setPaintings }) => {
               <Form.Check
                 label="Abstract"
                 id="Abstract"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Acrylic"
                 id="Acrylic"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Colourful"
                 id="Colourful"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Digital"
                 id="Digital"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Expressionism"
                 id="Expressionism"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Impressionism"
                 id="Impressionism"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Landscape"
                 id="Landscape"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Oil"
                 id="Oil"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Pastel"
                 id="Pastel"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Pop Art"
                 id="Pop Art"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Portrait"
                 id="Portrait"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Spray Paint"
                 id="Spray Paint"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Still life"
                 id="Still life"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Surreal"
                 id="Surreal"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
               <Form.Check
                 label="Watercolour"
                 id="Watercolour"
-                onChange={searchByStyle}
+                onClick={updateStylesArray}
                 type={type}
               />
             </div>
