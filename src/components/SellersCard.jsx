@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
 const SellersCard = ({ seller }) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);

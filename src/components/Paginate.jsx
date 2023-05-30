@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Pagination } from "react-bootstrap";
+import Pagination from "react-bootstrap/Pagination";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 const Paginate = ({ arrLength, pageNo, setPageNo, noToDisplay }) => {
@@ -31,7 +31,7 @@ const Paginate = ({ arrLength, pageNo, setPageNo, noToDisplay }) => {
         onClick={() => pageNo > 1 && setPageNo(pageNo - 1)}
         disabled={pageNo === 1}
       >
-        <BsArrowLeft />
+        <BsArrowLeft className="img-fluid" aria-label="arrow left" />
       </Pagination.Item>
       {arr}
       <Pagination.Item
@@ -39,7 +39,7 @@ const Paginate = ({ arrLength, pageNo, setPageNo, noToDisplay }) => {
         onClick={() => pageNo < maxPage && setPageNo(pageNo + 1)}
         disabled={pageNo === maxPage}
       >
-        <BsArrowRight />
+        <BsArrowRight className="img-fluid" aria-label="arrow right" />
       </Pagination.Item>
     </Pagination>
   );

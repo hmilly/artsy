@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Form, Row, Col } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import {
   AiFillEye,
   AiFillEyeInvisible,
   AiOutlineArrowRight,
 } from "react-icons/ai";
-import Oauth from "../components/Oauth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Layout from "../components/Layout";
+import Oauth from "../components/Oauth";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);

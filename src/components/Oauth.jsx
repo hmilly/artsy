@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import  Button  from "react-bootstrap/Button";
+import { FcGoogle } from "react-icons/fc";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
-import { toast } from "react-toastify";
-import { FcGoogle } from "react-icons/fc";
-import { Button } from "react-bootstrap";
 
 const Oauth = () => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Oauth = () => {
         instead:
       </p>
       <Button className="btn-dark" onClick={onGoogleClick}>
-        <FcGoogle className="img-fluid" />
+        <FcGoogle className="img-fluid" aria-label="google"/>
       </Button>
     </div>
   );

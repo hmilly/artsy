@@ -1,4 +1,4 @@
-import { Form } from "react-bootstrap";
+import Form  from "react-bootstrap/Form";
 
 const SellerPaintingForm = ({ formData, setFormData }) => {
   const { description, name, price } = formData;

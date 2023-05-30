@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 import { getAuth, updateProfile, updateEmail } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase.config";
-import { toast } from "react-toastify";
-import { Container, Row, Form } from "react-bootstrap";
 import ProfileForm from "./ProfileForm";
 
 const ProfileDetails = ({ profile, formData }) => {

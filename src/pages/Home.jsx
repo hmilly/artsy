@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Row, Col, Carousel } from "react-bootstrap";
+import Carousel from "react-bootstrap/Carousel";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { fetchAllSellerData, fetchPaintingsCollection } from "../fns/fetchFns";
 import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";

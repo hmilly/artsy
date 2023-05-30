@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchPaintingsArr } from "../fns/fetchFns";
 import { toast } from "react-toastify";
+import { fetchPaintingsArr } from "../fns/fetchFns";
 import LoadingState from "../components/LoadingState";
-import PaintingCard from "../components/PaintingCard";
 import Layout from "../components/Layout";
+import PaintingCard from "../components/PaintingCard";
 
 const ShopItem = () => {
   const params = useParams();

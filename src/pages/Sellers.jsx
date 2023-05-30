@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Row, Col } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { fetchAllSellerData } from "../fns/fetchFns";
 import LoadingState from "../components/LoadingState";
 import Layout from "../components/Layout";

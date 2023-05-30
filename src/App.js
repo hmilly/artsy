@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Paintings from "./pages/Paintings";
@@ -25,7 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/paintings" element={<Paintings />} />
           <Route path="/sellers" element={<Sellers />} />
-          
+
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

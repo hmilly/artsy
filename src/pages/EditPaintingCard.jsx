@@ -1,18 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import { db } from "../firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { toast } from "react-toastify";
-import { Row, Col, Button, Form } from "react-bootstrap";
-import LoadingState from "../components/LoadingState";
-import SellerPaintingForm from "../components/SellerPaintingForm";
-import Layout from "../components/Layout";
 import {
   fetchPaintingById,
   deleteFromStorage,
   storeImage,
 } from "../fns/fetchFns";
+import LoadingState from "../components/LoadingState";
+import Layout from "../components/Layout";
+import SellerPaintingForm from "../components/SellerPaintingForm";
 
 const EditPaintingCard = () => {
   const auth = getAuth();

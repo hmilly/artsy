@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Form, Row, Col } from "react-bootstrap";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import Layout from "../components/Layout";
 
 const ForgotPassword = () => {
@@ -49,7 +51,7 @@ const ForgotPassword = () => {
           </Col>
           <Col className="col-auto">
             <button className="btn btn-success rounded-pill">
-              <AiOutlineArrowRight className="img-fluid" />
+              <AiOutlineArrowRight className="img-fluid" aria-label="arrow right"/>
             </button>
           </Col>
         </Row>

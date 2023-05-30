@@ -1,14 +1,12 @@
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import Button from "react-bootstrap/Button";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
-import { toast } from "react-toastify";
-import {
-  Card,
-  Button,
-  Accordion,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
 
 const PaintingCard = ({ painting, ShopItem }) => {
   const [reserved, setReserved] = useState(
