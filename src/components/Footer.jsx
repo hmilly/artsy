@@ -6,10 +6,18 @@ const Footer = () => {
       <p className="w-75 text-center">
         Copyright © 2023 Artsy - All Rights Reserved
       </p>
-      <Link to="/privacy-policy" onClick={() => window.scrollTo(0, 0)}>
+      <Link
+        to="/privacy-policy"
+        className="text-info"
+        onClick={() => window.scrollTo(0, 0)}
+      >
         Privacy Policy
       </Link>
-      <Link to="/about" onClick={() => window.scrollTo(0, 0)}>
+      <Link
+        to="/about"
+        className="text-info"
+        onClick={() => window.scrollTo(0, 0)}
+      >
         About
       </Link>
     </footer>

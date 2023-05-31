@@ -1,19 +1,34 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
+import Nav from "react-bootstrap/Nav";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import { AiFillHome, AiOutlinePicture, AiOutlineShop } from "react-icons/ai";
 import { BsFillPersonVcardFill } from "react-icons/bs";
-import { Nav, Row, Col } from "react-bootstrap";
+import { getAuth } from "firebase/auth";
 
 const Header = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+  const ref = useRef();
 
   const [userId] = useState(localStorage.getItem("user"));
 
   const logOut = () => {
     localStorage.removeItem("user");
-    auth.signOut().then(() => navigate("/"));
+
+    auth.signOut().then(() => {
+      if (window.location.pathname === "/") {
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
+
+      toast.success("You have been logged out");
+    });
   };
 
   return (
@@ -23,20 +38,53 @@ const Header = () => {
           as="ul"
           className="d-flex justify-content-evenly p-1 m-0 order-sm-1 order-2"
         >
-          <Nav.Item as="li">
-            <Link to="/" className="p-1 text-light">
-              <AiFillHome className="img-fluid" />
-            </Link>
+          <Nav.Item as="li" ref={ref}>
+            <OverlayTrigger
+              placement="bottom"
+              container={ref}
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Tooltip id="button-tooltip" className="position-absolute">
+                  Home
+                </Tooltip>
+              }
+            >
+              <Link to="/" className="p-1 text-light">
+                <AiFillHome className="img-fluid" aria-label="home" />
+              </Link>
+            </OverlayTrigger>
           </Nav.Item>
           <Nav.Item as="li">
-            <Link to="/sellers" className="p-1 text-light">
-              <AiOutlineShop className="img-fluid" />
-            </Link>
+            <OverlayTrigger
+              placement="bottom"
+              container={ref}
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Tooltip id="button-tooltip" className="position-absolute">
+                  Shops
+                </Tooltip>
+              }
+            >
+              <Link to="/sellers" className="p-1 text-light">
+                <AiOutlineShop className="img-fluid" aria-label="shop" />
+              </Link>
+            </OverlayTrigger>
           </Nav.Item>
           <Nav.Item as="li">
-            <Link to="/paintings" className="p-1 text-light">
-              <AiOutlinePicture className="img-fluid" />
-            </Link>
+            <OverlayTrigger
+              placement="bottom"
+              container={ref}
+              delay={{ show: 250, hide: 400 }}
+              overlay={
+                <Tooltip id="button-tooltip" className="position-absolute">
+                  Paintings
+                </Tooltip>
+              }
+            >
+              <Link to="/paintings" className="p-1 text-light">
+                <AiOutlinePicture className="img-fluid" aria-label="" />
+              </Link>
+            </OverlayTrigger>
           </Nav.Item>
         </Col>
         <Col className="order-sm-2 order-1">
@@ -51,9 +99,20 @@ const Header = () => {
             className="d-flex justify-content-evenly p-1 m-0 order-3 align-items-center"
           >
             <Nav.Item as="li">
-              <Link to="/profile" className="p-1 text-light">
-                <BsFillPersonVcardFill className="img-fluid " />
-              </Link>
+              <OverlayTrigger
+                placement="bottom"
+                container={ref}
+                delay={{ show: 250, hide: 400 }}
+                overlay={
+                  <Tooltip id="button-tooltip" className="position-absolute">
+                    Profile
+                  </Tooltip>
+                }
+              >
+                <Link to="/profile" className="p-1 text-light">
+                  <BsFillPersonVcardFill className="img-fluid " />
+                </Link>
+              </OverlayTrigger>
             </Nav.Item>
             <Nav.Item as="li">
               <button

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Row, Col, Card } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
 import { db } from "../firebase.config";
@@ -110,8 +112,8 @@ const Profile = () => {
     <Layout>
       <h2>Profile</h2>
       <ProfileDetails profile={profile} formData={formData} />
-      <Row className="my-3 mx-1 justify-content-between w-100">
-        <Col className="col-auto">
+      <Row className="row-cols-2 justify-content-center row-cols-md-2 justify-content-md-between gap-2 py-4">
+        <Col className="w-auto text-center">
           <h3>
             {profile.userRef === "sellers"
               ? "Items for sale (click card to edit listing)"
@@ -119,12 +121,12 @@ const Profile = () => {
           </h3>
         </Col>
         {profile.userRef === "sellers" && (
-          <Col className="col-2 d-flex justify-content-end ">
+          <Col className="w-auto d-flex justify-self-end">
             <Link
               to={`/create-painting/${auth.currentUser.uid}`}
               className="btn btn-primary"
             >
-              <BiImageAdd className="fs-3" />
+              <BiImageAdd className="fs-3" aria-label="add painting" />
             </Link>
           </Col>
         )}
@@ -145,7 +147,10 @@ const Profile = () => {
                           : onDeleteForUser(painting)
                       }
                     >
-                      <AiOutlineClose className="img-fluid align-self-end" />
+                      <AiOutlineClose
+                        className="img-fluid align-self-end"
+                        aria-label="close"
+                      />
                     </button>
                     <Link
                       className="p-2 h-100 link-dark text-decoration-none"

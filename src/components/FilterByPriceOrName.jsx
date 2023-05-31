@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Col, Dropdown } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const FilterByPriceOrName = ({ paintings, setPaintings, setPageNo }) => {
-  // eslint-disable-next-line no-unused-vars
   const [initialPaintingArr] = useState(paintings);
   const allPaintings = [...paintings];
   const [filter, setFilter] = useState("Sort by");
@@ -65,7 +65,7 @@ const FilterByPriceOrName = ({ paintings, setPaintings, setPageNo }) => {
           className={`border rounded border-secondary border-opacity-50 w-100 ${
             filter !== "Sort by" && "bg-secondary bg-opacity-50"
           }`}
-          id="dropdown-button"
+          id="sort-by-price-or-name-dropdown"
         >
           {filter}
         </Dropdown.Toggle>

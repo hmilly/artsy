@@ -1,9 +1,10 @@
 /* eslint-disable array-callback-return */
 import { useEffect, useState } from "react";
-import { Col, Form, Dropdown } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const FilteredDropdown = ({ paintings, setPaintings, setPageNo }) => {
-  // eslint-disable-next-line no-unused-vars
   const [allPaintings] = useState(paintings);
   const [styles, setStyles] = useState([]);
 
@@ -44,7 +45,7 @@ const FilteredDropdown = ({ paintings, setPaintings, setPageNo }) => {
           className={`border rounded border-secondary border-opacity-50 w-100 ${
             styles.length > 0 && "bg-secondary bg-opacity-50"
           }`}
-          id="dropdown-button"
+          id="sort-by-genre-dropdown"
         >
           Painting Style
         </Dropdown.Toggle>
